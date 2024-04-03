@@ -1,9 +1,5 @@
 package capstone.socialchild.service;
 
-import capstone.socialchild.domain.member.Gender;
-import capstone.socialchild.domain.member.Member;
-import capstone.socialchild.domain.member.Role;
-import capstone.socialchild.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +10,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
