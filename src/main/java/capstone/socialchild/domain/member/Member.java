@@ -30,5 +30,4 @@ public class Member {
 
     @Enumerated(value = STRING)
     private Role role;
-
 }

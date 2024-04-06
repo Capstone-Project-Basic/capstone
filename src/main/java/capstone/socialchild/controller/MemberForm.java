@@ -26,4 +26,5 @@ public class MemberForm {
 
     @NotEmpty(message = "신분을 선택해주세요!")
     private Role role;
+
 }
