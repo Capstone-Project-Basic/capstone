@@ -19,17 +19,17 @@ public class MemberService {
      * 회원가입
      */
     @Transactional
-    public String join(Member member) {
+    public Long join(Member member) {
         validateDuplicateMember(member);
         memberRepository.save(member);
-        return member.getUserid();
+        return member.getId();
     }
 
     /**
      * 중복 회원 검증
      */
     private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findById(member.getUserid());
+        List<Member> findMembers = memberRepository.findById(member.getId());
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 아이디입니다!");
         }
@@ -42,8 +42,8 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Member findOne(String userid) {
-        return memberRepository.findOne(userid);
+    public Member findOne(Long id) {
+        return memberRepository.findOne(id);
     }
 
 }

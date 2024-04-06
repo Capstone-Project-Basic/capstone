@@ -13,13 +13,13 @@ import static jakarta.persistence.EnumType.STRING;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long member_id;
+    @Column(name = "member_id")
+    private Long id;
 
     @Column
-    private String userid;
+    private String loginId;
 
-    @Column
-    private String passwd;
+    private String loginPassword;
 
     private String name;
     private LocalDate birth;

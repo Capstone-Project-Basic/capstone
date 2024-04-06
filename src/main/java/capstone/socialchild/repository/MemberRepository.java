@@ -15,13 +15,13 @@ public class MemberRepository {
     @PersistenceContext
     private final EntityManager em;
 
-    public String save(Member member) {
+    public Long save(Member member) {
         em.persist(member);
-        return member.getUserid();
+        return member.getId();
     }
 
-    public Member findOne(String userid) {
-        return em.find(Member.class, userid);
+    public Member findOne(Long id) {
+        return em.find(Member.class, id);
     }
 
     public List<Member> findAll() {
@@ -29,9 +29,9 @@ public class MemberRepository {
                 .getResultList();
     }
 
-    public List<Member> findById(String userid) {
-        return em.createQuery("select m from Member m where m.userid = :userid", Member.class)
-                .setParameter("userid", userid)
+    public List<Member> findById(Long id) {
+        return em.createQuery("select m from Member m where m.id = :id", Member.class)
+                .setParameter("id", id)
                 .getResultList();
     }
 

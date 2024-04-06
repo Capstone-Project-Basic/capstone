@@ -31,8 +31,8 @@ class MemberServiceTest {
     public void 회원가입() throws Exception {
         //given
         Member member1 = new Member();
-        member1.setUserid("user1");
-        member1.setPasswd("password1");
+        member1.setLoginId("user1");
+        member1.setLoginPassword("password1");
         member1.setName("John Doe");
         member1.setBirth(LocalDate.of(2020, 5, 15));
         member1.setGender(Gender.MALE);
@@ -41,21 +41,22 @@ class MemberServiceTest {
 
         // given2
         Member member2 = new Member();
-        member2.setUserid("user2");
-        member2.setPasswd("password2");
+        member2.setLoginId("user2");
+        member2.setLoginPassword("password2");
         member2.setName("Jane Smith");
         member2.setBirth(LocalDate.of(2021, 10, 25));
         member2.setGender(Gender.FEMALE);
         member2.setPhone_no("234-5678-9012");
         member2.setRole(Role.CHILD);
 
+        em.persist(member1);
+        em.persist(member2);
+
         //when
-        memberService.join(member1);
-        memberService.join(member2);
-        String savedId = member1.getUserid();
+        Long savedId = member1.getId();
 
         //then
         em.flush();
-        // assertEquals(member1, MemberRepository.findOne(savedId));
+        assertEquals(member1, memberRepository.findOne(savedId));
     }
 }
