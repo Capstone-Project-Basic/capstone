@@ -60,4 +60,31 @@ class MemberServiceTest {
         assertEquals(member1, memberRepository.findOne(savedId));
 
     }
+
+    @Test
+    // @Rollback(false)
+    public void 회원삭제() throws Exception {
+        //given
+        Member member1 = new Member();
+        member1.setLoginId("user1");
+        member1.setLoginPassword("password1");
+        member1.setName("John Doe");
+        member1.setBirth(LocalDate.of(2020, 5, 15));
+        member1.setGender(Gender.MALE);
+        member1.setPhone_no("123-4567-8901");
+        member1.setRole(Role.CHILD);
+        em.persist(member1);
+
+        // when
+        Long savedId = member1.getId();
+        memberService.deleteMember(savedId);
+
+        // em.persist(member1);
+
+        // then
+        Member deletedMember = em.find(Member.class, savedId);
+        assertNull(deletedMember);
+
+
+    }
 }

@@ -41,4 +41,7 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    public void delete(Member member) {
+        em.remove(member);
+    }
 }

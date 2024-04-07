@@ -2,6 +2,7 @@ package capstone.socialchild.service;
 
 import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +45,17 @@ public class MemberService {
 
     public Member findOne(Long id) {
         return memberRepository.findOne(id);
+    }
+
+    /**
+     * 회원 삭제
+     */
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findOne(id);
+        if (member != null) {
+            memberRepository.delete(member);
+        } else {
+            throw new EntityNotFoundException("존재하지 않는 회원입니다!");
+        }
     }
 }
