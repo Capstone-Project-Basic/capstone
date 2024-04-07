@@ -1,12 +1,15 @@
 package capstone.socialchild.service;
 
+import capstone.socialchild.domain.member.Gender;
 import capstone.socialchild.domain.member.Member;
+import capstone.socialchild.domain.member.Role;
 import capstone.socialchild.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -30,7 +33,7 @@ public class MemberService {
      * 중복 회원 검증
      */
     private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findById(member.getId());
+        List<Member> findMembers = memberRepository.findByLoginId(member.getLoginId());
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 아이디입니다!");
         }
@@ -58,4 +61,25 @@ public class MemberService {
             throw new EntityNotFoundException("존재하지 않는 회원입니다!");
         }
     }
+
+    /**
+     * 회원 수정
+     * 변경감지 방법으로 준영속 Member 엔티티 수정
+     */
+    @Transactional
+    public void updateMember(Long memberId, String password, String name,
+                             LocalDate birth, Gender gender, String phone_no, Role role) {
+        Member existingMember = memberRepository.findOne(memberId);
+        if (existingMember == null) {
+            throw new EntityNotFoundException("존재하지 않는 회원입니다!");
+        }
+
+        // loginId, Role은 변경 불가로 설정
+        existingMember.setLoginPassword(password);
+        existingMember.setName(name);
+        existingMember.setBirth(birth);
+        existingMember.setGender(gender);
+        existingMember.setPhone_no(phone_no);
+    }
+
 }
