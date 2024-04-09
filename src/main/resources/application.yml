@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/capstone
-    username: sa
+    url: jdbc:mysql://172.210.80.67:3306/CapstoneDB?characterEncoding=UTF-8&serverTimezone=UTC
+    username: CapstoneDB
     password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
