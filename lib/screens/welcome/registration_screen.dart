@@ -1,12 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pocekt_teacher/components/rounded_button.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocekt_teacher/model/user.dart';
+import 'package:pocekt_teacher/resources/AnimatedVisibility.dart';
+import 'package:pocekt_teacher/resources/TransitionData.dart';
 import 'package:pocekt_teacher/screens/main_screen.dart';
+
+enum Role {
+  child,
+  teacher,
+  none,
+}
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -19,17 +28,21 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   bool showSpinner = false;
-  late String email;
+  late String userID;
   late String password;
+  late String name;
+  late String role;
 
-  Future<UserModel> registerUser(
-      String userEmail, String userPassword, BuildContext context) async {
+  Future<UserModel> registerUser(String userEmail, String userPassword,
+      String name, String role, BuildContext context) async {
     var response =
         await http.post(Uri.parse("http://localhost:8080/members/new"),
             headers: <String, String>{"Content-Type": "application/json"},
             body: jsonEncode(<String, String>{
-              "userEmail": userEmail,
-              "userPassword": userPassword,
+              "loginId": userEmail,
+              "loginPassword": userPassword,
+              "name": name,
+              'role': role,
             }));
 
     String responseString = response.body;
@@ -46,6 +59,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return UserModel(
         id: 9999, userEmail: 'error email', userPassword: 'error password');
+  }
+
+  bool _idIsVisible = true;
+  bool _passwordIsVisible = false;
+  bool _nameIsVisible = false;
+  bool _roleIsVisible = false;
+  Role selectedRole = Role.none;
+
+  void selectGender(Role role) {
+    role == Role.child
+        ? selectedRole = Role.child
+        : selectedRole = Role.teacher;
   }
 
   @override
@@ -65,7 +90,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const SizedBox(
-                      height: 150.0,
+                      height: 50.0,
                     ),
                     Hero(
                       tag: 'logo',
@@ -78,58 +103,236 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Flexible(
+                  flex: 2,
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    decoration: kTextFieldDecoration,
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  TextField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    decoration:
-                        kTextFieldDecoration.copyWith(hintText: '비밀번호를 입력하세요'),
-                  ),
-                  const SizedBox(
-                    height: 24.0,
-                  ),
-                  RoundedButton(
-                    color: children_dark,
-                    title: '회원가입',
-                    subTitle: '',
-                    buttonFunction: () async {
-                      setState(() {
-                        showSpinner = true;
-                      });
-                      String userEmail = email;
-                      String userPassword = password;
-                      UserModel userModel =
-                          await registerUser(userEmail, userPassword, context);
-                      // Navigator.pushReplacement(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (BuildContext context) =>
-                      //             const MainScreen()));
-                      // Add some function to create account
-                    },
-                  ),
-                ],
-              ))
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      AnimatedVisibility(
+                        visible: _idIsVisible,
+                        child: Column(
+                          children: [
+                            TextField(
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.emailAddress,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 40.0),
+                                onChanged: (value) {
+                                  userID = value;
+                                },
+                                onEditingComplete: () {
+                                  setState(() {
+                                    _passwordIsVisible = !_passwordIsVisible;
+                                    Future.delayed(
+                                        const Duration(milliseconds: 100), () {
+                                      FocusScope.of(context).nextFocus();
+                                    });
+                                  });
+                                },
+                                decoration: kTextFieldDecoration),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      AnimatedVisibility(
+                        visible: _passwordIsVisible,
+                        enter: fadeIn(),
+                        exit: fadeOut(),
+                        child: Column(
+                          children: [
+                            TextField(
+                              textInputAction: TextInputAction.next,
+                              obscureText: true,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 40.0),
+                              onChanged: (value) {
+                                password = value;
+                              },
+                              onEditingComplete: () {
+                                setState(() {
+                                  _nameIsVisible = !_nameIsVisible;
+                                  Future.delayed(
+                                      const Duration(milliseconds: 100), () {
+                                    FocusScope.of(context).nextFocus();
+                                  });
+                                });
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  hintText: '비밀번호를 입력하세요'),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      AnimatedVisibility(
+                        visible: _nameIsVisible,
+                        enter: fadeIn(),
+                        exit: fadeOut(),
+                        child: TextField(
+                          textInputAction: TextInputAction.done,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 40.0),
+                          onChanged: (value) {
+                            name = value;
+                          },
+                          onEditingComplete: () {
+                            setState(() {
+                              _idIsVisible = !_idIsVisible;
+                              _passwordIsVisible = !_passwordIsVisible;
+                              _nameIsVisible = !_nameIsVisible;
+                              Future.delayed(const Duration(milliseconds: 100),
+                                  () {
+                                _roleIsVisible = !_roleIsVisible;
+                              });
+                            });
+                          },
+                          decoration: kTextFieldDecoration.copyWith(
+                              hintText: '이름을 입력하세요'),
+                        ),
+                      ),
+                      AnimatedVisibility(
+                        visible: _roleIsVisible,
+                        enter: fadeIn(),
+                        exit: fadeOut(),
+                        child: Column(
+                          children: [
+                            Text(
+                              '나는 ...',
+                              style: kMediumText.copyWith(color: children),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ReusableCard(
+                                  onTapFunction: () {
+                                    setState(() {
+                                      selectGender(Role.child);
+                                      role = 'CHILD';
+                                    });
+                                  },
+                                  background: selectedRole == Role.child
+                                      ? children_dark
+                                      : Colors.grey,
+                                  cardCover: const ReusableCover(
+                                    image:
+                                        AssetImage('assets/images/hiyoko.png'),
+                                    cardText: '학생입니다',
+                                  ),
+                                ),
+                                ReusableCard(
+                                  onTapFunction: () {
+                                    setState(() {
+                                      selectGender(Role.teacher);
+                                      role = 'TEACHER';
+                                    });
+                                  },
+                                  background: selectedRole == Role.teacher
+                                      ? children_dark
+                                      : Colors.grey,
+                                  cardCover: const ReusableCover(
+                                    image: AssetImage(
+                                        'assets/images/niwatori.png'),
+                                    cardText: '선생님입니다',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            RoundedButton(
+                              color: children_dark,
+                              title: '회원가입',
+                              subTitle: '',
+                              buttonFunction: () async {
+                                setState(() {
+                                  showSpinner = true;
+                                });
+                                String loginID = userID;
+                                String loginPassword = password;
+                                UserModel userModel = await registerUser(
+                                    loginID,
+                                    loginPassword,
+                                    name,
+                                    role,
+                                    context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const MainScreen()));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 60.0,
+                      ),
+                    ],
+                  ))
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class ReusableCard extends StatelessWidget {
+  const ReusableCard({
+    super.key,
+    required this.background,
+    required this.cardCover,
+    required this.onTapFunction,
+  });
+
+  final Color background;
+  final Widget cardCover;
+  final VoidCallback onTapFunction;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTapFunction,
+      child: Container(
+        margin: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(25.0),
+        width: 150.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: background,
+        ),
+        child: cardCover,
+      ),
+    );
+  }
+}
+
+class ReusableCover extends StatelessWidget {
+  const ReusableCover({super.key, required this.image, required this.cardText});
+
+  final AssetImage image;
+  final String cardText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image(
+          image: image,
+          height: 100.0,
+          fit: BoxFit.fill,
+        ),
+        const SizedBox(
+          height: 15.0,
+        ),
+        Text(
+          cardText,
+          style: kSmallText,
+        ),
+      ],
     );
   }
 }

@@ -13,6 +13,12 @@ const kSmallText = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 30.0,
 );
+const kMediumText = TextStyle(
+  color: Colors.white,
+  fontFamily: "Dongle",
+  fontWeight: FontWeight.bold,
+  fontSize: 60.0,
+);
 const kTitleDecoration = TextStyle(
   color: children_light,
   fontWeight: FontWeight.bold,
@@ -25,8 +31,8 @@ const kLogoDecoration = TextStyle(
 );
 
 const kTextFieldDecoration = InputDecoration(
-  hintText: '이메일을 입력하세요',
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  hintText: '아이디를 입력하세요',
+  contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(8.0)),
   ),

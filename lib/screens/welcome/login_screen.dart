@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -54,9 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 60.0,
-                    ),
                   ],
                 ),
               ),
@@ -66,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
+                      style: const TextStyle(fontSize: 40.0),
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
@@ -77,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 8.0,
                     ),
                     TextField(
+                      style: const TextStyle(fontSize: 40.0),
                       obscureText: true,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
