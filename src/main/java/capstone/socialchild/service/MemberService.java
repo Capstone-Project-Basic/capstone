@@ -32,6 +32,18 @@ public class MemberService {
     }
 
     /**
+     * 회원 인증
+     */
+    public boolean authenticate(String loginId, String loginPassword) {
+        Member member = (Member) memberRepository.findByLoginId(loginId);
+        if (member == null) {
+            return false;
+        } else {
+            return member.getLoginPassword().equals(loginPassword);
+        }
+    }
+
+    /**
      * 중복 회원 검증
      */
     private void validateDuplicateMember(Member member) {
