@@ -1,6 +1,6 @@
-package capstone.socialchild.domain.mission;
+package capstone.socialchild.domain.Mission;
 
-import capstone.socialchild.dto.mission.MissionRequestDto;
+import capstone.socialchild.dto.MissionRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
