@@ -19,15 +19,11 @@ const kMediumText = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 60.0,
 );
-const kTitleDecoration = TextStyle(
-  color: children_light,
+const kTitleText = TextStyle(
+  color: Colors.white,
+  fontFamily: "Dongle",
   fontWeight: FontWeight.bold,
-  fontSize: 30.0,
-);
-const kLogoDecoration = TextStyle(
-  color: children_light,
-  fontWeight: FontWeight.bold,
-  fontSize: 60.0,
+  fontSize: 90.0,
 );
 
 const kTextFieldDecoration = InputDecoration(

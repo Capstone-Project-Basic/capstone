@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/components/rounded_button.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:http/http.dart' as http;
@@ -334,32 +335,5 @@ class ReusableCover extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class MyAlertDialog extends StatelessWidget {
-  const MyAlertDialog({
-    super.key,
-    required this.title,
-    required this.content,
-    this.actions = const [],
-  });
-
-  final String title;
-  final String content;
-  final List<Widget> actions;
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-        title: Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        actions: actions,
-        content: Text(
-          content,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ));
   }
 }
