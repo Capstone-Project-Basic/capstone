@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/components/rounded_button.dart';
 import 'package:pocekt_teacher/constants.dart';
+import 'package:pocekt_teacher/model/user.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -17,6 +22,32 @@ class _LoginScreenState extends State<LoginScreen> {
   late String email;
   late String password;
 
+  Future<UserModel> loginUser(
+      String userEmail, String userPassword, BuildContext context) async {
+    var response =
+        await http.post(Uri.parse("http://localhost:8080/members/new"),
+            headers: <String, String>{"Content-Type": "application/json"},
+            body: jsonEncode(<String, String>{
+              "loginId": userEmail,
+              "loginPassword": userPassword,
+            }));
+
+    String responseString = response.body;
+    if (response.statusCode == 200) {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext dialogContext) {
+          return MyAlertDialog(
+              title: "Backend Response", content: response.body);
+        },
+      );
+    }
+
+    return UserModel(
+        id: 9999, userEmail: 'error email', userPassword: 'error password');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -54,9 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 60.0,
-                    ),
                   ],
                 ),
               ),
@@ -66,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
+                      style: const TextStyle(fontSize: 40.0),
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
@@ -77,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 8.0,
                     ),
                     TextField(
+                      style: const TextStyle(fontSize: 40.0),
                       obscureText: true,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
