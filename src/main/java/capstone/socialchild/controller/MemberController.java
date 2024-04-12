@@ -1,12 +1,14 @@
 package capstone.socialchild.controller;
 
 import capstone.socialchild.domain.member.Member;
+import capstone.socialchild.dto.member.request.SignIn;
 import capstone.socialchild.dto.member.request.SignUp;
 import capstone.socialchild.dto.member.request.UpdateMember;
 import capstone.socialchild.dto.member.response.DetailMember;
 import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,21 @@ public class MemberController {
     }
 
     /**
+     * 회원 로그인
+     */
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody SignIn request) {
+        // 로그인 처리 로직 구현
+        boolean isAuthenticated = memberService.authenticate(request.getLoginId(), request.getLoginPassword());
+
+        if (isAuthenticated) {
+            return ResponseEntity.ok("로그인 성공!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패. 아이디 또는 비밀번호를 확인해주세요.");
+        }
+    }
+
+    /*
      * 회원 상세 조회
      */
     @GetMapping("/{memberId}")
