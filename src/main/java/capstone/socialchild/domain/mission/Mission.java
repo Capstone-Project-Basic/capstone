@@ -1,32 +1,43 @@
 package capstone.socialchild.domain.mission;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
+import capstone.socialchild.dto.mission.MissionRequestDto;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
+import static jakarta.persistence.EnumType.STRING;
+
+@Setter
 @Getter
 @NoArgsConstructor
+@Entity(name = "mission")
 public class Mission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "mission_id")
+    private Long missionId;
 
+    @Column
     private String title;
 
+    @Column
     private String content;
 
-    private Long grade;
+    @Enumerated(value = STRING)
+    private Grade grade;
 
-    @Builder
-    public Mission(String title, String content, Long grade) {
-        this.title = title;
-        this.content = content;
-        this.grade = grade;
+    //requestDto 정보를 가져와 entity 만들 때 사용
+    public Mission (MissionRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.grade = requestDto.getGrade();
     }
 
+    //업데이트 메소드
+    public void update(MissionRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.grade = requestDto.getGrade();
+    }
 }

@@ -1,9 +1,8 @@
-package capstone.socialchild.repository;
+package capstone.socialchild.service;
 
 import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.domain.mission.Mission;
 import capstone.socialchild.domain.mission.SuccessMission;
-import capstone.socialchild.dto.SuccessMissionDto;
 import capstone.socialchild.dto.mission.SuccessMissionDto;
 import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.repository.MissionRepository;
@@ -27,15 +26,16 @@ public class SuccessMissionService {
     @Autowired
     private MissionRepository missionRepository;
 
-    public SuccessMissionDto saveSuccessMission(Long memberId, SuccessMissionDto dto) {
-        Member member = (Member) memberRepository.findById(dto.getMemberId());
-        Mission mission = missionRepository.findById(dto.getId());
+    public SuccessMissionDto saveSuccessMission(Long memberId, Long missionId, SuccessMissionDto dto) {
+        Member member = (Member) memberRepository.findById(memberId);
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new RuntimeException("Mission not found"));
 
         SuccessMission target = new SuccessMission(mission, member);
         SuccessMission created = successMissionRepository.save(target);
         return SuccessMissionDto.builder()
                 .id(created.getId())
-                .missionId(created.getMission().getId())
+                .missionId(created.getMission().getMissionId())
                 .memberId(created.getMember().getId())
                 .build();
     }
@@ -46,7 +46,7 @@ public class SuccessMissionService {
                 .stream()
                 .map(successMission -> SuccessMissionDto.builder()
                         .id(successMission.getId())
-                        .missionId(successMission.getMission().getId())
+                        .missionId(successMission.getMission().getMissionId())
                         .memberId(successMission.getMember().getId())
                         .build())
                 .collect(Collectors.toList());

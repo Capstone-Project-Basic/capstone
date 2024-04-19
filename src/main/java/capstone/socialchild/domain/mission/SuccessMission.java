@@ -5,6 +5,8 @@ import capstone.socialchild.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Optional;
+
 @Entity
 @Getter
 @NoArgsConstructor
