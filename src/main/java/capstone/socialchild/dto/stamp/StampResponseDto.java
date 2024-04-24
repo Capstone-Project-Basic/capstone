@@ -1,6 +1,5 @@
 package capstone.socialchild.dto.stamp;
 
-import capstone.socialchild.domain.mission.SuccessMission;
 import capstone.socialchild.domain.stamp.Stamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,7 @@ public class StampResponseDto {
     public StampResponseDto(Stamp stamp) {
         this.id = stamp.getId();
         this.memberId = stamp.getMember().getId();
-        this.successMissionId = stamp.getSuccessMission().getId();
+        this.successMissionId = stamp.getSuccessMission().getSmId();
     }
 
 }

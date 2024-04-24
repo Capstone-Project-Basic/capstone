@@ -1,5 +1,6 @@
 package capstone.socialchild.controller;
 
+import capstone.socialchild.dto.mission.MissionResponseDto;
 import capstone.socialchild.dto.stamp.StampRequestDto;
 import capstone.socialchild.dto.stamp.StampResponseDto;
 import capstone.socialchild.service.StampService;
@@ -22,6 +23,11 @@ public class StampController {
     @GetMapping("/{memberId}/stamps/{id}")
     public StampResponseDto findStampOne (@PathVariable("id") Long id) {
         return stampService.showOne(id);
+    }
+
+    @GetMapping("/{memberId}/stamps/{id}/mission")
+    public MissionResponseDto findMissionContents (Long id) {
+        return stampService.showMission(id);
     }
 
     @PostMapping("/{memberId}/stamps")
