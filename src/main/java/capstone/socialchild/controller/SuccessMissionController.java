@@ -21,6 +21,7 @@ public class SuccessMissionController {
     @Autowired
     SuccessMissionService successMissionService;
 
+    // error
     @GetMapping("/{memberId}")
     public List<SuccessMissionResponseDto> getSuccessMission(@PathVariable("memberId") Long memberId) {
         return successMissionService.showAll(memberId);

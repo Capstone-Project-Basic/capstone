@@ -11,12 +11,14 @@ import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.repository.MissionRepository;
 import capstone.socialchild.repository.StampRepository;
 import capstone.socialchild.repository.SuccessMissionRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class StampService {
 
@@ -33,7 +35,6 @@ public class StampService {
     MissionRepository missionRepository;
 
     public List<StampResponseDto> showAll(Long memberId) {
-        Member member = (Member) memberRepository.findById(memberId);
         return stampRepository.findByStamp(memberId)
                 .stream()
                 .map(StampResponseDto::new)
@@ -48,7 +49,9 @@ public class StampService {
 
     // 도장 클릭시 미션 상세내용 보기
     public MissionResponseDto showMission(Long stampId) {
-        Stamp stamp = stampRepository.findById(stampId).orElseThrow(() -> new IllegalArgumentException("해당 도장이 없습니다. id=" + stampId));
+        log.info("stampid :" + stampId);
+        Stamp stamp = stampRepository.findById(stampId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 도장이 없습니다. id=" + stampId));
         Mission mission = stamp.getSuccessMission().getMission();
 
         return new MissionResponseDto(mission);

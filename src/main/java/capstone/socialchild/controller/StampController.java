@@ -25,8 +25,9 @@ public class StampController {
         return stampService.showOne(id);
     }
 
+
     @GetMapping("/{memberId}/stamps/{id}/mission")
-    public MissionResponseDto findMissionContents (Long id) {
+    public MissionResponseDto findMissionContents (@PathVariable("id") Long id) {
         return stampService.showMission(id);
     }
 

@@ -13,7 +13,7 @@ public interface StampRepository extends JpaRepository<Stamp, Long> {
     @Query(value =
             "SELECT * " +
                     "FROM stamp " +
-                    "WHERE member_id = :memberId",
+                    "WHERE member_member_id = :memberId",
             nativeQuery = true)
     List<Stamp> findByStamp(@Param("memberId") Long memberId);
 

@@ -54,11 +54,7 @@ public class SuccessMissionService {
     public List<SuccessMissionResponseDto> showAll(Long memberId) {
         return successMissionRepository.findBySuccessMission(memberId)
                 .stream()
-                .map(successMission -> SuccessMissionResponseDto.builder()
-                        .id((successMission.getSmId()))
-                        .missionId(successMission.getMission().getMissionId())
-                        .memberId(successMission.getMember().getId())
-                        .build())
+                .map(SuccessMissionResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

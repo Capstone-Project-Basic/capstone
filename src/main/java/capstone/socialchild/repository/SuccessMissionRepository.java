@@ -15,15 +15,8 @@ public interface SuccessMissionRepository extends JpaRepository<SuccessMission, 
     // 특정 멤버의 모든 성공미션 조회
     @Query(value =
         "SELECT * " +
-                "FROM successmission " +
+                "FROM success_mission " +
                 "WHERE member_id = :memberId",
         nativeQuery = true)
     List<SuccessMission> findBySuccessMission(@Param("memberId") Long memberId);
-
-    @Query(value =
-            "SELECT * " +
-                    "FROM successmission " +
-                    "WHERE success_mission_id = :successMissionId",
-            nativeQuery = true)
-    public SuccessMission findByOne(Long successMissionId);
 }

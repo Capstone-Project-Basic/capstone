@@ -20,6 +20,7 @@ public class Stamp {
     private Long id;
 
     @ManyToOne
+    @JsonProperty("member_id")
     private Member member;
 
     @OneToOne

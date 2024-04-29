@@ -20,7 +20,7 @@ public class StampResponseDto {
     public StampResponseDto(Stamp stamp) {
         this.id = stamp.getId();
         this.memberId = stamp.getMember().getId();
-        this.successMissionId = stamp.getSuccessMission().getSmId();
+        this.successMissionId = stamp.getSuccessMission().getId();
     }
 
 }

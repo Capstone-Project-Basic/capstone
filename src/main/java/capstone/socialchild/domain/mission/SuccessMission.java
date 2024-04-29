@@ -14,7 +14,7 @@ public class SuccessMission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long smId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "misson_id")
