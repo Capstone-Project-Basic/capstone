@@ -10,3 +10,4 @@ public class socialchildApplication {
             SpringApplication.run(socialchildApplication.class, args);
         }
 }
+    

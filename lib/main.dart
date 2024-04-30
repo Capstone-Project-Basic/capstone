@@ -24,7 +24,7 @@ class PocketTeacher extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: WelcomeScreen.id,
+      initialRoute: MainScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
