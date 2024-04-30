@@ -9,6 +9,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb
 
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -16,44 +17,7 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
-  sql:
-    init:
-      data-locations:
 
 logging.level:
   org.hibernate.SQL: debug # logger 로 출력(권장)
-  org.hibernate.type: trace
-
-#spring:
-#  h2:
-#    console:
-#      enabled: true
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    defer-datasource-initialization: true
-#
-#  datasource:
-#    url: jdbc:h2:mem:testdb
-#
-#  sql:
-#    init:
-#      data-locations: classpath:/data.sql
-#      mode: never
-#
-#logging:
-##  level:
-##    org:
-##      hibernate:
-##        SQL: DEBUG
-#  spring:
-#    jpa:
-#      properties:
-#        hibernate:
-#          format_sql: true
-#    hibernate:
-#      type:
-#        descriptor:
-#          sql:
-#            BasicBinder: TRACE
+#  org.hibernate.type: trace
