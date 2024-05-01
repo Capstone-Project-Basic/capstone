@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/screens/home_screen.dart';
 import 'package:pocekt_teacher/screens/stamp_screen.dart';
+import 'package:pocekt_teacher/screens/profile_page_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static String id = 'main_screen';
@@ -47,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       body: <Widget>[
-        const Text('profile'),
+        const ProfileApp(),
         const HomeScreen(),
         const StampScreen(),
       ][_currentPageIndex],
