@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
     public List<Mission> findByTitle(String title);
+    public List<Mission> findByActiveStatusTrue();
 }
