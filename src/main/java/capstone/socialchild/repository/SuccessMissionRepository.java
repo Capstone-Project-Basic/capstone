@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface SuccessMissionRepository extends JpaRepository<SuccessMission, Long> {
@@ -19,4 +20,11 @@ public interface SuccessMissionRepository extends JpaRepository<SuccessMission, 
                 "WHERE member_id = :memberId",
         nativeQuery = true)
     List<SuccessMission> findBySuccessMission(@Param("memberId") Long memberId);
+
+    @Query(value =
+            "SELECT * " +
+                    "FROM success_mission " +
+                    "ORDER BY member_id ",
+            nativeQuery = true)
+    List<SuccessMission> findByAllSuccessMission();
 }

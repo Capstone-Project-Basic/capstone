@@ -68,4 +68,5 @@ public class StampService {
         stampRepository.save(stamp);
         return new StampResponseDto(stamp);
     }
+
 }
