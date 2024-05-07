@@ -3,6 +3,7 @@ package capstone.socialchild.controller;
 import capstone.socialchild.dto.mission.MissionListResponseDto;
 import capstone.socialchild.dto.mission.MissionRequestDto;
 import capstone.socialchild.dto.mission.MissionResponseDto;
+import capstone.socialchild.dto.mission.MissionStatusReqDto;
 import capstone.socialchild.service.MissionService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,13 @@ public class MissionController {
     }
 
     @GetMapping
-    public List<MissionListResponseDto> getAllMission() {
-        return missionService.findAllMission();
+    public List<MissionListResponseDto> getAllMissions() {
+        return missionService.findAllMissions();
+    }
+
+    @GetMapping("/active")
+    public List<MissionListResponseDto> getAllActiveMissions(){
+        return missionService.findAllActiveMissions();
     }
 
     @PostMapping
@@ -43,8 +49,9 @@ public class MissionController {
         return missionService.update(missionId, missionRequestDto);
     }
 
-    @DeleteMapping("/{missionId}")
-    public Long deleteMission(@PathVariable("missionId") Long missionId) {
-        return missionService.delete(missionId);
+    @PatchMapping("/{missionId}/unactive")
+    public Long updateMissionStatus(@PathVariable Long missionId, @RequestBody MissionStatusReqDto missionStatusReqDto) {
+        return missionService.updateMissionStatus(missionId,missionStatusReqDto);
     }
+
 }

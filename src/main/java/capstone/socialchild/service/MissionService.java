@@ -6,6 +6,7 @@ import capstone.socialchild.domain.mission.Mission;
 import capstone.socialchild.dto.mission.MissionListResponseDto;
 import capstone.socialchild.dto.mission.MissionRequestDto;
 import capstone.socialchild.dto.mission.MissionResponseDto;
+import capstone.socialchild.dto.mission.MissionStatusReqDto;
 import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.repository.MissionRepository;
 import jakarta.transaction.Transactional;
@@ -36,7 +37,7 @@ public class MissionService {
         throw new IllegalStateException("미션을 생성할 수 없습니다!");
     }
 
-    public List<MissionListResponseDto> findAllMission(){
+    public List<MissionListResponseDto> findAllMissions(){
         try{
         List<Mission> missionList = missionRepository.findAll();
 
@@ -46,6 +47,22 @@ public class MissionService {
             responseDtoList.add(new MissionListResponseDto(mission));
         }
         return responseDtoList;
+        } catch (Exception e){
+            //에러 발생
+        }
+        return null;
+    }
+
+    public List<MissionListResponseDto> findAllActiveMissions(){
+        try{
+            List<Mission> missionList = missionRepository.findByActiveStatusTrue();
+
+            List<MissionListResponseDto> responseDtoList = new ArrayList<>();
+
+            for(Mission mission : missionList) {
+                responseDtoList.add(new MissionListResponseDto(mission));
+            }
+            return responseDtoList;
         } catch (Exception e){
             //에러 발생
         }
@@ -78,16 +95,31 @@ public class MissionService {
 
     @Transactional
     public Long update(Long id, MissionRequestDto requestDto) {
-        Mission mission = missionRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 미션이 존재하지 않습니다.")
-        );
-        mission.update(requestDto);
-        return mission.getMissionId();
+        if(requestDto.getRole() == Role.TEACHER) {
+            Mission mission = missionRepository.findById(id).orElseThrow(
+                    () -> new IllegalArgumentException("해당 미션이 존재하지 않습니다.")
+            );
+            mission.update(requestDto);
+            return mission.getMissionId();
+        }
+        throw new IllegalStateException("미션을 수정할 수 없습니다!");
     }
 
     @Transactional
-    public Long delete(Long id) {
-        missionRepository.deleteById(id);
-        return id;
+    public Long updateMissionStatus(Long id, MissionStatusReqDto requestDto) {
+        if(requestDto.getRole() == Role.TEACHER) {
+            Mission mission = missionRepository.findById(id).orElseThrow(
+                    () -> new IllegalArgumentException("해당 미션이 존재하지 않습니다.")
+            );
+            mission.unactive(requestDto);
+            return mission.getMissionId();
+        }
+        throw new IllegalStateException("미션을 비활성화할 수 없습니다!");
     }
+
+//    @Transactional
+//    public Long delete(Long id) {
+//        missionRepository.deleteById(id);
+//        return id;
+//    }
 }
