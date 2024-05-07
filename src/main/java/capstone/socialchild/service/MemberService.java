@@ -1,5 +1,6 @@
 package capstone.socialchild.service;
 
+import capstone.socialchild.config.SessionManager;
 import capstone.socialchild.domain.member.Gender;
 import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.domain.member.Role;
@@ -20,6 +21,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final SessionManager sessionManager;
 
     /**
      * 회원가입
