@@ -58,8 +58,11 @@ public class StampService {
     }
 
     public StampResponseDto create(Long memberId, StampRequestDto requestDto) {
-        Member member = memberRepository.findOne(memberId);
-        SuccessMission successMission = successMissionRepository.findById(requestDto.getSuccessMissionId()).orElseThrow(() -> new IllegalArgumentException("해당 미션이 없습니다. id=" + requestDto.getSuccessMissionId()));
+        if (memberId == null)
+            throw new IllegalArgumentException("현재 유저가 없습니다.");
+        Member member = memberRepository.findOne(requestDto.getMemberId());
+        SuccessMission successMission = successMissionRepository.findById(requestDto.getSuccessMissionId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 미션이 없습니다. id=" + requestDto.getSuccessMissionId()));
 
         Stamp stamp = Stamp.builder()
                 .member(member)
@@ -68,4 +71,5 @@ public class StampService {
         stampRepository.save(stamp);
         return new StampResponseDto(stamp);
     }
+
 }

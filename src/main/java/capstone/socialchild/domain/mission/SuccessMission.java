@@ -17,7 +17,7 @@ public class SuccessMission {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "misson_id")
+    @JoinColumn(name = "mission_id")
     private Mission mission;
 
     @ManyToOne
