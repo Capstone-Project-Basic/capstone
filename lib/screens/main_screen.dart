@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           NavigationDestination(
             icon: Icon(Icons.menu_book),
-            label: '내 도장',
+            label: '선생님 도장',
           ),
         ],
       ),
