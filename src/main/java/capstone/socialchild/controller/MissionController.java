@@ -54,4 +54,9 @@ public class MissionController {
         return missionService.updateMissionStatus(missionId,missionStatusReqDto);
     }
 
+    @GetMapping("/check")
+    public Boolean checkActiveMission() {
+        return missionService.checkActiveMission();
+    }
+
 }
