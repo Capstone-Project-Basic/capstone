@@ -45,8 +45,7 @@ public class Member {
         Member member = new Member();
 
         member.setLoginId(loginId);
-        // 비밀번호를 암호화하여 설정
-        member.setLoginPassword(encrypt(loginPassword));
+        member.setLoginPassword(loginPassword);
         member.setName(name);
         member.setBirth(birth);
         member.setGender(gender);
@@ -56,22 +55,22 @@ public class Member {
         return member;
     }
 
-    public static String encrypt(String password) {
-        String salt = getSalt();
-        String saltedPassword = password + salt;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedPassword = md.digest(saltedPassword.getBytes());
-            return Base64.getEncoder().encodeToString(hashedPassword);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to hash password", e);
-        }
-    }
-
-    private static String getSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt);
-    }
+//    public static String encrypt(String password) {
+//        String salt = getSalt();
+//        String saltedPassword = password + salt;
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//            byte[] hashedPassword = md.digest(saltedPassword.getBytes());
+//            return Base64.getEncoder().encodeToString(hashedPassword);
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException("Failed to hash password", e);
+//        }
+//    }
+//
+//    private static String getSalt() {
+//        SecureRandom random = new SecureRandom();
+//        byte[] salt = new byte[16];
+//        random.nextBytes(salt);
+//        return Base64.getEncoder().encodeToString(salt);
+//    }
 }

@@ -7,6 +7,9 @@ import capstone.socialchild.dto.member.request.UpdateMember;
 import capstone.socialchild.dto.member.response.DetailMember;
 import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.service.MemberService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,22 +66,30 @@ public class MemberController {
     /**
      * 회원 수정
      */
-    @PatchMapping("/{memberId}")
-    public ResponseEntity<Object> updateMember(@PathVariable Long memberId, @RequestBody UpdateMember request) {
+    @Transactional
+    public void updateMember(Long memberId, UpdateMember request) {
 
-        memberService.updateMember(memberId, request);
-        Member findMember = memberService.findById(memberId);
+        Member findMember = memberRepository.findOne(memberId);
+        if (findMember == null) {
+            throw new EntityNotFoundException("존재하지 않는 회원입니다!");
+        }
 
-        return ResponseEntity.noContent().build();
+        // loginId, Role은 변경 불가로 설정
+        findMember.setLoginPassword(request.getLoginPassword());
+        findMember.setName(request.getName());
+        findMember.setBirth(request.getBirth());
+        findMember.setPhone_no(request.getPhone_no());
     }
 
     /**
      * 회원 삭제
      */
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity<Object> deleteMember(@PathVariable Long memberId) {
-
-        memberService.deleteMember(memberId);
-        return ResponseEntity.noContent().build();
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findOne(id);
+        if (member != null) {
+            memberRepository.delete(id);
+        } else {
+            throw new EntityNotFoundException("존재하지 않는 회원입니다!");
+        }
     }
 }

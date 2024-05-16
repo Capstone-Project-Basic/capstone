@@ -9,6 +9,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SessionManagerTest {
@@ -29,11 +30,12 @@ class SessionManagerTest {
 
         // 세션 조회, 클라이언트에서 다시 서버로 요청함
         Object result = sessionManager.getSession(request);
-        assertEquals(member, result);  // 객체 비교
+        assertThat(result).isEqualTo(member);
+        // 객체 비교
 
         // 세션 만료
         sessionManager.expire(request);
         Object expired = sessionManager.getSession(request);
-        assertNull(expired);  // 만료된 세션 확인
+        assertThat(expired).isNull();  // 만료된 세션 확인
     }
 }

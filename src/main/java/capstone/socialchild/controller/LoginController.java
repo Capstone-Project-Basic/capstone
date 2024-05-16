@@ -5,21 +5,25 @@ import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.dto.member.request.SignIn;
 import capstone.socialchild.dto.member.request.SignUp;
 import capstone.socialchild.service.MemberService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping("/login")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"https://localhost:8080"})
 public class LoginController {
 
     private final MemberService memberService;
@@ -28,40 +32,81 @@ public class LoginController {
     /**
      * 회원 가입
      */
-    @PostMapping("/new")
-    public ResponseEntity<Member> createMember(@RequestBody SignUp request) {
+    @PostMapping("login/new")
+    public ResponseEntity<?> createMember(@RequestBody SignUp request) {
 
-        Member member = Member.createMember(request.getLoginId(), request.getLoginPassword(), request.getName(), request.getBirth(), request.getGender(), request.getPhone_no(), request.getRole());
-        Long memberId = memberService.join(member);
+        Member member = Member.createMember(
+                request.getLoginId(), request.getLoginPassword(),
+                request.getName(), request.getBirth(), request.getGender(),
+                request.getPhone_no(), request.getRole()
+        );
 
-        return ResponseEntity
-                .created(URI.create("/new/" + memberId))
-                .build();
+//        Long memberId = memberService.join(member);
+//
+//        return ResponseEntity
+//                .created(URI.create("/new/" + memberId))
+//                .build();
+        memberService.join(member);
+        return ResponseEntity.status(HttpStatus.CREATED).body("회원 가입 성공");
     }
 
-    /**
-     * 회원 로그인
-     */
-    @PostMapping
-    public ResponseEntity<String> login(@RequestBody SignIn request, HttpServletResponse response) {
+    @GetMapping("/login")
+    public ResponseEntity<?> login(@RequestBody SignIn signIn) {
+        Member member = memberService.login(signIn.getLoginId(), signIn.getLoginPassword());
+        return ResponseEntity.ok(member);
+    }
 
-        boolean isAuthenticated = memberService.authenticate(request.getLoginId(), request.getLoginPassword());
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@Valid @RequestBody SignIn request,
+                                        BindingResult bindingResult, HttpServletResponse response) {
 
-        if (isAuthenticated) {
-            // 로그인 성공 시 세션 생성
-            sessionManager.createSession(request.getLoginId(), response);
-            return ResponseEntity.ok("로그인 성공!");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패. 아이디 또는 비밀번호를 확인해주세요.");
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        Member loginMember = memberService.login(request.getLoginId(), request.getLoginPassword());
+
+        if(loginMember == null) {
+             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // 로그인 성공 처리
+
+        // 쿠키에 시간 정보X -> 브라우저 종료시 모두 종료
+        sessionManager.createSession(loginMember, response);
+        return ResponseEntity.ok("세션 로그인 성공!");
     }
 
     /**
-     *  회원 로그아웃
+     *  로그아웃
      */
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
+
         sessionManager.expire(request);
         return ResponseEntity.ok("로그아웃 성공!");
     }
+
+//    private void expireCookie(HttpServletResponse response, String cookieName) {
+//        Cookie cookie = new Cookie(cookieName, null);
+//        cookie.setMaxAge(0);
+//        response.addCookie(cookie);
+//    }
+//    /**
+//     * 세션 정보 보기
+//     */
+//    @GetMapping("/session-info")
+//    public ResponseEntity<String> sessionInfo(HttpServletRequest request) {
+//        Object sessionValue = sessionManager.getSession(request);
+//
+//        if (sessionValue == null) {
+//            return ResponseEntity.ok("세션이 없습니다.");
+//        }
+//
+//        // 세션 정보 출력
+//        log.info("Session Value={}", sessionValue);
+//
+//        return ResponseEntity.ok("세션 정보: " + sessionValue.toString());
+//    }
 }
