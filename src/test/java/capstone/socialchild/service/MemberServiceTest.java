@@ -5,11 +5,11 @@ import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.domain.member.Role;
 import capstone.socialchild.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,122 +22,52 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class MemberServiceTest {
 
-    @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
-    @Autowired EntityManager em;
+    @Autowired
+    private MemberService memberService;
 
-    @Test
-    @Rollback(false)
-    public void 회원가입() throws Exception {
-        //given
-        Member member1 = new Member();
-        member1.setLoginId("park");
-        member1.setLoginPassword("password1");
-        member1.setName("박성민");
-        member1.setBirth(LocalDate.of(2020, 5, 15));
-        member1.setGender(Gender.MALE);
-        member1.setPhone_no("123-4567-8901");
-        member1.setRole(Role.CHILD);
+    @Autowired
+    private MemberRepository memberRepository;
 
-        // given2
-        Member member2 = new Member();
-        member2.setLoginId("user2");
-        member2.setLoginPassword("password2");
-        member2.setName("김민상");
-        member2.setBirth(LocalDate.of(2021, 10, 25));
-        member2.setGender(Gender.FEMALE);
-        member2.setPhone_no("234-5678-9012");
-        member2.setRole(Role.CHILD);
+    @Autowired
+    private EntityManager em;
 
-        em.persist(member1);
-        em.persist(member2);
-
-        //when
-        Long savedId = member1.getId();
-
-        //then
+    @BeforeEach
+    void setUp() {
+        em.persist(Member.createMember("user1", "password1", "John Doe", LocalDate.of(2000, 1, 1), Gender.MALE, "123-4567-8901", Role.CHILD));
+        em.persist(Member.createMember("user2", "password2", "Jane Doe", LocalDate.of(2000, 2, 2), Gender.FEMALE, "987-6543-2109", Role.CHILD));
         em.flush();
-        assertEquals(member1, memberRepository.findOne(savedId));
-
+        em.clear();
     }
 
     @Test
-    public void 중복회원예외() throws Exception {
-        //given
-        Member member1 = new Member();
-        member1.setName("member");
-        member1.setLoginId("user1");
-
-
-        Member member2 = new Member();
-        member2.setName("member123");
-        member2.setLoginId("user1");
-
-        //when
-        memberService.join(member1);
-
-        //then
-        assertThrows(IllegalStateException.class,
-                () -> {
-                    memberService.join(member2);
-                });
+    public void 회원가입_테스트() {
+        Member newMember = Member.createMember("newUser", "newPassword", "New User", LocalDate.now(), Gender.MALE, "321-654-9870", Role.TEACHER);
+        Long savedId = memberService.join(newMember);
+        Member foundMember = memberRepository.findOne(savedId);
+        assertNotNull(foundMember);
+        assertEquals(newMember.getLoginId(), foundMember.getLoginId());
     }
 
     @Test
-    // @Rollback(false)
-    public void 회원삭제() throws Exception {
-        //given
-        Member member = createMember("user1", "password1", LocalDate.of(2020, 1, 1), "John Doe", Gender.MALE, "123-4567-8901", Role.CHILD);
+    public void 중복회원_예외() {
+        Member duplicateMember = Member.createMember("user1", "password123", "John Duplicate", LocalDate.of(1990, 10, 10), Gender.MALE, "111-222-3333", Role.CHILD);
 
-        // when
-        Long savedId = member.getId();
-        memberService.deleteMember(savedId);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            memberService.join(duplicateMember);
+        });
 
-        // em.persist(member1);
-
-        // then
-        Member deletedMember = em.find(Member.class, savedId);
-        assertNull(deletedMember);
+        assertEquals("이미 존재하는 아이디입니다!", exception.getMessage());
     }
 
-//    @Test
-//    public void 회원수정() throws Exception {
-//        // given
-//        Member member = createMember("user1", "password1", LocalDate.of(2020, 1, 1), "John Doe", Gender.MALE, "123-4567-8901", Role.CHILD);
-//        Long savedMemberId = member.getId();
-//
-//        // when
-//        MemberForm updateForm = new MemberForm();
-//        updateForm.setName("Jane Doe");
-//        updateForm.setGender(Gender.FEMALE);
-//        updateForm.setPhone_no("987-6543-2109");
-//
-//        memberService.updateMember(savedMemberId, updateForm);
-//        em.flush();
-//        em.clear();
-//
-//        // then
-//        Member updatedMember = memberRepository.findOne(savedMemberId);
-//        assertEquals("회원 이름이 올바르게 수정되지 않았습니다.", "Jane Doe", updatedMember.getName());
-//        assertEquals("회원 성별이 올바르게 수정되지 않았습니다.", Gender.FEMALE, updatedMember.getGender());
-//        assertEquals("회원 전화번호가 올바르게 수정되지 않았습니다.", "987-6543-2109", updatedMember.getPhone_no());
-//    }
+    @Test
+    public void 회원삭제_테스트() {
+        Member member = em.createQuery("SELECT m FROM Member m WHERE m.loginId = :loginId", Member.class)
+                .setParameter("loginId", "user1")
+                .getSingleResult();
+        Long memberId = member.getId();
+        assertNotNull(memberRepository.findOne(memberId));
 
-
-    private Member createMember(String loginId, String loginPassword, LocalDate birth, String name, Gender gender, String phone_no, Role role) throws Exception {
-
-        Member member = new Member();
-
-        member.setLoginId(loginId);
-        member.setLoginPassword(loginPassword);
-        member.setName(name);
-        member.setBirth(birth);
-        member.setGender(gender);
-        member.setPhone_no(phone_no);
-        member.setRole(role);
-
-        em.persist(member);
-
-        return member;
+        memberService.deleteMember(memberId);
+        assertNull(memberRepository.findOne(memberId));
     }
 }
