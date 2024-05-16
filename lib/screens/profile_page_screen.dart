@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,10 +13,11 @@ class ProfileApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Profile App',
-      home:  ProfilePage(),
+      home: ProfilePage(),
     );
   }
 }
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -24,6 +26,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  bool _isEditing = false;
+  final TextEditingController _nameController = TextEditingController(text: '김동글');
+  final TextEditingController _birthController = TextEditingController(text: '2010.09.23');
+  final TextEditingController _introController = TextEditingController(text: '안녕 나는 김동글 이고 축구를 좋아해 친하게 지내자');
+  XFile? _imageFile;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,45 +46,57 @@ class ProfilePageState extends State<ProfilePage> {
         ),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(234, 210, 129, 0.5),
-        actions: const [
-          SizedBox(width: 20),
-          Text(
-            '설정',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 35.0,
-              fontFamily: "Dongle",
-            ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isEditing = !_isEditing;
+              });
+            },
+            icon: Icon(_isEditing ? Icons.done : Icons.edit),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
         ],
       ),
       backgroundColor: const Color.fromRGBO(234, 210, 129, 0.5),
-      body: const ProfileWidget(),
+      body: ProfileWidget(
+        isEditing: _isEditing,
+        nameController: _nameController,
+        birthController: _birthController,
+        introController: _introController,
+        imageFile: _imageFile,
+        onImageTap: _pickImage,
+      ),
     );
   }
-}
-
-class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({Key? key}) : super(key: key);
-
-  @override
-  State<ProfileWidget> createState() => _ProfileWidgetState();
-}
-
-class _ProfileWidgetState extends State<ProfileWidget> {
-  XFile? file;
 
   Future<void> _pickImage() async {
-    ImagePicker().pickImage(source: ImageSource.gallery).then((image) {
-      if (image != null) {
-        setState(() {
-          file = image;
-          print(file);
-        });
-      }
-    });
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _imageFile = image;
+      });
+    }
   }
+}
+
+class ProfileWidget extends StatelessWidget {
+  final bool isEditing;
+  final TextEditingController nameController;
+  final TextEditingController birthController;
+  final TextEditingController introController;
+  final XFile? imageFile;
+  final VoidCallback? onImageTap;
+
+  const ProfileWidget({
+    Key? key,
+    required this.isEditing,
+    required this.nameController,
+    required this.birthController,
+    required this.introController,
+    this.imageFile,
+    this.onImageTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +105,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         const Positioned(
           bottom: 50,
           right: 0,
-          child: Image(image: AssetImage('assets/images/seashell.png'),
+          child: Image(
+            image: AssetImage('assets/images/seashell.png'),
             width: 100,
             height: 100,
             fit: BoxFit.cover,
@@ -98,22 +119,27 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                GestureDetector( onTap:() {
-                  _pickImage();
-                },
-                child: Container(
-                  width: 180,
-                  height: 180,
-                  margin: const EdgeInsets.all(15),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20),
+                GestureDetector(
+                  onTap: onImageTap,
+                  child: Container(
+                    width: 180,
+                    height: 180,
+                    margin: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: imageFile != null
+                        ? Image.file(
+                      File(imageFile!.path),
+                      fit: BoxFit.cover,
+                    )
+                        : const Image(
+                      image: AssetImage('assets/images/profile.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: const Image(image: AssetImage('assets/images/profile.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 ),
                 const SizedBox(width: 20),
                 Column(
@@ -174,17 +200,26 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                 ),
                 const SizedBox(width: 40),
-                Container(
+                isEditing
+                    ? Expanded(
+                  child: TextField(
+                    controller: nameController,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Dongle',
+                    ),
+                  ),
+                )
+                    : Container(
                   width: 300,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text(
-                    '김동글',
-                    style: TextStyle(
+                  child: Text(
+                    nameController.text,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: 'Dongle',
                     ),
@@ -208,17 +243,26 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                 ),
                 const SizedBox(width: 35),
-                Container(
+                isEditing
+                    ? Expanded(
+                  child: TextField(
+                    controller: birthController,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Dongle',
+                    ),
+                  ),
+                )
+                    : Container(
                   width: 300,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text(
-                    '2010.09.23',
-                    style: TextStyle(
+                  child: Text(
+                    birthController.text,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: 'Dongle',
                     ),
@@ -232,7 +276,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.fromLTRB(20,20,0,0,),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                   child: const Text(
                     '자기소개',
                     style: TextStyle(
@@ -243,17 +287,27 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                 ),
                 const SizedBox(width: 20),
-                Container(
+                isEditing
+                    ? Expanded(
+                  child: TextField(
+                    controller: introController,
+                    maxLines: null,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Dongle',
+                    ),
+                  ),
+                )
+                    : Container(
                   width: 300,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text(
-                    '안녕 나는 김동글 이고 축구를 좋아해 친하게 지내자',
-                    style: TextStyle(
+                  child: Text(
+                    introController.text,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: 'Dongle',
                     ),
