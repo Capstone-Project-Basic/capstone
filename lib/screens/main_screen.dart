@@ -3,6 +3,7 @@ import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/screens/home_screen.dart';
 import 'package:pocekt_teacher/screens/stamp_screen.dart';
 import 'package:pocekt_teacher/screens/profile_page_screen.dart';
+import 'package:pocekt_teacher/screens/teacher_mission_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static String id = 'main_screen';
@@ -15,7 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentPageIndex = 1;
-  List<String> titles = ["Profile", 'Home', 'Stamps'];
+  List<String> titles = ["Profile", 'Home', 'Stamps','teacher'];
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +46,17 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.menu_book),
             label: '내 도장',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.telegram),
+            label: '선생님 도장',
+          ),
         ],
       ),
       body: <Widget>[
         const ProfileApp(),
         const HomeScreen(),
         const StampScreen(),
+        const MissionPage(),
       ][_currentPageIndex],
     );
   }

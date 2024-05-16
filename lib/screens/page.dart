@@ -80,12 +80,10 @@ class SchoolPage extends StatelessWidget {
                       elevation: MaterialStatePropertyAll(0.0),
                     ),
                     child: buttonImage,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NoticeListScreen()),
-                      );
-                    },
+                    onPressed: () { Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NoticeListScreen()),
+                    );}
                   ),
                 ),
               ],
