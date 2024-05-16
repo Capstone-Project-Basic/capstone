@@ -16,7 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentPageIndex = 1;
-  List<String> titles = ["Profile", 'Home', 'Stamps''teacher'];
+  List<String> titles = ["Profile", 'Home', 'Stamps','teacher'];
 
   @override
   Widget build(BuildContext context) {
