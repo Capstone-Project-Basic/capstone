@@ -117,6 +117,13 @@ public class MissionService {
         throw new IllegalStateException("미션을 비활성화할 수 없습니다!");
     }
 
+    public Boolean checkActiveMission(){
+        if(missionRepository.findByActiveStatusTrue().isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
 //    @Transactional
 //    public Long delete(Long id) {
 //        missionRepository.deleteById(id);
