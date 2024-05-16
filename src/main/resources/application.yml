@@ -6,17 +6,29 @@
 #    driver-class-name: org.h2.Driver
 
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-
+  h2:
+    console:
+      enabled: true
   jpa:
+    defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
-        # show_sql: true
         format_sql: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+  sql:
+    init:
+      data-locations: classpath:/data.sql
+      mode: always
 
-logging.level:
-  org.hibernate.SQL: debug # logger 로 출력(권장)
-#  org.hibernate.type: trace
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
