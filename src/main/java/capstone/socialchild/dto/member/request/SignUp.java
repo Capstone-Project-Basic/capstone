@@ -1,7 +1,6 @@
 package capstone.socialchild.dto.member.request;
 
 import capstone.socialchild.domain.member.Gender;
-import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.domain.member.Role;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -32,8 +31,4 @@ public class SignUp {
 
     @NotEmpty(message = "신분을 선택해주세요!")
     private Role role;              // 역할[CHILD, TEACHER]
-
-    public Member toMember() {
-        return Member.createMember(loginId, loginPassword, name, birth, gender, phone_no, role);
-    }
 }

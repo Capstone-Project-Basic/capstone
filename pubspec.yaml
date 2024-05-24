@@ -14,8 +14,6 @@ dependencies:
   modal_progress_hud_nsn: ^0.5.1
   http: ^1.1.0
   image_picker: ^1.1.1
-  firebase_core: ^2.31.1
-  firebase_messaging: ^14.9.3
   
 
 dev_dependencies:
