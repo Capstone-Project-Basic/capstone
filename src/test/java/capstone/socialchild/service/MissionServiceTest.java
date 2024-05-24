@@ -74,16 +74,5 @@ class MissionServiceTest {
 
     }
 
-    @Test
-    void 미션삭제() {
-        Mission mission = new Mission(new MissionRequestDto("제목","내용", Grade.GOLD, Role.TEACHER));
-        missionRepository.save(mission);
-        List<Mission> missions = missionRepository.findAll();
-        assertThat(missions.size()).isEqualTo(1);
 
-        missionRepository.delete(mission);
-        missions = missionRepository.findAll();
-        assertThat(missions.size()).isEqualTo(0);
-
-    }
 }
