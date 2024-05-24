@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">795397625032</string>
+    <string name="google_api_key" translatable="false">AIzaSyCtBXxwucM9GAmphhMPMgHEF2AnKOKXa4k</string>
+    <string name="google_app_id" translatable="false">1:795397625032:android:f19589ee2e5119202d81fd</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCtBXxwucM9GAmphhMPMgHEF2AnKOKXa4k</string>
+    <string name="google_storage_bucket" translatable="false">pocket-teacher-1b526.appspot.com</string>
+    <string name="project_id" translatable="false">pocket-teacher-1b526</string>
+</resources>
