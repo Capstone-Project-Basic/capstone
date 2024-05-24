@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="capstone.socialchild.SocialchildApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-23T06:09:32" hostname="simgyuseon-ui-MacBookAir.local" time="0.004">
-  <properties/>
-  <testcase name="contextLoads()" classname="capstone.socialchild.SocialchildApplicationTests" time="0.004"/>
-  <system-out><![CDATA[2024-05-23T15:09:32.241+09:00  INFO 98548 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [capstone.socialchild.SocialchildApplicationTests]: SocialchildApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-23T15:09:32.252+09:00  INFO 98548 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration capstone.socialchild.socialchildApplication for test class capstone.socialchild.SocialchildApplicationTests
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
