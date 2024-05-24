@@ -6,7 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.Base64;
 
 import static jakarta.persistence.EnumType.STRING;
 
@@ -50,4 +54,23 @@ public class Member {
 
         return member;
     }
+
+//    public static String encrypt(String password) {
+//        String salt = getSalt();
+//        String saltedPassword = password + salt;
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//            byte[] hashedPassword = md.digest(saltedPassword.getBytes());
+//            return Base64.getEncoder().encodeToString(hashedPassword);
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException("Failed to hash password", e);
+//        }
+//    }
+//
+//    private static String getSalt() {
+//        SecureRandom random = new SecureRandom();
+//        byte[] salt = new byte[16];
+//        random.nextBytes(salt);
+//        return Base64.getEncoder().encodeToString(salt);
+//    }
 }

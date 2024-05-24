@@ -8,15 +8,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface SuccessMissionRepository extends JpaRepository<SuccessMission, Long> {
 
     // 특정 멤버의 모든 성공미션 조회
     @Query(value =
-        "SELECT * " +
-                "FROM success_mission " +
-                "WHERE member_id = :memberId",
-        nativeQuery = true)
+            "SELECT * " +
+                    "FROM success_mission " +
+                    "WHERE member_id = :memberId",
+            nativeQuery = true)
     List<SuccessMission> findBySuccessMission(@Param("memberId") Long memberId);
+
+    @Query(value =
+            "SELECT * " +
+                    "FROM success_mission " +
+                    "ORDER BY member_id ",
+            nativeQuery = true)
+    List<SuccessMission> findByAllSuccessMission();
 }
