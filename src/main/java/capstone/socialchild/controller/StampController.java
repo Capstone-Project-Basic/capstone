@@ -32,8 +32,7 @@ public class StampController {
     }
 
     @PostMapping("/{memberId}/stamps")
-    public StampResponseDto newStamp(@PathVariable("memberId") Long memberId,
-                                     @RequestBody StampRequestDto requestDto) {
+    public StampResponseDto newStamp(@PathVariable("memberId") Long memberId, @RequestBody StampRequestDto requestDto) {
         return stampService.create(memberId, requestDto);
     }
 }

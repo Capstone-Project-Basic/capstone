@@ -12,7 +12,7 @@ public class MissionRequestDto {
     private String title;
     private String content;
     private Grade grade;
-    private Role role; // 계급 판단 위해 세션 구현되면 Member로 변경
+    private Role role; // 계급 판단 위해
 
     public MissionRequestDto(String title, String content, Grade grade, Role role) {
         this.title = title;
