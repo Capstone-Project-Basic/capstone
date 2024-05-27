@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocekt_teacher/constants.dart';
+import 'package:pocekt_teacher/screens/school_screen.dart';
+
 
 class SchoolPage extends StatelessWidget {
   const SchoolPage({
@@ -45,8 +47,8 @@ class SchoolPage extends StatelessWidget {
             children: [
               Expanded(
                   child: Image(
-                image: AssetImage('assets/images/sky.jpeg'),
-              )),
+                    image: AssetImage('assets/images/sky.jpeg'),
+                  )),
             ],
           ),
           Expanded(
@@ -70,24 +72,18 @@ class SchoolPage extends StatelessWidget {
                   child: ElevatedButton(
                     style: const ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll(Colors.transparent),
+                      MaterialStatePropertyAll(Colors.transparent),
                       foregroundColor:
-                          MaterialStatePropertyAll(Colors.transparent),
+                      MaterialStatePropertyAll(Colors.transparent),
                       overlayColor:
-                          MaterialStatePropertyAll(Colors.transparent),
+                      MaterialStatePropertyAll(Colors.transparent),
                       elevation: MaterialStatePropertyAll(0.0),
                     ),
                     child: buttonImage,
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const AlertDialog(
-                            title: Text('Test Page'),
-                          );
-                        },
-                      );
-                    },
+                    onPressed: () { Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NoticeListScreen()),
+                    );}
                   ),
                 ),
               ],
