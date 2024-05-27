@@ -37,7 +37,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Future<UserModel> registerUser(String userEmail, String userPassword,
       String name, String role, BuildContext context) async {
     var response =
-        await http.post(Uri.parse("http://localhost:8080/members/new"),
+        await http.post(Uri.parse("http://13.51.143.99:8080/login/new"),
             headers: <String, String>{"Content-Type": "application/json"},
             body: jsonEncode(<String, String>{
               "loginId": userEmail,
@@ -86,7 +86,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Column(
             children: [
               Flexible(
-                flex: 2,
+                fit: FlexFit.loose,
+                flex: 1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -104,6 +105,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Flexible(
+                  fit: FlexFit.loose,
                   flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
