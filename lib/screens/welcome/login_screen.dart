@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<UserModel> loginUser(
       String userEmail, String userPassword, BuildContext context) async {
-    var response = await http.post(Uri.parse("http://118.34.210.80:8080/login"),
+    var response = await http.post(Uri.parse("http://13.51.143.99:8080/login"),
         headers: <String, String>{"Content-Type": "application/json"},
         body: jsonEncode(<String, String>{
           "loginId": userEmail,

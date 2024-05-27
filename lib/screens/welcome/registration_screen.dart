@@ -36,14 +36,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<UserModel> registerUser(String userEmail, String userPassword,
       String name, String role, BuildContext context) async {
-    var response = await http.post(Uri.parse("http://localhost:8080/login/new"),
-        headers: <String, String>{"Content-Type": "application/json"},
-        body: jsonEncode(<String, String>{
-          "loginId": userEmail,
-          "loginPassword": userPassword,
-          "name": name,
-          'role': role,
-        }));
+    var response =
+        await http.post(Uri.parse("http://13.51.143.99:8080/login/new"),
+            headers: <String, String>{"Content-Type": "application/json"},
+            body: jsonEncode(<String, String>{
+              "loginId": userEmail,
+              "loginPassword": userPassword,
+              "name": name,
+              'role': role,
+            }));
 
     String responseString = response.body;
     if (response.statusCode == 200) {
