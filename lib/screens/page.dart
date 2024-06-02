@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/screens/school_screen.dart';
+import 'package:pocekt_teacher/screens/map_screen.dart';
+
 
 
 class SchoolPage extends StatelessWidget {
@@ -15,7 +17,7 @@ class SchoolPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
+         // floatingActionButton: FloatingActionButton(
       //   onPressed: () {},
       //   child: const Icon(Icons.accessibility_rounded),
       // ),
@@ -47,8 +49,8 @@ class SchoolPage extends StatelessWidget {
             children: [
               Expanded(
                   child: Image(
-                    image: AssetImage('assets/images/sky.jpeg'),
-                  )),
+                image: AssetImage('assets/images/sky.jpeg'),
+              )),
             ],
           ),
           Expanded(
@@ -72,18 +74,27 @@ class SchoolPage extends StatelessWidget {
                   child: ElevatedButton(
                     style: const ButtonStyle(
                       backgroundColor:
-                      MaterialStatePropertyAll(Colors.transparent),
+                          MaterialStatePropertyAll(Colors.transparent),
                       foregroundColor:
-                      MaterialStatePropertyAll(Colors.transparent),
+                          MaterialStatePropertyAll(Colors.transparent),
                       overlayColor:
-                      MaterialStatePropertyAll(Colors.transparent),
+                          MaterialStatePropertyAll(Colors.transparent),
                       elevation: MaterialStatePropertyAll(0.0),
                     ),
                     child: buttonImage,
-                    onPressed: () { Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NoticeListScreen()),
-                    );}
+                    onPressed: () {
+                      if (buttonImage.image == const AssetImage('assets/images/school.png')) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  NoticeListScreen()),
+                        );
+                      }  if (buttonImage.image == const AssetImage('assets/images/library.png')) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  MapWithMyLocation()),
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
