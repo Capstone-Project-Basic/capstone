@@ -20,10 +20,6 @@
         "source": "com.example.pocekt_teacher.app-main-23:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.example.pocekt_teacher.app-merged_res-30:/drawable_launch_background.xml.flat",
-        "source": "com.example.pocekt_teacher.app-main-23:/drawable/launch_background.xml"
-    },
-    {
         "merged": "com.example.pocekt_teacher.app-merged_res-30:/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "com.example.pocekt_teacher.app-main-23:/mipmap-xxhdpi/ic_launcher.png"
     }
