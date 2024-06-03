@@ -7,26 +7,26 @@ String UserModelToJson(UserModel data) => json.encode(data.toJson());
 class UserModel {
   UserModel({
     required this.id,
-    required this.userEmail,
-    required this.userPassword,
+    required this.loginID,
+    required this.loginPassword,
   });
 
   int id;
-  String userEmail;
-  String userPassword;
+  String loginID;
+  String loginPassword;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-      userEmail: json["userEmail"],
-      userPassword: json["userPassword"],
+      loginID: json["loginID"],
+      loginPassword: json["loginPassword"],
       id: json["id"]);
 
   Map<String, dynamic> toJson() => {
-        "userEmail": userEmail,
-        "userPassword": userPassword,
+        "loginID": loginID,
+        "loginPassword": loginPassword,
         'id': id,
       };
 
-  String get useremail => userEmail;
+  String get loginiD => loginID;
 
-  String get userpassword => userPassword;
+  String get loginpassword => loginPassword;
 }

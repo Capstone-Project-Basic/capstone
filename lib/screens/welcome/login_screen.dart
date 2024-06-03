@@ -7,6 +7,7 @@ import 'package:pocekt_teacher/components/rounded_button.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/model/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:pocekt_teacher/screens/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -19,16 +20,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
-  late String email;
-  late String password;
+  late String loginID;
+  late String loginPassword;
 
   Future<UserModel> loginUser(
-      String userEmail, String userPassword, BuildContext context) async {
+      String loginID, String loginPassword, BuildContext context) async {
     var response = await http.post(Uri.parse("http://13.51.143.99:8080/login"),
         headers: <String, String>{"Content-Type": "application/json"},
         body: jsonEncode(<String, String>{
-          "loginId": userEmail,
-          "loginPassword": userPassword,
+          "loginId": loginID,
+          "loginPassword": loginPassword,
         }));
 
     String responseString = response.body;
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return UserModel(
-        id: 9999, userEmail: 'error email', userPassword: 'error password');
+        id: 9999, loginID: 'error email', loginPassword: 'error password');
   }
 
   @override
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
-                        email = value;
+                        loginID = value;
                       },
                       decoration: kTextFieldDecoration,
                     ),
@@ -109,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscureText: true,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
-                        password = value;
+                        loginPassword = value;
                       },
                       decoration: kTextFieldDecoration.copyWith(
                           hintText: '비밀번호를 입력하세요'),
@@ -126,6 +127,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             showSpinner = true;
                           });
                           //Add some function to login user
+                          UserModel userModel =
+                              await loginUser(loginID, loginPassword, context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const MainScreen()));
                         }),
                     const SizedBox(
                       height: 50.0,
