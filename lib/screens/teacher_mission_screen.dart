@@ -1,20 +1,21 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../components/mission_button.dart';
+import '../components/my_alert_dialog.dart';
+import '../model/mission.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MissionPage(),
-    );
-  }
-}
+final ButtonStyle commonButtonStyle = ElevatedButton.styleFrom(
+  foregroundColor: Colors.purple,
+  backgroundColor: Colors.white,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(8),
+  ),
+);
 
 class MissionPage extends StatelessWidget {
-  const MissionPage({Key? key});
+  const MissionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,45 @@ class MissionPage extends StatelessWidget {
   }
 }
 
-class MissionRegistrationPage extends StatelessWidget {
+class MissionRegistrationPage extends StatefulWidget {
+  @override
+  State<MissionRegistrationPage> createState() => _MissionRegistrationPageState();
+}
+
+late String title;
+late String content;
+late String grade;
+late String role;
+
+class _MissionRegistrationPageState extends State<MissionRegistrationPage> {
+  Future<MissionModel> createMission(String missionTitle,
+      String missionContent, String grade, String role, BuildContext context) async {
+    var response =
+    await http.post(Uri.parse("http://13.51.143.99/missions"),
+        headers: <String, String>{"Content-Type": "application/json"},
+        body: jsonEncode(<String, String>{
+          "title": missionTitle,
+          "loginPassword": missionContent,
+          "grade": grade,
+          "role": role,
+        }));
+
+    String responseString = response.body;
+    if (response.statusCode == 200) {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext dialogContext) {
+          return MyAlertDialog(
+              title: "Backend Response", content: response.body);
+        },
+      );
+    }
+
+    return MissionModel(
+        id: 9999, missionTitle: 'error email', missionContent: 'error password');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,28 +113,51 @@ class MissionRegistrationPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const TextField(
+            TextField(
+              onChanged: (value) {
+                title = value;
+              },
               decoration: InputDecoration(
-                labelText: '미션을 입력하세요',),
+                labelText: '미션 제목을 입력하세요',),
             ),
             const SizedBox(height: 20.0),
+            TextField(
+              onChanged: (value) {
+                content = value;
+              },
+              decoration: InputDecoration(
+                labelText: '미션 내용을 입력하세요',),
+            ),
             Container(
               padding: const EdgeInsets.only(top: 20.0),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MissionGradeButton(grade: '상', color: Colors.orange),
-                  MissionGradeButton(grade: '중', color: Colors.grey),
-                  MissionGradeButton(grade: '하', color: Colors.yellow),],
+                  MissionGradeButton(grade: '하', color: Colors.orange,
+                    buttonFunction: () => grade = "BRONZE",),
+                  MissionGradeButton(grade: '중', color: Colors.grey,
+                    buttonFunction: () => grade = "SILVER",),
+                  MissionGradeButton(grade: '상', color: Colors.yellow,
+                    buttonFunction: () => grade = "GOLD",),],
               ),
             ),
             const SizedBox(height: 200.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                role = 'TEACHER';
+                MissionModel missionModel = await createMission(
+                    title,
+                    content,
+                    grade,
+                    role,
+                    context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MissionEditingPage()),);
+                  MaterialPageRoute(
+                      builder: (context) => MissionEditingPage(
+                          missionTitle: title, missionContent: content)),);
               },
+              style: commonButtonStyle,
               child: const Text('미션 등록', style: TextStyle( fontFamily: "dongle", fontSize: 25),),
             ),
           ],
@@ -105,7 +167,25 @@ class MissionRegistrationPage extends StatelessWidget {
   }
 }
 
-class MissionEditingPage extends StatelessWidget {
+class MissionEditingPage extends StatefulWidget {
+  final String missionTitle;
+  final String missionContent;
+
+  const MissionEditingPage({
+    Key? key,
+    required this.missionTitle,
+    required this.missionContent,
+  }) : super(key: key);
+
+  @override
+  _MissionEditingPageState createState() => _MissionEditingPageState();
+}
+
+class _MissionEditingPageState extends State<MissionEditingPage> {
+  bool switchValue1 = false;
+  bool switchValue2 = false;
+  bool switchValue3 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,53 +195,128 @@ class MissionEditingPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const TextField(
-              decoration: InputDecoration(
-                labelText: '미션을 편집하세요',
+            Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  widget.missionTitle,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+            Container(
+              height: 100,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  widget.missionContent,
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('김동글', style: TextStyle(fontSize: 22)),
+                  Switch(
+                    value: switchValue1,
+                    onChanged: (value) {
+                      setState(() {
+                        switchValue1 = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('김세모', style: TextStyle(fontSize: 22)),
+                  Switch(
+                    value: switchValue2,
+                    onChanged: (value) {
+                      setState(() {
+                        switchValue2 = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('김네모', style: TextStyle(fontSize: 22)),
+                  Switch(
+                    value: switchValue3,
+                    onChanged: (value) {
+                      setState(() {
+                        switchValue3 = value;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                   },
+                  style: commonButtonStyle,
                   child: const Text('편집', style: TextStyle(fontFamily: "dongle", fontSize: 25)),
                 ),
-                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.popUntil(context, (route) => route.isFirst);
                   },
+                  style: commonButtonStyle,
                   child: const Text('완료하기', style: TextStyle(fontFamily: "dongle", fontSize: 25)),
                 ),
               ],
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MissionGradeButton extends StatelessWidget {
-  final String grade;
-  final Color color;
-
-  const MissionGradeButton({required this.grade, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(color),
-      ),
-      child: Text(
-        grade,
-        style: const TextStyle(color: Colors.white),
       ),
     );
   }
