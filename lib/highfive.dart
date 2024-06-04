@@ -114,15 +114,15 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
   late NearbyService nearbyService;
   late StreamSubscription subscription;
   late StreamSubscription receivedDataSubscription;
-  bool isInviteShowing = false;
 
   bool isInit = false;
+  final bool _inviteIsVisible = true;
   // late final _title;
 
   @override
   void initState() {
-    init();
     super.initState();
+    init();
   }
 
   @override
@@ -143,12 +143,14 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
     // } else {
     //   _title = '내 친구들은 어디에?';
     // }
+    bool isInviteShowing = false;
     return Scaffold(
         appBar: AppBar(
           title: ShakeDetectWrap(
               onShake: () {
                 if (devices.isEmpty) {
-                  if (!isInviteShowing) {
+                  Navigator.pushNamed(context, 'advertiser');
+                  if (isInviteShowing) {
                     isInviteShowing = true;
                     Dialogs.materialDialog(
                         color: Colors.white,
@@ -163,7 +165,6 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
                         onClose: (_) {
                           isInviteShowing = false;
                         });
-                    Navigator.pushNamed(context, 'advertiser');
                   }
                 } else {
                   log('there is device');
@@ -351,7 +352,6 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
     await nearbyService.init(
         serviceType: 'mpconn',
         deviceName: devInfo,
-        deviceToken: devToken,
         strategy: Strategy.P2P_CLUSTER,
         callback: (isRunning) async {
           if (isRunning) {
@@ -374,7 +374,7 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
         nearbyService.stateChangedSubscription(callback: (devicesList) {
       for (var element in devicesList) {
         print(
-            "deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state} | deviceToken: ${element.deviceToken}");
+            "deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state}");
 
         if (Platform.isAndroid) {
           if (element.state == SessionState.connected) {
