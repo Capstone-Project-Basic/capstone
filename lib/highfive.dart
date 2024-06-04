@@ -114,15 +114,15 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
   late NearbyService nearbyService;
   late StreamSubscription subscription;
   late StreamSubscription receivedDataSubscription;
+  bool isInviteShowing = false;
 
   bool isInit = false;
-  final bool _inviteIsVisible = true;
   // late final _title;
 
   @override
   void initState() {
-    super.initState();
     init();
+    super.initState();
   }
 
   @override
@@ -143,14 +143,12 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
     // } else {
     //   _title = '내 친구들은 어디에?';
     // }
-    bool isInviteShowing = false;
     return Scaffold(
         appBar: AppBar(
           title: ShakeDetectWrap(
               onShake: () {
                 if (devices.isEmpty) {
-                  Navigator.pushNamed(context, 'advertiser');
-                  if (isInviteShowing) {
+                  if (!isInviteShowing) {
                     isInviteShowing = true;
                     Dialogs.materialDialog(
                         color: Colors.white,
@@ -165,6 +163,7 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
                         onClose: (_) {
                           isInviteShowing = false;
                         });
+                    Navigator.pushNamed(context, 'advertiser');
                   }
                 } else {
                   log('there is device');

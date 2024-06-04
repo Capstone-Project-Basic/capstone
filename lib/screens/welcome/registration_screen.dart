@@ -34,14 +34,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   late String name;
   late String role;
 
-  Future<UserModel> registerUser(String userEmail, String userPassword,
+  Future<UserModel> registerUser(String loginID, String loginPassword,
       String name, String role, BuildContext context) async {
     var response =
         await http.post(Uri.parse("http://13.51.143.99:8080/login/new"),
             headers: <String, String>{"Content-Type": "application/json"},
             body: jsonEncode(<String, String>{
-              "loginId": userEmail,
-              "loginPassword": userPassword,
+              "loginId": loginID,
+              "loginPassword": loginPassword,
               "name": name,
               'role': role,
             }));
@@ -59,7 +59,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
 
     return UserModel(
-        id: 9999, userEmail: 'error email', userPassword: 'error password');
+        id: 9999,
+        loginID: 'error email',
+        loginPassword: 'error password',
+        name: 'error name');
   }
 
   bool _idIsVisible = true;
