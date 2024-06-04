@@ -94,6 +94,13 @@ public class MemberService {
                 .filter(m -> m.getLoginPassword().equals(loginPassword))
                 .orElse(null);
     }
+    public void addStampCnt(Member member) {
+        Long cnt = member.getStampCnt();
+        log.info("cnt :   " + cnt);
+        member.setStampCnt(cnt + 1);
+        log.info("cnt : " + member.getStampCnt());
+        memberRepository.update(member);
+    }
 }
 
 //    /**

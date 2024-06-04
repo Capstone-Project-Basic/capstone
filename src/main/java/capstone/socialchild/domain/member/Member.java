@@ -39,6 +39,8 @@ public class Member {
     @Enumerated(value = STRING)
     private Role role;
 
+    private Long StampCnt;
+
     //==생성 메소드==//
     public static Member createMember(String loginId, String loginPassword, String name, LocalDate birth, Gender gender, String phone_no, Role role) {
 
@@ -51,7 +53,7 @@ public class Member {
         member.setGender(gender);
         member.setPhone_no(phone_no);
         member.setRole(role);
-
+        member.setStampCnt(0L);
         return member;
     }
 
