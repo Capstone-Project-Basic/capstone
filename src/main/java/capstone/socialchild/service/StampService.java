@@ -29,6 +29,9 @@ public class StampService {
     MemberRepository memberRepository;
 
     @Autowired
+    MemberService memberService;
+
+    @Autowired
     SuccessMissionRepository successMissionRepository;
 
     @Autowired
@@ -69,9 +72,7 @@ public class StampService {
                 .successMission(successMission)
                 .build();
         stampRepository.save(stamp);
-        Long stampCnt = member.getStampCnt();
-        member.setStampCnt(stampCnt + 1);
+        memberService.addStampCnt(member);
         return new StampResponseDto(stamp);
     }
-
 }
