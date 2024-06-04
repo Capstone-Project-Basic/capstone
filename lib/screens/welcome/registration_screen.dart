@@ -34,14 +34,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   late String name;
   late String role;
 
-  Future<UserModel> registerUser(String userEmail, String userPassword,
+  Future<UserModel> registerUser(String loginID, String loginPassword,
       String name, String role, BuildContext context) async {
     var response =
         await http.post(Uri.parse("http://13.51.143.99:8080/login/new"),
             headers: <String, String>{"Content-Type": "application/json"},
             body: jsonEncode(<String, String>{
-              "loginId": userEmail,
-              "loginPassword": userPassword,
+              "loginId": loginID,
+              "loginPassword": loginPassword,
               "name": name,
               'role': role,
             }));
@@ -59,7 +59,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
 
     return UserModel(
-        id: 9999, userEmail: 'error email', userPassword: 'error password');
+        id: 9999,
+        loginID: 'error email',
+        loginPassword: 'error password',
+        name: 'error name');
   }
 
   bool _idIsVisible = true;
@@ -76,54 +79,87 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        color: children_light,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              Flexible(
-                fit: FlexFit.loose,
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(
-                      height: 50.0,
-                    ),
-                    Hero(
-                      tag: 'logo',
-                      child: SizedBox(
-                        height: 250.0,
-                        child: Image.asset('assets/images/hiyoko_rounded.png'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Flexible(
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.grey[100],
+        body: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          color: children_light,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              children: [
+                Flexible(
                   fit: FlexFit.loose,
-                  flex: 2,
+                  flex: 1,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      AnimatedVisibility(
-                        visible: _idIsVisible,
-                        child: Column(
-                          children: [
-                            TextField(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Hero(
+                        tag: 'logo',
+                        child: SizedBox(
+                          height: 100.0,
+                          child:
+                              Image.asset('assets/images/hiyoko_rounded.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                    fit: FlexFit.loose,
+                    flex: 4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        AnimatedVisibility(
+                          visible: _idIsVisible,
+                          child: Column(
+                            children: [
+                              TextField(
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.emailAddress,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 40.0),
+                                  onChanged: (value) {
+                                    userID = value;
+                                  },
+                                  onEditingComplete: () {
+                                    setState(() {
+                                      _passwordIsVisible = !_passwordIsVisible;
+                                      Future.delayed(
+                                          const Duration(milliseconds: 100),
+                                          () {
+                                        FocusScope.of(context).nextFocus();
+                                      });
+                                    });
+                                  },
+                                  decoration: kTextFieldDecoration),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        AnimatedVisibility(
+                          visible: _passwordIsVisible,
+                          enter: fadeIn(),
+                          exit: fadeOut(),
+                          child: Column(
+                            children: [
+                              TextField(
                                 textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.emailAddress,
+                                obscureText: true,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(fontSize: 40.0),
                                 onChanged: (value) {
-                                  userID = value;
+                                  password = value;
                                 },
                                 onEditingComplete: () {
                                   setState(() {
+                                    _nameIsVisible = !_nameIsVisible;
+                                    _idIsVisible = !_idIsVisible;
                                     _passwordIsVisible = !_passwordIsVisible;
                                     Future.delayed(
                                         const Duration(milliseconds: 100), () {
@@ -131,150 +167,119 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     });
                                   });
                                 },
-                                decoration: kTextFieldDecoration),
-                            const SizedBox(
-                              height: 8.0,
-                            ),
-                          ],
+                                decoration: kTextFieldDecoration.copyWith(
+                                    hintText: '비밀번호를 입력하세요'),
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      AnimatedVisibility(
-                        visible: _passwordIsVisible,
-                        enter: fadeIn(),
-                        exit: fadeOut(),
-                        child: Column(
-                          children: [
-                            TextField(
-                              textInputAction: TextInputAction.next,
-                              obscureText: true,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 40.0),
-                              onChanged: (value) {
-                                password = value;
-                              },
-                              onEditingComplete: () {
-                                setState(() {
-                                  _nameIsVisible = !_nameIsVisible;
-                                  Future.delayed(
-                                      const Duration(milliseconds: 100), () {
-                                    FocusScope.of(context).nextFocus();
-                                  });
+                        AnimatedVisibility(
+                          visible: _nameIsVisible,
+                          enter: fadeIn(),
+                          exit: fadeOut(),
+                          child: TextField(
+                            textInputAction: TextInputAction.done,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 40.0),
+                            onChanged: (value) {
+                              name = value;
+                            },
+                            onEditingComplete: () {
+                              setState(() {
+                                _nameIsVisible = !_nameIsVisible;
+                                Future.delayed(
+                                    const Duration(milliseconds: 100), () {
+                                  _roleIsVisible = !_roleIsVisible;
                                 });
-                              },
-                              decoration: kTextFieldDecoration.copyWith(
-                                  hintText: '비밀번호를 입력하세요'),
-                            ),
-                            const SizedBox(
-                              height: 8.0,
-                            ),
-                          ],
-                        ),
-                      ),
-                      AnimatedVisibility(
-                        visible: _nameIsVisible,
-                        enter: fadeIn(),
-                        exit: fadeOut(),
-                        child: TextField(
-                          textInputAction: TextInputAction.done,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 40.0),
-                          onChanged: (value) {
-                            name = value;
-                          },
-                          onEditingComplete: () {
-                            setState(() {
-                              _idIsVisible = !_idIsVisible;
-                              _passwordIsVisible = !_passwordIsVisible;
-                              _nameIsVisible = !_nameIsVisible;
-                              Future.delayed(const Duration(milliseconds: 100),
-                                  () {
-                                _roleIsVisible = !_roleIsVisible;
                               });
-                            });
-                          },
-                          decoration: kTextFieldDecoration.copyWith(
-                              hintText: '이름을 입력하세요'),
+                            },
+                            decoration: kTextFieldDecoration.copyWith(
+                                hintText: '이름을 입력하세요'),
+                          ),
                         ),
-                      ),
-                      AnimatedVisibility(
-                        visible: _roleIsVisible,
-                        enter: fadeIn(),
-                        exit: fadeOut(),
-                        child: Column(
-                          children: [
-                            Text(
-                              '나는 ...',
-                              style: kMediumText.copyWith(color: children),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ReusableCard(
-                                  onTapFunction: () {
-                                    setState(() {
-                                      selectGender(Role.child);
-                                      role = 'CHILD';
-                                    });
-                                  },
-                                  background: selectedRole == Role.child
-                                      ? children_dark
-                                      : Colors.grey,
-                                  cardCover: const ReusableCover(
-                                    image:
-                                        AssetImage('assets/images/hiyoko.png'),
-                                    cardText: '학생입니다',
+                        AnimatedVisibility(
+                          visible: _roleIsVisible,
+                          enter: fadeIn(),
+                          exit: fadeOut(),
+                          child: Column(
+                            children: [
+                              Text(
+                                '나는 ...',
+                                style: kMediumText.copyWith(color: children),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ReusableCard(
+                                    onTapFunction: () {
+                                      setState(() {
+                                        selectGender(Role.child);
+                                        role = 'CHILD';
+                                      });
+                                    },
+                                    background: selectedRole == Role.child
+                                        ? children_dark
+                                        : Colors.grey,
+                                    cardCover: const ReusableCover(
+                                      image: AssetImage(
+                                          'assets/images/hiyoko.png'),
+                                      cardText: '학생입니다',
+                                    ),
                                   ),
-                                ),
-                                ReusableCard(
-                                  onTapFunction: () {
-                                    setState(() {
-                                      selectGender(Role.teacher);
-                                      role = 'TEACHER';
-                                    });
-                                  },
-                                  background: selectedRole == Role.teacher
-                                      ? children_dark
-                                      : Colors.grey,
-                                  cardCover: const ReusableCover(
-                                    image: AssetImage(
-                                        'assets/images/niwatori.png'),
-                                    cardText: '선생님입니다',
+                                  ReusableCard(
+                                    onTapFunction: () {
+                                      setState(() {
+                                        selectGender(Role.teacher);
+                                        role = 'TEACHER';
+                                      });
+                                    },
+                                    background: selectedRole == Role.teacher
+                                        ? children_dark
+                                        : Colors.grey,
+                                    cardCover: const ReusableCover(
+                                      image: AssetImage(
+                                          'assets/images/niwatori.png'),
+                                      cardText: '선생님입니다',
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            RoundedButton(
-                              color: children_dark,
-                              title: '회원가입',
-                              subTitle: '',
-                              buttonFunction: () async {
-                                setState(() {
-                                  showSpinner = true;
-                                });
-                                String loginID = userID;
-                                String loginPassword = password;
-                                UserModel userModel = await registerUser(
-                                    loginID,
-                                    loginPassword,
-                                    name,
-                                    role,
-                                    context);
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const MainScreen()));
-                              },
-                            ),
-                          ],
+                                ],
+                              ),
+                              RoundedButton(
+                                color: children_dark,
+                                title: '회원가입',
+                                subTitle: '',
+                                buttonFunction: () async {
+                                  setState(() {
+                                    showSpinner = true;
+                                  });
+                                  String loginID = userID;
+                                  String loginPassword = password;
+                                  UserModel userModel = await registerUser(
+                                      loginID,
+                                      loginPassword,
+                                      name,
+                                      role,
+                                      context);
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const MainScreen()));
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 60.0,
-                      ),
-                    ],
-                  ))
-            ],
+                        const SizedBox(
+                          height: 60.0,
+                        ),
+                      ],
+                    ))
+              ],
+            ),
           ),
         ),
       ),

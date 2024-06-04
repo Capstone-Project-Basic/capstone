@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.pocekt_teacher.app-mergeDebugResources-26:/values-es-rUS/values-es-rUS.xml",
+            "outputFile": "com.example.pocekt_teacher.app-mergeDebugResources-28:/values-es-rUS/values-es-rUS.xml",
             "map": [
                 {
                     "source": "/Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/res/values-es-rUS/values.xml",

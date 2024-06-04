@@ -4,10 +4,11 @@ import 'package:pocekt_teacher/screens/notification_screen.dart';
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
+  late var fCMToken = "";
 
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
-    final fCMToken = await _firebaseMessaging.getToken();
+    fCMToken = (await _firebaseMessaging.getToken())!;
     print('Token: $fCMToken');
 
     initPushNotifications();

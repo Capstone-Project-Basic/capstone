@@ -15,390 +15,471 @@
 15    <uses-permission android:name="android.permission.INTERNET" />
 15-->/Users/boroboro/Capstone/capstone/android/app/src/debug/AndroidManifest.xml:6:5-66
 15-->/Users/boroboro/Capstone/capstone/android/app/src/debug/AndroidManifest.xml:6:22-64
-16    <uses-permission android:name="android.permission.WAKE_LOCK" />
-16-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-68
-16-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-65
-17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissions options for the `notification` group -->
-17-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-79
-17-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-76
-18    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required by older versions of Google Play services to create IID tokens -->
-18-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-77
-18-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:22-74
-19    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-19-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:26:5-82
-19-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:26:22-79
-20
-21    <permission
-21-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
-22        android:name="com.boroboro01.pocekt_teacher.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-22-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
-23        android:protectionLevel="signature" />
-23-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
-24
-25    <uses-permission android:name="com.boroboro01.pocekt_teacher.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-25-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
-25-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
-26
-27    <application
-28        android:name="android.app.Application"
-29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-29-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
-30        android:debuggable="true"
-31        android:icon="@mipmap/ic_launcher"
-32        android:label="pocekt_teacher"
-33        android:requestLegacyExternalStorage="true" >
-34        <activity
-35            android:name="com.example.pocekt_teacher.MainActivity"
-36            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-37            android:exported="true"
-38            android:hardwareAccelerated="true"
-39            android:launchMode="singleTop"
-40            android:theme="@style/LaunchTheme"
-41            android:windowSoftInputMode="adjustResize" >
+16    <uses-permission android:name="android.permission.ACESS_FINE_LOCATION" />
+16-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:2:1-73
+16-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:2:18-71
+17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+17-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:3:1-76
+17-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:3:18-74
+18    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+18-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:4:1-75
+18-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:4:18-73
+19    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+19-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:5:1-76
+19-->/Users/boroboro/Capstone/capstone/android/app/src/main/AndroidManifest.xml:5:18-74
+20    <uses-permission android:name="android.permission.WAKE_LOCK" />
+20-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-68
+20-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-65
+21    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissions options for the `notification` group -->
+21-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-79
+21-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-76
+22    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+22-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-77
+22-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:22-74
+23    <uses-permission android:name="android.permission.BLUETOOTH" />
+23-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-68
+23-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-65
+24    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+24-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-74
+24-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-71
+25    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+25-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-76
+25-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-73
+26    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+26-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:12:5-75
+26-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:12:22-72
+27    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+27-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-76
+27-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:13:22-73
+28    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+28-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:14:5-79
+28-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:14:22-76
+29
+30    <uses-feature android:name="android.hardware.wifi.direct" />
+30-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:18:5-65
+30-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:18:19-62
+31
+32    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+32-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:21:5-79
+32-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:21:22-76
+33    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+33-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:23:5-77
+33-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:23:22-74
+34    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+34-->[:vibration] /Users/boroboro/Capstone/capstone/build/vibration/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-66
+34-->[:vibration] /Users/boroboro/Capstone/capstone/build/vibration/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-63
+35    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+35-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:26:5-82
+35-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:26:22-79
+36
+37    <uses-feature
+37-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:26:5-28:35
+38        android:glEsVersion="0x00020000"
+38-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:27:9-41
+39        android:required="true" />
+39-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:28:9-32
+40
+41    <queries>
+41-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:30:5-34:15
 42
-43            <!--
-44                 Specifies an Android theme to apply to this Activity as soon as
-45                 the Android process has started. This theme is visible to the user
-46                 while the Flutter UI initializes. After that, this theme continues
-47                 to determine the Window background behind the Flutter UI.
-48            -->
-49            <meta-data
-50                android:name="io.flutter.embedding.android.NormalTheme"
-51                android:resource="@style/NormalTheme" />
+43        <!-- Needs to be explicitly declared on Android R+ -->
+44        <package android:name="com.google.android.apps.maps" />
+44-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:33:9-64
+44-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:33:18-61
+45    </queries>
+46
+47    <permission
+47-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
+48        android:name="com.boroboro01.pocekt_teacher.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+48-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
+49        android:protectionLevel="signature" />
+49-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
+50
+51    <uses-permission android:name="com.boroboro01.pocekt_teacher.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+51-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
+51-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
 52
-53            <intent-filter>
-54                <action android:name="android.intent.action.MAIN" />
-55
-56                <category android:name="android.intent.category.LAUNCHER" />
-57            </intent-filter>
-58        </activity>
-59        <!--
-60             Don't delete the meta-data below.
-61             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-62        -->
-63        <meta-data
-64            android:name="flutterEmbedding"
-65            android:value="2" />
-66
-67        <service
-67-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:16:9-19:72
-68            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
-68-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-107
-69            android:exported="false"
-69-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-37
-70            android:permission="android.permission.BIND_JOB_SERVICE" />
-70-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-69
-71        <service
-71-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:20:9-26:19
-72            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
-72-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-97
-73            android:exported="false" >
-73-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-37
-74            <intent-filter>
-74-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:29
-75                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-75-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-78
-75-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-75
-76            </intent-filter>
-77        </service>
-78
-79        <receiver
-79-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-35:20
-80            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
-80-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-98
-81            android:exported="true"
-81-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-36
-82            android:permission="com.google.android.c2dm.permission.SEND" >
-82-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:13-73
-83            <intent-filter>
-83-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:32:13-34:29
-84                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-84-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:17-81
-84-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:25-78
-85            </intent-filter>
-86        </receiver>
-87
-88        <service
-88-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:37:9-41:19
-89            android:name="com.google.firebase.components.ComponentDiscoveryService"
-89-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:37:18-89
-90            android:directBootAware="true"
-90-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:32:13-43
-91            android:exported="false" >
-91-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:56:13-37
-92            <meta-data
-92-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:38:13-40:85
-93                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
-93-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:39:17-128
-94                android:value="com.google.firebase.components.ComponentRegistrar" />
-94-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:40:17-82
-95            <meta-data
-95-->[:firebase_core] /Users/boroboro/Capstone/capstone/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
-96                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
-96-->[:firebase_core] /Users/boroboro/Capstone/capstone/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
-97                android:value="com.google.firebase.components.ComponentRegistrar" />
-97-->[:firebase_core] /Users/boroboro/Capstone/capstone/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
-98            <meta-data
-98-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:57:13-59:85
-99                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar"
-99-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:58:17-122
-100                android:value="com.google.firebase.components.ComponentRegistrar" />
-100-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:59:17-82
-101            <meta-data
-101-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:60:13-62:85
-102                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
-102-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:61:17-119
-103                android:value="com.google.firebase.components.ComponentRegistrar" />
-103-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:62:17-82
-104            <meta-data
-104-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:15:13-17:85
-105                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
-105-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:16:17-130
-106                android:value="com.google.firebase.components.ComponentRegistrar" />
-106-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:17:17-82
-107            <meta-data
-107-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:18:13-20:85
-108                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
-108-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:19:17-127
-109                android:value="com.google.firebase.components.ComponentRegistrar" />
-109-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:20:17-82
-110            <meta-data
-110-->[com.google.firebase:firebase-common-ktx:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/47c8e9af01620bdc19a975b7069cabd4/transformed/jetified-firebase-common-ktx-20.4.3/AndroidManifest.xml:12:13-14:85
-111                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
-111-->[com.google.firebase:firebase-common-ktx:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/47c8e9af01620bdc19a975b7069cabd4/transformed/jetified-firebase-common-ktx-20.4.3/AndroidManifest.xml:13:17-116
-112                android:value="com.google.firebase.components.ComponentRegistrar" />
-112-->[com.google.firebase:firebase-common-ktx:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/47c8e9af01620bdc19a975b7069cabd4/transformed/jetified-firebase-common-ktx-20.4.3/AndroidManifest.xml:14:17-82
-113            <meta-data
-113-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:35:13-37:85
-114                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
-114-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:36:17-109
-115                android:value="com.google.firebase.components.ComponentRegistrar" />
-115-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:37:17-82
-116            <meta-data
-116-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/boroboro/.gradle/caches/transforms-3/81b1eaa4c326e28d1d88edf14cf3fdfa/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
-117                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
-117-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/boroboro/.gradle/caches/transforms-3/81b1eaa4c326e28d1d88edf14cf3fdfa/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
-118                android:value="com.google.firebase.components.ComponentRegistrar" />
-118-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/boroboro/.gradle/caches/transforms-3/81b1eaa4c326e28d1d88edf14cf3fdfa/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
-119        </service>
-120
-121        <provider
-121-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:43:9-47:38
-122            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
-122-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:44:13-102
-123            android:authorities="com.boroboro01.pocekt_teacher.flutterfirebasemessaginginitprovider"
-123-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:45:13-88
-124            android:exported="false"
-124-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:46:13-37
-125            android:initOrder="99" />
-125-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:47:13-35
-126        <provider
-126-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:9-19:20
-127            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-127-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-82
-128            android:authorities="com.boroboro01.pocekt_teacher.flutter.image_provider"
-128-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-74
-129            android:exported="false"
-129-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-37
-130            android:grantUriPermissions="true" >
-130-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-47
-131            <meta-data
-131-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-18:75
-132                android:name="android.support.FILE_PROVIDER_PATHS"
-132-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-67
-133                android:resource="@xml/flutter_image_picker_file_paths" />
-133-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:18:17-72
-134        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
-135        <service
-135-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:21:9-33:19
-136            android:name="com.google.android.gms.metadata.ModuleDependencies"
-136-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-78
-137            android:enabled="false"
-137-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-36
-138            android:exported="false" >
-138-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:24:13-37
-139            <intent-filter>
-139-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:26:13-28:29
-140                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
-140-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:27:17-94
-140-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:27:25-91
-141            </intent-filter>
-142
-143            <meta-data
-143-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-32:36
-144                android:name="photopicker_activity:0:required"
-144-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:31:17-63
-145                android:value="" />
-145-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:32:17-33
-146        </service>
-147
-148        <receiver
-148-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:29:9-40:20
-149            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-149-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:30:13-78
-150            android:exported="true"
-150-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:31:13-36
-151            android:permission="com.google.android.c2dm.permission.SEND" >
-151-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:32:13-73
-152            <intent-filter>
-152-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:32:13-34:29
-153                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-153-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:17-81
-153-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:25-78
-154            </intent-filter>
-155
-156            <meta-data
-156-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:37:13-39:40
-157                android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
-157-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:38:17-92
-158                android:value="true" />
-158-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:39:17-37
-159        </receiver>
-160        <!--
-161             FirebaseMessagingService performs security checks at runtime,
-162             but set to not exported to explicitly avoid allowing another app to call it.
-163        -->
-164        <service
-164-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:46:9-53:19
-165            android:name="com.google.firebase.messaging.FirebaseMessagingService"
-165-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:47:13-82
-166            android:directBootAware="true"
-166-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:48:13-43
-167            android:exported="false" >
-167-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:49:13-37
-168            <intent-filter android:priority="-500" >
-168-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:29
-169                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-169-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-78
-169-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-75
-170            </intent-filter>
-171        </service>
-172
-173        <provider
-173-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:23:9-28:39
-174            android:name="com.google.firebase.provider.FirebaseInitProvider"
-174-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:24:13-77
-175            android:authorities="com.boroboro01.pocekt_teacher.firebaseinitprovider"
-175-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:25:13-72
-176            android:directBootAware="true"
-176-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:26:13-43
-177            android:exported="false"
-177-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:27:13-37
-178            android:initOrder="100" />
-178-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:28:13-36
+53    <application
+54        android:name="android.app.Application"
+55        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+55-->[androidx.core:core:1.10.1] /Users/boroboro/.gradle/caches/transforms-3/a939efee1febfaa82837f4e8382bc6d3/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
+56        android:debuggable="true"
+57        android:icon="@mipmap/ic_launcher"
+58        android:label="pocekt_teacher"
+59        android:requestLegacyExternalStorage="true" >
+60        <meta-data
+61            android:name="com.google.android.geo.API_KEY"
+62            android:value="AIzaSyD5hO9s3Me8ClvwuK_rOrayNgNlBEo4tjg" />
+63
+64        <activity
+65            android:name="com.example.pocekt_teacher.MainActivity"
+66            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+67            android:exported="true"
+68            android:hardwareAccelerated="true"
+69            android:launchMode="singleTop"
+70            android:requestLegacyExternalStorage="true"
+71            android:theme="@style/LaunchTheme"
+72            android:windowSoftInputMode="adjustResize" >
+73
+74            <!--
+75                 Specifies an Android theme to apply to this Activity as soon as
+76                 the Android process has started. This theme is visible to the user
+77                 while the Flutter UI initializes. After that, this theme continues
+78                 to determine the Window background behind the Flutter UI.
+79            -->
+80            <meta-data
+81                android:name="io.flutter.embedding.android.NormalTheme"
+82                android:resource="@style/NormalTheme" />
+83
+84            <intent-filter>
+85                <action android:name="android.intent.action.MAIN" />
+86
+87                <category android:name="android.intent.category.LAUNCHER" />
+88            </intent-filter>
+89        </activity>
+90        <!--
+91             Don't delete the meta-data below.
+92             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+93        -->
+94        <meta-data
+95            android:name="flutterEmbedding"
+96            android:value="2" />
+97
+98        <service
+98-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:16:9-19:72
+99            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+99-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-107
+100            android:exported="false"
+100-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-37
+101            android:permission="android.permission.BIND_JOB_SERVICE" />
+101-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-69
+102        <service
+102-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:20:9-26:19
+103            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+103-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-97
+104            android:exported="false" >
+104-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-37
+105            <intent-filter>
+105-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:29
+106                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+106-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-78
+106-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-75
+107            </intent-filter>
+108        </service>
+109
+110        <receiver
+110-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-35:20
+111            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+111-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-98
+112            android:exported="true"
+112-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-36
+113            android:permission="com.google.android.c2dm.permission.SEND" >
+113-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:13-73
+114            <intent-filter>
+114-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:32:13-34:29
+115                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+115-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:17-81
+115-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:25-78
+116            </intent-filter>
+117        </receiver>
+118
+119        <service
+119-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:37:9-41:19
+120            android:name="com.google.firebase.components.ComponentDiscoveryService"
+120-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:37:18-89
+121            android:directBootAware="true"
+121-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:32:13-43
+122            android:exported="false" >
+122-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:56:13-37
+123            <meta-data
+123-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:38:13-40:85
+124                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+124-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:39:17-128
+125                android:value="com.google.firebase.components.ComponentRegistrar" />
+125-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:40:17-82
+126            <meta-data
+126-->[:firebase_core] /Users/boroboro/Capstone/capstone/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+127                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+127-->[:firebase_core] /Users/boroboro/Capstone/capstone/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+128                android:value="com.google.firebase.components.ComponentRegistrar" />
+128-->[:firebase_core] /Users/boroboro/Capstone/capstone/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+129            <meta-data
+129-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:57:13-59:85
+130                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar"
+130-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:58:17-122
+131                android:value="com.google.firebase.components.ComponentRegistrar" />
+131-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:59:17-82
+132            <meta-data
+132-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:60:13-62:85
+133                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+133-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:61:17-119
+134                android:value="com.google.firebase.components.ComponentRegistrar" />
+134-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:62:17-82
+135            <meta-data
+135-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:15:13-17:85
+136                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+136-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:16:17-130
+137                android:value="com.google.firebase.components.ComponentRegistrar" />
+137-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:17:17-82
+138            <meta-data
+138-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:18:13-20:85
+139                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+139-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:19:17-127
+140                android:value="com.google.firebase.components.ComponentRegistrar" />
+140-->[com.google.firebase:firebase-installations:17.2.0] /Users/boroboro/.gradle/caches/transforms-3/e529b566d0c3550111110578503021d8/transformed/jetified-firebase-installations-17.2.0/AndroidManifest.xml:20:17-82
+141            <meta-data
+141-->[com.google.firebase:firebase-common-ktx:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/47c8e9af01620bdc19a975b7069cabd4/transformed/jetified-firebase-common-ktx-20.4.3/AndroidManifest.xml:12:13-14:85
+142                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+142-->[com.google.firebase:firebase-common-ktx:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/47c8e9af01620bdc19a975b7069cabd4/transformed/jetified-firebase-common-ktx-20.4.3/AndroidManifest.xml:13:17-116
+143                android:value="com.google.firebase.components.ComponentRegistrar" />
+143-->[com.google.firebase:firebase-common-ktx:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/47c8e9af01620bdc19a975b7069cabd4/transformed/jetified-firebase-common-ktx-20.4.3/AndroidManifest.xml:14:17-82
+144            <meta-data
+144-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:35:13-37:85
+145                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+145-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:36:17-109
+146                android:value="com.google.firebase.components.ComponentRegistrar" />
+146-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:37:17-82
+147            <meta-data
+147-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/boroboro/.gradle/caches/transforms-3/81b1eaa4c326e28d1d88edf14cf3fdfa/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+148                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+148-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/boroboro/.gradle/caches/transforms-3/81b1eaa4c326e28d1d88edf14cf3fdfa/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+149                android:value="com.google.firebase.components.ComponentRegistrar" />
+149-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/boroboro/.gradle/caches/transforms-3/81b1eaa4c326e28d1d88edf14cf3fdfa/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+150        </service>
+151
+152        <provider
+152-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:43:9-47:38
+153            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+153-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:44:13-102
+154            android:authorities="com.boroboro01.pocekt_teacher.flutterfirebasemessaginginitprovider"
+154-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:45:13-88
+155            android:exported="false"
+155-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:46:13-37
+156            android:initOrder="99" />
+156-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:47:13-35
+157
+158        <service
+158-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:26:9-29:40
+159            android:name="com.nankai.flutter_nearby_connections.NearbyService"
+159-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:27:13-79
+160            android:enabled="true"
+160-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:28:13-35
+161            android:exported="false" />
+161-->[:flutter_nearby_connections] /Users/boroboro/Capstone/capstone/build/flutter_nearby_connections/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-37
+162
+163        <provider
+163-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:9-19:20
+164            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+164-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-82
+165            android:authorities="com.boroboro01.pocekt_teacher.flutter.image_provider"
+165-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-74
+166            android:exported="false"
+166-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-37
+167            android:grantUriPermissions="true" >
+167-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-47
+168            <meta-data
+168-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-18:75
+169                android:name="android.support.FILE_PROVIDER_PATHS"
+169-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-67
+170                android:resource="@xml/flutter_image_picker_file_paths" />
+170-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:18:17-72
+171        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
+172        <service
+172-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:21:9-33:19
+173            android:name="com.google.android.gms.metadata.ModuleDependencies"
+173-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-78
+174            android:enabled="false"
+174-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-36
+175            android:exported="false" >
+175-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:24:13-37
+176            <intent-filter>
+176-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:26:13-28:29
+177                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+177-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:27:17-94
+177-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:27:25-91
+178            </intent-filter>
 179
-180        <activity
-180-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
-181            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-181-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
-182            android:exported="false"
-182-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
-183            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-183-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+180            <meta-data
+180-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-32:36
+181                android:name="photopicker_activity:0:required"
+181-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:31:17-63
+182                android:value="" />
+182-->[:image_picker_android] /Users/boroboro/Capstone/capstone/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:32:17-33
+183        </service>
 184
-185        <meta-data
-185-->[com.google.android.gms:play-services-basement:18.3.0] /Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
-186            android:name="com.google.android.gms.version"
-186-->[com.google.android.gms:play-services-basement:18.3.0] /Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
-187            android:value="@integer/google_play_services_version" />
-187-->[com.google.android.gms:play-services-basement:18.3.0] /Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
-188
-189        <uses-library
-189-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
-190            android:name="androidx.window.extensions"
-190-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
-191            android:required="false" />
-191-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
-192        <uses-library
-192-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
-193            android:name="androidx.window.sidecar"
-193-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
-194            android:required="false" />
-194-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
-195
-196        <provider
-196-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
-197            android:name="androidx.startup.InitializationProvider"
-197-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:25:13-67
-198            android:authorities="com.boroboro01.pocekt_teacher.androidx-startup"
-198-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:26:13-68
-199            android:exported="false" >
-199-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:27:13-37
-200            <meta-data
-200-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-201                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-201-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-202                android:value="androidx.startup" />
-202-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-203        </provider>
-204
-205        <receiver
-205-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-206            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-206-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-207            android:directBootAware="false"
-207-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-208            android:enabled="true"
-208-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-209            android:exported="true"
-209-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-210            android:permission="android.permission.DUMP" >
-210-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-211            <intent-filter>
-211-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-212                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-212-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-212-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-213            </intent-filter>
-214            <intent-filter>
-214-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-215                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-215-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-215-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-216            </intent-filter>
-217            <intent-filter>
-217-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-218                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-218-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-218-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-219            </intent-filter>
-220            <intent-filter>
-220-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-221                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-221-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-221-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-222            </intent-filter>
-223        </receiver>
+185        <receiver
+185-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:29:9-40:20
+186            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+186-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:30:13-78
+187            android:exported="true"
+187-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:31:13-36
+188            android:permission="com.google.android.c2dm.permission.SEND" >
+188-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:32:13-73
+189            <intent-filter>
+189-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:32:13-34:29
+190                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+190-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:17-81
+190-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:25-78
+191            </intent-filter>
+192
+193            <meta-data
+193-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:37:13-39:40
+194                android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
+194-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:38:17-92
+195                android:value="true" />
+195-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:39:17-37
+196        </receiver>
+197        <!--
+198             FirebaseMessagingService performs security checks at runtime,
+199             but set to not exported to explicitly avoid allowing another app to call it.
+200        -->
+201        <service
+201-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:46:9-53:19
+202            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+202-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:47:13-82
+203            android:directBootAware="true"
+203-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:48:13-43
+204            android:exported="false" >
+204-->[com.google.firebase:firebase-messaging:23.4.1] /Users/boroboro/.gradle/caches/transforms-3/2e75d919f89a6d46e92f673ac08e4a01/transformed/jetified-firebase-messaging-23.4.1/AndroidManifest.xml:49:13-37
+205            <intent-filter android:priority="-500" >
+205-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:29
+206                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+206-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-78
+206-->[:firebase_messaging] /Users/boroboro/Capstone/capstone/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-75
+207            </intent-filter>
+208        </service>
+209
+210        <provider
+210-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:23:9-28:39
+211            android:name="com.google.firebase.provider.FirebaseInitProvider"
+211-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:24:13-77
+212            android:authorities="com.boroboro01.pocekt_teacher.firebaseinitprovider"
+212-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:25:13-72
+213            android:directBootAware="true"
+213-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:26:13-43
+214            android:exported="false"
+214-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:27:13-37
+215            android:initOrder="100" /> <!-- Needs to be explicitly declared on P+ -->
+215-->[com.google.firebase:firebase-common:20.4.3] /Users/boroboro/.gradle/caches/transforms-3/5bf30d9b63fd0668597b155398bdbe53/transformed/jetified-firebase-common-20.4.3/AndroidManifest.xml:28:13-36
+216        <uses-library
+216-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:39:9-41:40
+217            android:name="org.apache.http.legacy"
+217-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:40:13-50
+218            android:required="false" />
+218-->[com.google.android.gms:play-services-maps:18.2.0] /Users/boroboro/.gradle/caches/transforms-3/5d22973caaab300df0b96d8d7b6d81b9/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:41:13-37
+219
+220        <activity
+220-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+221            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+221-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+222            android:exported="false"
+222-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+223            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+223-->[com.google.android.gms:play-services-base:18.0.1] /Users/boroboro/.gradle/caches/transforms-3/38e2dc481b45963dc5de745aa2d04c21/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
 224
-225        <service
-225-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
-226            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-226-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
-227            android:exported="false" >
-227-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
-228            <meta-data
-228-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
-229                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-229-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
-230                android:value="cct" />
-230-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
-231        </service>
-232        <service
-232-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
-233            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-233-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
-234            android:exported="false"
-234-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
-235            android:permission="android.permission.BIND_JOB_SERVICE" >
-235-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
-236        </service>
-237
-238        <receiver
-238-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
-239            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-239-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
-240            android:exported="false" />
-240-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
-241    </application>
-242
-243</manifest>
+225        <meta-data
+225-->[com.google.android.gms:play-services-basement:18.3.0] /Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
+226            android:name="com.google.android.gms.version"
+226-->[com.google.android.gms:play-services-basement:18.3.0] /Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
+227            android:value="@integer/google_play_services_version" />
+227-->[com.google.android.gms:play-services-basement:18.3.0] /Users/boroboro/.gradle/caches/transforms-3/22a7b4450b5c1e0a339618117b1ce9ce/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
+228
+229        <uses-library
+229-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+230            android:name="androidx.window.extensions"
+230-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+231            android:required="false" />
+231-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+232        <uses-library
+232-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+233            android:name="androidx.window.sidecar"
+233-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+234            android:required="false" />
+234-->[androidx.window:window:1.0.0-beta04] /Users/boroboro/.gradle/caches/transforms-3/4c8a1024155ca56df8549f23c1169f94/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+235
+236        <provider
+236-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+237            android:name="androidx.startup.InitializationProvider"
+237-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:25:13-67
+238            android:authorities="com.boroboro01.pocekt_teacher.androidx-startup"
+238-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:26:13-68
+239            android:exported="false" >
+239-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:27:13-37
+240            <meta-data
+240-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+241                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+241-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+242                android:value="androidx.startup" />
+242-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+243        </provider>
+244
+245        <receiver
+245-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+246            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+246-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+247            android:directBootAware="false"
+247-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+248            android:enabled="true"
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+249            android:exported="true"
+249-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+250            android:permission="android.permission.DUMP" >
+250-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+251            <intent-filter>
+251-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+252                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+252-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+252-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+253            </intent-filter>
+254            <intent-filter>
+254-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+255                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+255-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+255-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+256            </intent-filter>
+257            <intent-filter>
+257-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+258                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+258-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+258-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+259            </intent-filter>
+260            <intent-filter>
+260-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+261                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+261-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+261-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/boroboro/.gradle/caches/transforms-3/38f6b6525a92602575c09d4fb613185b/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+262            </intent-filter>
+263        </receiver>
+264
+265        <service
+265-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+266            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+266-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+267            android:exported="false" >
+267-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+268            <meta-data
+268-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+269                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+269-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+270                android:value="cct" />
+270-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/fe23318d7e60afb8ebf02bc98b77bffb/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+271        </service>
+272        <service
+272-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+273            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+273-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+274            android:exported="false"
+274-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+275            android:permission="android.permission.BIND_JOB_SERVICE" >
+275-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+276        </service>
+277
+278        <receiver
+278-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+279            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+279-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+280            android:exported="false" />
+280-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/boroboro/.gradle/caches/transforms-3/511cc5e302865ed524294037059042e5/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+281    </application>
+282
+283</manifest>

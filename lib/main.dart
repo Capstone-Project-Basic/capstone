@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocekt_teacher/api/firebase_api.dart';
 import 'package:pocekt_teacher/constants.dart';
+import 'package:pocekt_teacher/highfive.dart';
 import 'package:pocekt_teacher/screens/notification_screen.dart';
 import 'package:pocekt_teacher/screens/welcome/login_screen.dart';
 import 'package:pocekt_teacher/screens/welcome/registration_screen.dart';
@@ -54,6 +55,7 @@ class _PocketTeacherState extends State<PocketTeacher> {
         RegistrationScreen.id: (context) => const RegistrationScreen(),
         MainScreen.id: (context) => const MainScreen(),
         NotificationScreen.id: (context) => const NotificationScreen(),
+        Highfive.id: (context) => const Highfive(),
         // StampScreen.id
       },
     );
