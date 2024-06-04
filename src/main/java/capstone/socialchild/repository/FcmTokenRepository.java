@@ -19,6 +19,9 @@ public interface FcmTokenRepository extends JpaRepository<FcmToken,Long> {
         @Query("SELECT t.token FROM Fcm_Token t WHERE t.token <> :exceptToken")
         List<String> findAllTokensExcept(@Param("exceptToken") String exceptToken);
 
+        @Query("SELECT t.memberId FROM Fcm_Token t WHERE t.token = :token")
+        Long findIdByToken(@Param("token") String token);
+
         @Query("SELECT t.token FROM Fcm_Token t WHERE t.token <> :exceptToken1 AND t.token <> :exceptToken2")
         List<String> findAllTokensExceptTwo(
                 @Param("exceptToken1") String exceptToken1,

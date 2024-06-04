@@ -8,6 +8,7 @@ import capstone.socialchild.dto.fcm.FcmRequestDto;
 import capstone.socialchild.dto.fcm.FcmRequestDto2;
 import capstone.socialchild.dto.mission.MissionListResponseDto;
 import capstone.socialchild.repository.FcmTokenRepository;
+import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.service.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,8 @@ public class FcmController {
     private final FirebaseCloudMessageService firebaseCloudMessageService;
     @Autowired
     private FcmTokenRepository fcmTokenRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(FcmController.class);
 
@@ -73,8 +76,12 @@ public class FcmController {
                 List<String> yo = fcmTokenRepository.flagTrue();
                 requestDto2.setToken1(yo.get(0));
                 requestDto2.setToken2(yo.get(1));
-                requestDto2.setTitle("ㅎㅇ");
-                requestDto2.setBody("뭐요");
+                requestDto2.setTitle("친구들이 만났어요 !");
+                requestDto2.setBody(
+                        memberRepository.findNameById(fcmTokenRepository.findIdByToken(yo.get(0)))
+                        + " 친구와 " + memberRepository.findNameById(fcmTokenRepository.findIdByToken(yo.get(1)))
+                        + " 친구가 하이파이브에 성공했어요 !"
+                );
                 firebaseCloudMessageService.sendMessageToAllExceptTwo(
                         requestDto2.getToken1(), requestDto2.getToken2()
                         , requestDto2.getTitle(), requestDto2.getBody());
