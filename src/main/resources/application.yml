@@ -1,7 +1,7 @@
 spring:
   h2:
     console:
-      enabled: true #false 해야함
+      enabled: false
   jpa:
     defer-datasource-initialization: true
     hibernate:
@@ -9,16 +9,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#  datasource:
-#    url: jdbc:mysql://basic-capstone-socialchild.c7sqiiwaofcr.eu-north-1.rds.amazonaws.com:3306/socialchilddb
-#    username: root
-#    password: Sbtmxkxmzpdlwldb!04250217!!
-#    driver-class-name: com.mysql.cj.jdbc.Driver
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test2
-    username: sa
-    password: sa
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 
 logging:
