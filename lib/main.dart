@@ -47,7 +47,7 @@ class _PocketTeacherState extends State<PocketTeacher> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: MainScreen.id,
+      initialRoute: WelcomeScreen.id,
       navigatorKey: navigatorKey,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),

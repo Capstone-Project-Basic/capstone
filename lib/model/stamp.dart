@@ -7,26 +7,26 @@ String StampModelToJson(StampModel data) => json.encode(data.toJson());
 class StampModel {
   StampModel({
     required this.id,
-    required this.missionId,
+    required this.successMissionId,
     required this.memberId,
   });
 
   int id;
-  String missionId;
-  String memberId;
+  int successMissionId;
+  int memberId;
 
   factory StampModel.fromJson(Map<String, dynamic> json) => StampModel(
-      missionId: json["stampEmail"],
-      memberId: json["stampPassword"],
+      successMissionId: json["successMissionId"] ?? "",
+      memberId: json["memberId"] ?? "",
       id: json["id"]);
 
   Map<String, dynamic> toJson() => {
-        "stampEmail": missionId,
-        "stampPassword": memberId,
+        "successMissionId": successMissionId,
+        "memberId": memberId,
         'id': id,
       };
 
-  String get missionid => missionId;
+  int get successMissionid => successMissionId;
 
-  String get memberid => memberId;
+  int get memberid => memberId;
 }

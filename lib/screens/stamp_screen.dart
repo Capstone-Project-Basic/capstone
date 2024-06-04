@@ -5,6 +5,7 @@ import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/model/stamp.dart';
 import 'package:http/http.dart' as http;
+import 'package:pocekt_teacher/model/user.dart';
 
 class StampScreen extends StatefulWidget {
   const StampScreen({super.key});
@@ -38,20 +39,52 @@ class StampScreen extends StatefulWidget {
 const memberID = 1;
 bool showSpinner = false;
 
-Future<StampModel> fetchStamp() async {
+Future<UserModel> fetchMission() async {
+  final response =
+      await http.get(Uri.parse("http://13.51.143.99:8080/missions/active"));
+
+  if (response.statusCode == 200) {
+    return UserModel.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  } else {
+    throw Exception('Failed to load User');
+  }
+}
+
+Future<UserModel> fetchUser() async {
+  final response =
+      await http.get(Uri.parse("http://13.51.143.99:8080/members/$memberID"));
+
+  if (response.statusCode == 200) {
+    return UserModel.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  } else {
+    throw Exception('Failed to load User');
+  }
+}
+
+Future<List<StampModel>> fetchStamp() async {
   final response =
       await http.get(Uri.parse("http://13.51.143.99:8080/$memberID/stamps"));
 
+  // print('Status code: ${response.statusCode}');
+  // print('Response body: ${response.body}');
+
   if (response.statusCode == 200) {
-    return StampModel.fromJson(
-        jsonDecode(response.body) as Map<String, dynamic>);
+    final List body = json.decode(response.body);
+
+    print(body);
+
+    return body.map((e) => StampModel.fromJson(e)).toList();
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load Stamp');
   }
 }
 
 class _StampScreenState extends State<StampScreen> {
-  late Future<StampModel> futureStamp;
+  late Future<List<StampModel>> futureStamp;
+  late Future<UserModel> futureUser;
+  late final userName;
 
   Future<void> _showMission() async {
     return showDialog<void>(
@@ -59,6 +92,7 @@ class _StampScreenState extends State<StampScreen> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           titleTextStyle: kMediumText.copyWith(
             color: Colors.black,
             fontWeight: FontWeight.w300,
@@ -95,6 +129,7 @@ class _StampScreenState extends State<StampScreen> {
   @override
   void initState() {
     futureStamp = fetchStamp();
+    futureUser = fetchUser();
     super.initState();
   }
 
@@ -112,8 +147,7 @@ class _StampScreenState extends State<StampScreen> {
         highlightElevation: 0,
         disabledElevation: 0,
         elevation: 0,
-        // onPressed: () => _showMission(),
-        onPressed: () {},
+        onPressed: () => _showMission(),
         child: const Image(
           image: AssetImage('assets/images/teacher.png'),
         ),
@@ -125,9 +159,22 @@ class _StampScreenState extends State<StampScreen> {
           padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: [
-              const TitleCard(
-                title: '(name)의 도장 보관함',
-              ),
+              FutureBuilder(
+                  future: futureUser,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasData) {
+                      return TitleCard(
+                        title: snapshot.data!.name,
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                    }
+                    return const TitleCard(
+                      title: "There is no data",
+                    );
+                  }),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
@@ -144,23 +191,19 @@ class _StampScreenState extends State<StampScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: [
-                      FutureBuilder(
+                      FutureBuilder<List<StampModel>>(
                           future: futureStamp,
                           builder: (context, snapshot) {
-                            setState(() {
-                              showSpinner = true;
-                            });
-                            if (snapshot.hasData) {
-                              showSpinner = false;
-                              return Stamp(
-                                  successMissionId: snapshot.data!.missionId);
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              //Connecting...
+                            } else if (snapshot.hasData) {
+                              final stamps = snapshot.data!;
+                              return buildStamp(stamps);
                             } else if (snapshot.hasError) {
-                              showSpinner = false;
-                              return Stamp(
-                                  successMissionId: '${snapshot.error}');
+                              print(snapshot.error);
                             }
-
-                            return const Text("Loading...");
+                            return const Text("No Data Available...");
                           }),
                     ],
                   ),
@@ -188,6 +231,18 @@ class _StampScreenState extends State<StampScreen> {
   }
 }
 
+Widget buildStamp(List<StampModel> stamps) {
+  return ListView.builder(
+    itemCount: stamps.length,
+    itemBuilder: (context, index) {
+      final stamp = stamps[index];
+      return Stamp(
+        successMissionId: stamp.successMissionId.toString(),
+      );
+    },
+  );
+}
+
 class Stamp extends StatelessWidget {
   const Stamp({
     super.key,
@@ -200,11 +255,11 @@ class Stamp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: children,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(8.0),
       ),
-      padding: const EdgeInsets.all(8.0),
-      child: const Text('Stamp'),
+      child:
+          const Image(image: AssetImage("assets/images/eto_mark10_tori.png")),
     );
   }
 }
@@ -231,7 +286,15 @@ class TitleCard extends StatelessWidget {
           color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Center(child: Text(title)),
+        child: Center(
+            child: Text(
+          '$title의 도장 보관함',
+          style: const TextStyle(
+            color: Colors.black,
+            fontFamily: "Dongle",
+            fontSize: 30.0,
+          ),
+        )),
       ),
     );
   }

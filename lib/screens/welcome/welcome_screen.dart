@@ -61,9 +61,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const SizedBox(
-                      height: 70.0,
-                    ),
                     RoundedButton(
                       color: children_dark,
                       title: '시작하기',

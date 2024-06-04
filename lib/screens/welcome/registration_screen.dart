@@ -59,7 +59,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
 
     return UserModel(
-        id: 9999, loginID: 'error email', loginPassword: 'error password');
+        id: 9999,
+        loginID: 'error email',
+        loginPassword: 'error password',
+        name: 'error name');
   }
 
   bool _idIsVisible = true;
