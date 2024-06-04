@@ -4,6 +4,8 @@ import capstone.socialchild.domain.member.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,9 +19,34 @@ public class MemberRepository {
     @PersistenceContext
     private final EntityManager em;
 
+    @Transactional
     public Long save(Member member) {
-        em.persist(member);
-        return member.getId();
+        if (member.getId() == null) {
+            em.persist(member);
+            return member.getId();
+        } else {
+            Member mergedMember = em.merge(member);
+            return mergedMember.getId();
+        }
+    }
+
+    @Transactional
+    public void update(Member member) {
+        Long id = member.getId();
+        Long stampCnt = member.getStampCnt();
+
+        if (id == null) {
+            throw new IllegalArgumentException("Member ID must not be null for update.");
+        }
+
+        Query query = em.createQuery("UPDATE Member m SET m.StampCnt = :stampCnt WHERE m.id = :id");
+        query.setParameter("stampCnt", stampCnt);
+        query.setParameter("id", id);
+
+        int updatedCount = query.executeUpdate();
+        if (updatedCount == 0) {
+            throw new IllegalArgumentException("No Member entity with the given ID was found for update.");
+        }
     }
 
     public Member findOne(Long id) {
@@ -30,6 +57,13 @@ public class MemberRepository {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
+
+    public String findNameById(Long memberId) {
+        return em.createQuery("select m.name from Member m where m.id = :memberId", String.class)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+    }
+
 
     public List<Member> findById(Long id) {
         return em.createQuery("select m from Member m where m.id = :id", Member.class)
