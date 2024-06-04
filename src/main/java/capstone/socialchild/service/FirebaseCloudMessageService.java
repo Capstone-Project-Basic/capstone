@@ -1,12 +1,15 @@
 package capstone.socialchild.service;
 
+import capstone.socialchild.domain.member.FcmToken;
 import capstone.socialchild.dto.fcm.FcmMessage;
+import capstone.socialchild.dto.fcm.FcmRequestDto2;
 import capstone.socialchild.repository.FcmTokenRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -24,8 +27,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
+    @Autowired
     private final ObjectMapper objectMapper;
+    @Autowired
     private final FcmTokenRepository fcmTokenRepository;
+
+
+    public void saveToken(FcmToken fcmToken) {
+        fcmTokenRepository.save(fcmToken);
+    }
 
     public void sendMessageTo(String targetToken, String title, String body) {
         try {
@@ -51,6 +61,17 @@ public class FirebaseCloudMessageService {
             sendMessage(message);
         }
     }
+
+
+
+    public void sendMessageToAllExceptTwo(String exceptToken1, String exceptToken2, String title, String body) throws IOException {
+        List<String> tokens = fcmTokenRepository.findAllTokensExceptTwo(exceptToken1, exceptToken2);
+        for (String token : tokens) {
+            String message = makeMessage(token, title, body);
+            sendMessage(message);
+        }
+    }
+
 
     private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
