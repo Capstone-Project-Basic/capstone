@@ -54,7 +54,6 @@ public class LoginController {
         FcmToken fcmToken = new FcmToken(memberIdForToken,request.getToken());
         firebaseCloudMessageService.saveToken(fcmToken);
 
-        memberService.join(member);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원 가입 성공");
     }
 
