@@ -69,6 +69,8 @@ public class StampService {
                 .successMission(successMission)
                 .build();
         stampRepository.save(stamp);
+        Long stampCnt = member.getStampCnt();
+        member.setStampCnt(stampCnt + 1);
         return new StampResponseDto(stamp);
     }
 
