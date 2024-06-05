@@ -23,8 +23,8 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
 @Slf4j
+@RestController
 @RequiredArgsConstructor
 public class LoginController {
 

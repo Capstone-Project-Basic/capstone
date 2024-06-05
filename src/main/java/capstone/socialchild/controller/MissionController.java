@@ -5,11 +5,9 @@ import capstone.socialchild.dto.mission.MissionRequestDto;
 import capstone.socialchild.dto.mission.MissionResponseDto;
 import capstone.socialchild.dto.mission.MissionStatusReqDto;
 import capstone.socialchild.service.MissionService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"https://localhost:8080"}) // Flutter 포트번호에 따라 바뀔 수 있음
 @RequestMapping("/missions")
 public class MissionController {
 

@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/api/fcm")
-@RestController
-@RequiredArgsConstructor
 @Slf4j
+@RestController
+@RequestMapping("/api/fcm")
+@RequiredArgsConstructor
 public class FcmController {
 
     private final FirebaseCloudMessageService firebaseCloudMessageService;

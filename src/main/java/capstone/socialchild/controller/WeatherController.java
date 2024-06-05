@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/weather/*")
+@RequestMapping("/weather")
 public class WeatherController {
 
-    @RequestMapping("/weather")
+    @RequestMapping
     public Weather showWeather(){
         Weather nowWeather = new Weather();
         nowWeather.setDate(nowWeather.date()); //날짜
