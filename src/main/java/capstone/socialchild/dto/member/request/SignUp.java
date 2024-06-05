@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -14,6 +15,7 @@ import java.time.LocalDate;
  * 회원가입 request
  */
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignUp {
@@ -33,10 +35,12 @@ public class SignUp {
     @NotEmpty(message = "신분을 선택해주세요!")
     private Role role;              // 역할[CHILD, TEACHER]
 
-    @NotEmpty
-    private String token; //회원가입 시 기기 고유 토큰
+    private Long stampCnt;
+
+    private Double latitude;
+    private Double longitude;
 
     public Member toMember() {
-        return Member.createMember(loginId, loginPassword, name, birth, gender, phone_no, role);
+        return Member.createMember(loginId, loginPassword, name, birth, gender, phone_no, role, stampCnt, latitude, longitude);
     }
 }
