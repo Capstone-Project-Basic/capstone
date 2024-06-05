@@ -6,11 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.Base64;
 
 import static jakarta.persistence.EnumType.STRING;
 
@@ -20,8 +16,9 @@ import static jakarta.persistence.EnumType.STRING;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column(name = "member_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -40,10 +37,16 @@ public class Member {
     private Role role;
 
     @Column
-    private Long StampCnt;
+    private Long stampCnt;
+
+    @Column(nullable = true)
+    private Double latitude;
+
+    @Column(nullable = true)
+    private Double longitude;
 
     //==생성 메소드==//
-    public static Member createMember(String loginId, String loginPassword, String name, LocalDate birth, Gender gender, String phone_no, Role role) {
+    public static Member createMember(String loginId, String loginPassword, String name, LocalDate birth, Gender gender, String phone_no, Role role, Long stampCnt, Double latitude, Double longitude) {
 
         Member member = new Member();
 
@@ -54,26 +57,10 @@ public class Member {
         member.setGender(gender);
         member.setPhone_no(phone_no);
         member.setRole(role);
-        member.setStampCnt(0L);
+        member.setStampCnt(stampCnt);
+        member.setLatitude(latitude);
+        member.setLongitude(longitude);
+
         return member;
     }
-
-//    public static String encrypt(String password) {
-//        String salt = getSalt();
-//        String saltedPassword = password + salt;
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("SHA-256");
-//            byte[] hashedPassword = md.digest(saltedPassword.getBytes());
-//            return Base64.getEncoder().encodeToString(hashedPassword);
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException("Failed to hash password", e);
-//        }
-//    }
-//
-//    private static String getSalt() {
-//        SecureRandom random = new SecureRandom();
-//        byte[] salt = new byte[16];
-//        random.nextBytes(salt);
-//        return Base64.getEncoder().encodeToString(salt);
-//    }
 }
