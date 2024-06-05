@@ -38,19 +38,6 @@ public class MemberController {
     }
 
     /**
-     * 회원 전체 조회
-     */
-    @GetMapping
-    public List<DetailMember> findAllDetailMembers() {
-
-        List<Member> members = memberRepository.findAll();
-
-        return members.stream()
-                .map(DetailMember::of)
-                .toList();
-    }
-
-    /**
      * 회원 검색(이름)
      */
     @GetMapping("/search")

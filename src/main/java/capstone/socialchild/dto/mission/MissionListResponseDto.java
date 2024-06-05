@@ -12,6 +12,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 public class MissionListResponseDto {
+    private Long missionId;
     private String title;
     private String content;
     private Grade grade;
@@ -19,12 +20,14 @@ public class MissionListResponseDto {
 
     //Entity -> Dto
     public MissionListResponseDto(Mission mission) {
+        this.missionId = mission.getMissionId();
         this.title = mission.getTitle();
         this.content = mission.getContent();
         this.grade = mission.getGrade();
         this.activeStatus = mission.getActiveStatus();
     }
     public MissionListResponseDto(Optional<Mission> mission) {
+        this.missionId = mission.get().getMissionId();
         this.title = mission.get().getTitle();
         this.content = mission.get().getContent();
         this.grade = mission.get().getGrade();
