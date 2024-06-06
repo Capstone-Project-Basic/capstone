@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->/Users/boroboro/.pub-cache/hosted/pub.dev/geolocator_android-2.1.0/android/src/main/AndroidManifest.xml
+6-->/Users/chuuuuu__jin/.pub-cache/hosted/pub.dev/geolocator_android-2.1.0/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="16" />
-7-->/Users/boroboro/.pub-cache/hosted/pub.dev/geolocator_android-2.1.0/android/src/main/AndroidManifest.xml
+7-->/Users/chuuuuu__jin/.pub-cache/hosted/pub.dev/geolocator_android-2.1.0/android/src/main/AndroidManifest.xml
 8
 9</manifest>
