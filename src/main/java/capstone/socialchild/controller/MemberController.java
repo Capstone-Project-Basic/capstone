@@ -1,21 +1,15 @@
 package capstone.socialchild.controller;
 
 import capstone.socialchild.domain.member.Member;
-import capstone.socialchild.dto.member.request.SignIn;
-import capstone.socialchild.dto.member.request.SignUp;
 import capstone.socialchild.dto.member.request.UpdateMember;
 import capstone.socialchild.dto.member.response.DetailMember;
 import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
