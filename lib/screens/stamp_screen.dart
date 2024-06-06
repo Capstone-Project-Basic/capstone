@@ -229,7 +229,7 @@ class _StampScreenState extends State<StampScreen> {
                 }),
             Container(
               decoration: const BoxDecoration(
-                color: children_light,
+                color: Color.fromRGBO(238, 238, 238, 1),
               ),
               child: GridView.count(
                 primary: false,
@@ -256,9 +256,6 @@ class _StampScreenState extends State<StampScreen> {
                       }),
                 ],
               ),
-            ),
-            Container(
-              height: 10,
             ),
             const TitleCard(title: '도장 순위'),
             FutureBuilder<List<UserModel>>(
@@ -368,30 +365,25 @@ class TitleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 16.0,
-      ),
-      child: Container(
-        height: 50,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            color: children_light,
-            border: Border.symmetric(
-                horizontal: BorderSide(
-              color: children_dark,
-              width: 2,
-            ))),
-        child: Center(
-            child: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.black,
-            fontFamily: "Dongle",
-            fontSize: 30.0,
-          ),
-        )),
-      ),
+    return Container(
+      height: 50,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+          color: children_light,
+          border: Border.symmetric(
+              horizontal: BorderSide(
+            color: children_dark,
+            width: 2,
+          ))),
+      child: Center(
+          child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.black,
+          fontFamily: "Dongle",
+          fontSize: 35.0,
+        ),
+      )),
     );
   }
 }
@@ -423,7 +415,7 @@ class NameCard extends StatelessWidget {
           color: backgroundColor,
           border: const Border(
               bottom: BorderSide(
-            color: children_dark,
+            color: children,
             width: 1,
           ))
           // borderRadius: BorderRadius.circular(8),
@@ -481,6 +473,9 @@ class NameCard extends StatelessWidget {
                   FaIcon(
                     icon,
                     color: color,
+                    shadows: const <Shadow>[
+                      Shadow(color: Colors.black, blurRadius: 15.0)
+                    ],
                   ),
                   const SizedBox(
                     width: 10.0,

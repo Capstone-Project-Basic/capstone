@@ -89,11 +89,11 @@ class ProfilePageState extends State<ProfilePage> {
 
   bool _isEditing = false;
   final TextEditingController _nameController =
-      TextEditingController(text: '김동글');
+      TextEditingController(text: loginUser.name);
   final TextEditingController _birthController =
       TextEditingController(text: '2010.09.23');
   final TextEditingController _introController =
-      TextEditingController(text: '안녕 나는 김동글 이고 축구를 좋아해 친하게 지내자');
+      TextEditingController(text: '안녕 나는 ${loginUser.name} 이고 축구를 좋아해 친하게 지내자');
   XFile? _imageFile;
 
   @override
@@ -130,7 +130,6 @@ class ProfilePageState extends State<ProfilePage> {
         introController: _introController,
         imageFile: _imageFile,
         onImageTap: _pickImage,
-        userName: "koko",
       ),
     );
   }
@@ -153,15 +152,12 @@ class ProfileWidget extends StatelessWidget {
   final XFile? imageFile;
   final VoidCallback? onImageTap;
 
-  final String userName;
-
   const ProfileWidget({
     Key? key,
     required this.isEditing,
     required this.nameController,
     required this.birthController,
     required this.introController,
-    required this.userName,
     this.imageFile,
     this.onImageTap,
   }) : super(key: key);
