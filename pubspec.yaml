@@ -20,6 +20,13 @@ dependencies:
   geolocator: ^7.6.2
   geocoding: ^2.0.0
   permission_handler: ^9.2.0
+  shake_detector: ^0.1.2
+  flutter_nearby_connections: ^1.1.2
+  flutter_styled_toast: ^2.2.1
+  device_info_plus: ^10.1.0
+  vibration: ^1.9.0
+  material_dialogs: ^1.1.4
+  lottie: ^2.7.0
   
 
 dev_dependencies:
@@ -33,7 +40,8 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/map_style.json
+    - assets/lottie/
+    - assets/map/
 
   # example:
   fonts:
