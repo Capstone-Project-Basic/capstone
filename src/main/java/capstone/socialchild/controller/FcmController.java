@@ -1,13 +1,9 @@
 package capstone.socialchild.controller;
 
-
-import capstone.socialchild.domain.member.FcmToken;
-import capstone.socialchild.domain.mission.Mission;
 import capstone.socialchild.dto.fcm.Dto;
 import capstone.socialchild.dto.fcm.FcmRequestDto;
 import capstone.socialchild.dto.fcm.FcmRequestDto2;
 import capstone.socialchild.dto.fcm.SendToOneDto;
-import capstone.socialchild.dto.mission.MissionListResponseDto;
 import capstone.socialchild.repository.FcmTokenRepository;
 import capstone.socialchild.repository.MemberRepository;
 import capstone.socialchild.service.FirebaseCloudMessageService;
@@ -21,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -49,7 +44,10 @@ public class FcmController {
     @PostMapping("/sendToOne")
     public ResponseEntity<String> sendToTone(@RequestBody SendToOneDto sendToOneDto) {
         String targetToken= fcmTokenRepository.findTokenByMemberId(sendToOneDto.getMemberId());
-        firebaseCloudMessageService.sendMessageTo(targetToken,"제목","내용");
+        firebaseCloudMessageService.sendMessageTo(targetToken,
+                "친구가 나를 불러요 !",
+                memberRepository.findNameById(sendToOneDto.getMemberId()) +
+                        " 친구가 " + sendToOneDto.getLocation()+ "에서 나를 불러요 !");
         return ResponseEntity.ok().build();
     }
 

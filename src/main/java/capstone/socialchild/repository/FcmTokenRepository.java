@@ -13,8 +13,9 @@ import java.util.List;
 @Repository
 public interface FcmTokenRepository extends JpaRepository<FcmToken,Long> {
 
+        @Query("SELECT t.token FROM Fcm_Token t WHERE t.memberId = :memberId")
+        String findTokenByMemberId(@Param("memberId") Long memberId);
 
-        String findTokenByMemberId(Long memberId);
         @Query("SELECT t.token FROM Fcm_Token t WHERE t.token <> :exceptToken")
         List<String> findAllTokensExcept(@Param("exceptToken") String exceptToken);
 
