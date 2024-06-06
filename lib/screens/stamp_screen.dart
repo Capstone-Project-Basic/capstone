@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pocekt_teacher/constants.dart';
@@ -12,6 +13,7 @@ import 'package:pocekt_teacher/model/user.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:pocekt_teacher/utils/cookie_manager.dart';
 import 'package:material_dialogs/material_dialogs.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StampScreen extends StatefulWidget {
   const StampScreen({super.key});
@@ -81,30 +83,11 @@ Future<List<StampModel>> fetchStamp(memberID) async {
 }
 
 Future<List<UserModel>> fetchMembers() async {
-  // var dio = Dio();
-  // dio.interceptors.add(CookieManager(MyCookieManager.instance.cookieJar));
-
-  // try {
-  //   final response = await dio.get("http://13.51.143.99:8080/members");
-
-  //   print("fetchmembers : ${response.statusCode}");
-  //   print("fetchmembers : ${response.data}");
-
-  //   if (response.statusCode == 200) {
-  //     final List<dynamic> body = response.data;
-  //     return body.map((e) => UserModel.fromJson(e)).toList();
-  //   } else {
-  //     throw Exception('Failed to load members data');
-  //   }
-  // } catch (e) {
-  //   print("Error during communication: $e");
-  //   throw Exception('Failed to load members data');
-  // }
   final response =
       await http.get(Uri.parse("http://13.51.143.99:8080/members"));
 
   if (response.statusCode == 200) {
-    final List body = json.decode(response.body);
+    final List body = json.decode(utf8.decode(response.bodyBytes));
     return body.map((e) => UserModel.fromJson(e)).toList();
   } else {
     throw Exception('Failed to load Stamp data');
@@ -126,7 +109,6 @@ class _StampScreenState extends State<StampScreen> {
     missionTitle: "",
     missionContent: "",
   ));
-  late final userName;
 
   Future<void> _showMission() async {
     Dialogs.materialDialog(
@@ -205,6 +187,7 @@ class _StampScreenState extends State<StampScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String userName = loginUser.name;
     return Scaffold(
       floatingActionButton: FloatingActionButton.large(
         backgroundColor: Colors.transparent,
@@ -222,84 +205,79 @@ class _StampScreenState extends State<StampScreen> {
           image: AssetImage('assets/images/teacher.png'),
         ),
       ),
-      backgroundColor: children_light,
+      backgroundColor: Colors.white,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView(
-            children: [
-              FutureBuilder(
-                  future: futureUser,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasData) {
-                      return TitleCard(
-                        title: snapshot.data!.name,
-                      );
-                    } else if (snapshot.hasError) {
-                      print(snapshot.error);
-                    }
-                    return const TitleCard(
-                      title: "There is no data",
-                    );
-                  }),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.grey.shade200,
-                  ),
-                  child: GridView.count(
-                    primary: false,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 5,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    children: [
-                      FutureBuilder<List<StampModel>>(
-                          future: futureStamp,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              //Connecting...
-                            } else if (snapshot.hasData) {
-                              final stamps = snapshot.data!;
-                              return buildStamp(stamps);
-                            } else if (snapshot.hasError) {
-                              print(snapshot.error);
-                            }
-                            return const Text("No Data Available...");
-                          }),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: 30,
-              ),
-              FutureBuilder<List<UserModel>>(
-                future: futureMembers,
+        child: ListView(
+          children: [
+            FutureBuilder(
+                future: futureUser,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    //Connecting...
+                    showSpinner = true;
                   } else if (snapshot.hasData) {
-                    final users = snapshot.data!;
-                    users.sort((a, b) => a.stampCnt.compareTo(b.stampCnt));
-                    print(users);
-                    return buildRanking(users);
+                    userName = snapshot.data!.name;
+                    return TitleCard(
+                      title: '$userName의 도장 보관함',
+                    );
                   } else if (snapshot.hasError) {
                     print(snapshot.error);
                   }
-                  return const Text("No Data Available...");
-                },
+                  return const TitleCard(
+                    title: "There is no data",
+                  );
+                }),
+            Container(
+              decoration: const BoxDecoration(
+                color: children_light,
               ),
-            ],
-          ),
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 5,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  FutureBuilder<List<StampModel>>(
+                      future: futureStamp,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          //Connecting...
+                        } else if (snapshot.hasData) {
+                          final stamps = snapshot.data!;
+                          return buildStamp(stamps);
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                        }
+                        return const Text("No Data Available...");
+                      }),
+                ],
+              ),
+            ),
+            Container(
+              height: 10,
+            ),
+            const TitleCard(title: '도장 순위'),
+            FutureBuilder<List<UserModel>>(
+              future: futureMembers,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  //Connecting...
+                } else if (snapshot.hasData) {
+                  final users = snapshot.data!;
+                  users.sort((a, b) => a.stampCnt.compareTo(b.stampCnt));
+                  print(users);
+                  return buildRanking(users, userName);
+                } else if (snapshot.hasError) {
+                  print(snapshot.error);
+                }
+                return const Text("No Data Available...");
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -318,7 +296,7 @@ Widget buildStamp(List<StampModel> stamps) {
   );
 }
 
-Widget buildRanking(List<UserModel> users) {
+Widget buildRanking(List<UserModel> users, String userName) {
   print("users.length :${users.length}");
 
   return ListView.builder(
@@ -326,7 +304,35 @@ Widget buildRanking(List<UserModel> users) {
     itemCount: users.length,
     itemBuilder: (context, index) {
       final user = users[index];
-      return NameCard(ranking: index, name: user.name, stamps: user.stamp_cnt);
+      final rank = (index + 1).toString();
+      Color color = Colors.grey;
+      Color bgColor = Colors.grey.shade200;
+      IconData icon = FontAwesomeIcons.medal;
+
+      switch (rank) {
+        case '1':
+          color = const Color.fromRGBO(255, 213, 79, 1);
+          icon = FontAwesomeIcons.crown;
+          break;
+        case '2':
+          color = const Color.fromRGBO(255, 213, 79, 1);
+          break;
+        case '3':
+          color = const Color.fromRGBO(255, 213, 79, 1);
+          break;
+      }
+      if (user.name == userName) {
+        bgColor = children_light;
+      }
+
+      return NameCard(
+        ranking: rank,
+        name: user.name,
+        stamps: user.stamp_cnt,
+        color: color,
+        icon: icon,
+        backgroundColor: bgColor,
+      );
     },
   );
 }
@@ -364,19 +370,21 @@ class TitleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
         top: 16.0,
       ),
       child: Container(
         height: 50,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(8),
-        ),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            color: children_light,
+            border: Border.symmetric(
+                horizontal: BorderSide(
+              color: children_dark,
+              width: 2,
+            ))),
         child: Center(
             child: Text(
-          '$title의 도장 보관함',
+          title,
           style: const TextStyle(
             color: Colors.black,
             fontFamily: "Dongle",
@@ -394,32 +402,94 @@ class NameCard extends StatelessWidget {
     required this.ranking,
     required this.name,
     required this.stamps,
+    required this.color,
+    required this.backgroundColor,
+    required this.icon,
   });
 
-  int ranking;
+  String ranking;
   String name;
   int stamps;
+  Color color;
+  Color backgroundColor;
+  IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
-      child: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('$ranking $name $stamps'),
-            ),
-          ],
-        ),
+    return Container(
+      height: 60,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: backgroundColor,
+          border: const Border(
+              bottom: BorderSide(
+            color: children_dark,
+            width: 1,
+          ))
+          // borderRadius: BorderRadius.circular(8),
+          ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Text(
+                    '$ranking위',
+                    style: kSmallText.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 20.0),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  const CircleAvatar(
+                    radius: 15,
+                    backgroundImage: AssetImage('assets/images/hiyoko.png'),
+                  ),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  Text(
+                    name,
+                    style: kSmallText.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 20.0),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    '$stamps개의 도장',
+                    style: kSmallText.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 20.0),
+                  ),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  FaIcon(
+                    icon,
+                    color: color,
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -224,6 +224,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///Users/boroboro/.pub-cache/hosted/pub.dev/font_awesome_flutter-10.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "geocoding",
       "rootUri": "file:///Users/boroboro/.pub-cache/hosted/pub.dev/geocoding-2.2.2",
       "packageUri": "lib/",
@@ -644,7 +650,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-05T12:19:48.702561Z",
+  "generated": "2024-06-06T03:07:54.643422Z",
   "generator": "pub",
   "generatorVersion": "3.5.0-214.0.dev",
   "flutterRoot": "file:///opt/homebrew/Caskroom/flutter/3.13.1/flutter",
