@@ -78,6 +78,9 @@ public class MemberController {
         findMember.setName(request.getName());
         findMember.setBirth(request.getBirth());
         findMember.setPhone_no(request.getPhone_no());
+        findMember.setImagePath(request.getImagePath());
+
+        memberRepository.save(findMember);
     }
 
     /**

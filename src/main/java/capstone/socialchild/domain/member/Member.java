@@ -36,6 +36,9 @@ public class Member {
     @Enumerated(value = STRING)
     private Role role;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @Column
     private Long stampCnt;
 
@@ -46,7 +49,10 @@ public class Member {
     private Double longitude;
 
     //==생성 메소드==//
-    public static Member createMember(String loginId, String loginPassword, String name, LocalDate birth, Gender gender, String phone_no, Role role, Long stampCnt, Double latitude, Double longitude) {
+    public static Member createMember(String loginId, String loginPassword,
+                                      String name, LocalDate birth, Gender gender,
+                                      String phone_no, Role role, String imagePath, Long stampCnt,
+                                      Double latitude, Double longitude) {
 
         Member member = new Member();
 
@@ -57,6 +63,7 @@ public class Member {
         member.setGender(gender);
         member.setPhone_no(phone_no);
         member.setRole(role);
+        member.setImagePath(imagePath);
         member.setStampCnt(stampCnt);
         member.setLatitude(latitude);
         member.setLongitude(longitude);

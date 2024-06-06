@@ -41,7 +41,7 @@ public class LoginController {
         Member member = Member.createMember(
                 request.getLoginId(), request.getLoginPassword(),
                 request.getName(), request.getBirth(), request.getGender(),
-                request.getPhone_no(), request.getRole(),request.getStampCnt(),
+                request.getPhone_no(), request.getRole(), request.getImagePath(), request.getStampCnt(),
                 request.getLatitude(), request.getLongitude()
         );
         Long memberIdForToken = memberService.join(member);

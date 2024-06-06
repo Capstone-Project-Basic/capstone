@@ -33,7 +33,7 @@ public class MemberRepository {
             throw new IllegalArgumentException("Member ID must not be null for update.");
         }
 
-        Query query = em.createQuery("UPDATE Member m SET m.StampCnt = :stampCnt WHERE m.id = :id");
+        Query query = em.createQuery("UPDATE Member m SET m.stampCnt = :stampCnt WHERE m.id = :id");
         query.setParameter("stampCnt", stampCnt);
         query.setParameter("id", id);
 
