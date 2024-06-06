@@ -21,16 +21,26 @@ public class DetailMember {
     private Gender gender;          // 성별[MALE, FEMALE]
     private String phone_no;        // 전화번호
     private Role role;              // 역할[CHILD, TEACHER]
+    private String imagePath;       // 이미지
+    private Long stampCnt;          // 도장 개수
+    private Double latitude;
+    private Double longitude;
+
 
     public static DetailMember of(Member member) { // 정적 팩토리 메서드
         DetailMember detailMember = new DetailMember();
 
+        detailMember.id = member.getId();
         detailMember.loginId = member.getLoginId();
         detailMember.name = member.getName();
         detailMember.birth = member.getBirth();
         detailMember.gender = member.getGender();
         detailMember.phone_no = member.getPhone_no();
         detailMember.role = member.getRole();
+        detailMember.imagePath = member.getImagePath();
+        detailMember.stampCnt = member.getStampCnt();
+        detailMember.latitude = member.getLatitude();
+        detailMember.longitude = member.getLongitude();
 
         return detailMember;
     }
