@@ -35,6 +35,7 @@ public class SignUp {
     @NotEmpty(message = "신분을 선택해주세요!")
     private Role role;              // 역할[CHILD, TEACHER]
 
+    private String token; //회원가입 시 기기 고유 토큰
     private Long stampCnt;
 
     private Double latitude;

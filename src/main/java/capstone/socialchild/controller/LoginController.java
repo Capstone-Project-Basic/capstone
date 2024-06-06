@@ -4,7 +4,9 @@ import capstone.socialchild.config.SessionManager;
 import capstone.socialchild.domain.member.Member;
 import capstone.socialchild.dto.member.request.SignIn;
 import capstone.socialchild.dto.member.request.SignUp;
+import capstone.socialchild.service.FirebaseCloudMessageService;
 import capstone.socialchild.service.MemberService;
+import capstone.socialchild.domain.member.FcmToken;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ public class LoginController {
 
     private final MemberService memberService;
     private final SessionManager sessionManager;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     /**
      * 회원 가입
@@ -41,8 +44,9 @@ public class LoginController {
                 request.getPhone_no(), request.getRole(),request.getStampCnt(),
                 request.getLatitude(), request.getLongitude()
         );
-
-        memberService.join(member);
+        Long memberIdForToken = memberService.join(member);
+        FcmToken fcmToken = new FcmToken(memberIdForToken,request.getToken());
+        firebaseCloudMessageService.saveToken(fcmToken);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원 가입 성공");
     }
 
