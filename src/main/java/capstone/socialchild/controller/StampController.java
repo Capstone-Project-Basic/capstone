@@ -38,4 +38,10 @@ public class StampController {
                                      @RequestBody StampRequestDto requestDto) {
         return stampService.create(memberId, requestDto);
     }
+
+    @PostMapping("/{memberId}/stamps/Shake")
+    public StampResponseDto newStampShake(@PathVariable("memberId") Long memberId,
+                                     @RequestBody StampRequestDto requestDto) {
+        return stampService.createShake(memberId, requestDto);
+    }
 }

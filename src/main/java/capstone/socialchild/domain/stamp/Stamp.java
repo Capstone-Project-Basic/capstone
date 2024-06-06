@@ -23,7 +23,7 @@ public class Stamp {
     @JsonProperty("member_id")
     private Member member;
 
-    @OneToOne
+    @OneToOne(optional = true)
     @JsonProperty("success_mission_id")
     private SuccessMission successMission;
 
