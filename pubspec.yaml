@@ -27,6 +27,9 @@ dependencies:
   vibration: ^1.9.0
   material_dialogs: ^1.1.4
   lottie: ^2.7.0
+  cookie_jar: ^4.0.8
+  dio: ^5.4.3+1
+  dio_cookie_manager: ^3.1.1
   
 
 dev_dependencies:

@@ -2,13 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:developer';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lottie/lottie.dart';
-import 'package:material_dialogs/widgets/buttons/icon_button.dart';
-import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/constants.dart';
-import 'package:pocekt_teacher/resources/AnimatedVisibility.dart';
+import 'package:pocekt_teacher/model/token.dart';
 import 'package:vibration/vibration.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -17,6 +14,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
 import 'api/firebase_api.dart';
 import 'package:material_dialogs/material_dialogs.dart';
+import 'package:http/http.dart' as http;
+
+Future<Token> sendAlert(String token, BuildContext context) async {
+  var response = await http.post(
+      Uri.parse("http://13.51.143.99:8080/api/fcm/sendToAllExceptTwo2"),
+      headers: <String, String>{"Content-Type": "application/json"},
+      body: jsonEncode(<String, String>{
+        "token": token,
+      }));
+
+  String responseString = response.body;
+  if (response.statusCode == 200) {
+    print(response.body);
+  }
+
+  return Token(
+    id: 9999,
+    token: 'error email',
+  );
+}
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -371,7 +388,7 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
 
     bool isDialogShowing = false;
     subscription =
-        nearbyService.stateChangedSubscription(callback: (devicesList) {
+        nearbyService.stateChangedSubscription(callback: (devicesList) async {
       for (var element in devicesList) {
         print(
             "deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state}");
@@ -382,6 +399,8 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
             Vibration.vibrate(duration: 1000);
             if (!isDialogShowing) {
               isDialogShowing = true;
+              String token = devToken;
+              Token userToken = await sendAlert(token, context);
               Dialogs.materialDialog(
                   color: Colors.white,
                   msg: '하이파이브 성공!',

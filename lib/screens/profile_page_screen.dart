@@ -1,6 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pocekt_teacher/model/user.dart';
+import 'package:pocekt_teacher/screens/stamp_screen.dart';
+import 'package:pocekt_teacher/utils/cookie_manager.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const ProfileApp());
@@ -23,13 +30,70 @@ class ProfilePage extends StatefulWidget {
 
   @override
   ProfilePageState createState() => ProfilePageState();
+
+  Future<UserModel> currentUser() async {
+    var dio = Dio();
+    dio.interceptors.add(CookieManager(MyCookieManager.instance.cookieJar));
+
+    final response = await dio.get("http://13.51.143.99:8080");
+
+    print('Status code: ${response.statusCode}');
+    print('Response body: ${response.data}');
+
+    if (response.statusCode == 200) {
+      loginUser = UserModel.fromJson(response.data as Map<String, dynamic>);
+      currentmemberID = loginUser.id;
+      print('loginUser: $loginUser');
+      print('currentmemberID: $currentmemberID');
+      return loginUser;
+    } else {
+      throw Exception('Failed to load currentUser');
+    }
+  }
+
+  Future<UserModel> fetchUser(memberID) async {
+    final response =
+        await http.get(Uri.parse("http://13.51.143.99:8080/members/$memberID"));
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
+    } else {
+      throw Exception('Failed to load User data');
+    }
+  }
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  late Future<UserModel> futureUser = Future.value(UserModel(
+    id: 0,
+    loginId: '',
+    loginPassword: '',
+    name: '',
+    stamp_cnt: 0,
+  ));
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await currentUser();
+    setState(() {
+      futureUser = fetchUser(currentmemberID);
+      showSpinner = false;
+    });
+  }
+
   bool _isEditing = false;
-  final TextEditingController _nameController = TextEditingController(text: '김동글');
-  final TextEditingController _birthController = TextEditingController(text: '2010.09.23');
-  final TextEditingController _introController = TextEditingController(text: '안녕 나는 김동글 이고 축구를 좋아해 친하게 지내자');
+  final TextEditingController _nameController =
+      TextEditingController(text: '김동글');
+  final TextEditingController _birthController =
+      TextEditingController(text: '2010.09.23');
+  final TextEditingController _introController =
+      TextEditingController(text: '안녕 나는 김동글 이고 축구를 좋아해 친하게 지내자');
   XFile? _imageFile;
 
   @override
@@ -66,6 +130,7 @@ class ProfilePageState extends State<ProfilePage> {
         introController: _introController,
         imageFile: _imageFile,
         onImageTap: _pickImage,
+        userName: "koko",
       ),
     );
   }
@@ -88,12 +153,15 @@ class ProfileWidget extends StatelessWidget {
   final XFile? imageFile;
   final VoidCallback? onImageTap;
 
+  final String userName;
+
   const ProfileWidget({
     Key? key,
     required this.isEditing,
     required this.nameController,
     required this.birthController,
     required this.introController,
+    required this.userName,
     this.imageFile,
     this.onImageTap,
   }) : super(key: key);
@@ -132,13 +200,13 @@ class ProfileWidget extends StatelessWidget {
                     ),
                     child: imageFile != null
                         ? Image.file(
-                      File(imageFile!.path),
-                      fit: BoxFit.cover,
-                    )
+                            File(imageFile!.path),
+                            fit: BoxFit.cover,
+                          )
                         : const Image(
-                      image: AssetImage('assets/images/profile.png'),
-                      fit: BoxFit.cover,
-                    ),
+                            image: AssetImage('assets/images/profile.png'),
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 const SizedBox(width: 20),
@@ -202,29 +270,30 @@ class ProfileWidget extends StatelessWidget {
                 const SizedBox(width: 40),
                 isEditing
                     ? Expanded(
-                  child: TextField(
-                    controller: nameController,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Dongle',
-                    ),
-                  ),
-                )
+                        child: TextField(
+                          controller: nameController,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      )
                     : Container(
-                  width: 300,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    nameController.text,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Dongle',
-                    ),
-                  ),
-                ),
+                        width: 300,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          nameController.text,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      ),
               ],
             ),
             const SizedBox(height: 20),
@@ -245,29 +314,30 @@ class ProfileWidget extends StatelessWidget {
                 const SizedBox(width: 35),
                 isEditing
                     ? Expanded(
-                  child: TextField(
-                    controller: birthController,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Dongle',
-                    ),
-                  ),
-                )
+                        child: TextField(
+                          controller: birthController,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      )
                     : Container(
-                  width: 300,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    birthController.text,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Dongle',
-                    ),
-                  ),
-                ),
+                        width: 300,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          birthController.text,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      ),
               ],
             ),
             const SizedBox(height: 20),
@@ -289,30 +359,31 @@ class ProfileWidget extends StatelessWidget {
                 const SizedBox(width: 20),
                 isEditing
                     ? Expanded(
-                  child: TextField(
-                    controller: introController,
-                    maxLines: null,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Dongle',
-                    ),
-                  ),
-                )
+                        child: TextField(
+                          controller: introController,
+                          maxLines: null,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      )
                     : Container(
-                  width: 300,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    introController.text,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Dongle',
-                    ),
-                  ),
-                ),
+                        width: 300,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 40),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          introController.text,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      ),
               ],
             ),
           ],

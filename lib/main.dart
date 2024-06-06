@@ -1,3 +1,6 @@
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:pocekt_teacher/api/firebase_api.dart';
 import 'package:pocekt_teacher/constants.dart';
@@ -17,6 +20,16 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // final dio = Dio();
+  // final cookieJar = CookieJar();
+  // dio.interceptors.add(CookieManager(cookieJar));
+  // await dio.get('https://pub.dev/');
+  // // Print cookies
+  // print(await cookieJar.loadForRequest(Uri.parse('https://pub.dev/')));
+  // // Another request with the cookie.
+  // await dio.get("https://pub.dev/");
+
   runApp(const PocketTeacher());
 }
 

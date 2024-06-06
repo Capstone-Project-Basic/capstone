@@ -1,11 +1,17 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/constants.dart';
+import 'package:pocekt_teacher/model/mission.dart';
 import 'package:pocekt_teacher/model/stamp.dart';
 import 'package:http/http.dart' as http;
 import 'package:pocekt_teacher/model/user.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:pocekt_teacher/utils/cookie_manager.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 
 class StampScreen extends StatefulWidget {
   const StampScreen({super.key});
@@ -14,123 +20,187 @@ class StampScreen extends StatefulWidget {
   State<StampScreen> createState() => _StampScreenState();
 }
 
-// Future<StampModel> checkStamps(String memberID, BuildContext context) async {
-//   var response =
-//       await http.post(Uri.parse("http://13.51.143.99:8080/$memberID/stamps"),
-//           headers: <String, String>{"Content-Type": "application/json"},
-//           body: jsonEncode(<String, String>{
-//             "memberID": memberID,
-//           }));
+late UserModel loginUser;
+int? currentmemberID = 1;
+bool showSpinner = true;
 
-//   String responseString = response.body;
-//   if (response.statusCode == 200) {
-//     showDialog(
-//       context: context,
-//       barrierDismissible: true,
-//       builder: (BuildContext dialogContext) {
-//         return MyAlertDialog(title: "Backend Response", content: response.body);
-//       },
-//     );
-//   }
+Future<UserModel> currentUser() async {
+  var dio = Dio();
+  dio.interceptors.add(CookieManager(MyCookieManager.instance.cookieJar));
 
-//   return StampModel(
-//       id: 9999, missionId: 'error email', memberId: 'error password');
-// }
-const memberID = 1;
-bool showSpinner = false;
+  final response = await dio.get("http://13.51.143.99:8080");
 
-Future<UserModel> fetchMission() async {
+  print('Status code: ${response.statusCode}');
+  print('Response body: ${response.data}');
+
+  if (response.statusCode == 200) {
+    loginUser = UserModel.fromJson(response.data as Map<String, dynamic>);
+    currentmemberID = loginUser.id;
+    print('loginUser: $loginUser');
+    print('currentmemberID: $currentmemberID');
+    return loginUser;
+  } else {
+    throw Exception('Failed to load currentUser');
+  }
+}
+
+Future<MissionModel> fetchMission() async {
   final response =
       await http.get(Uri.parse("http://13.51.143.99:8080/missions/active"));
 
   if (response.statusCode == 200) {
-    return UserModel.fromJson(
+    return MissionModel.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>);
   } else {
-    throw Exception('Failed to load User');
+    throw Exception('Failed to load mission data');
   }
 }
 
-Future<UserModel> fetchUser() async {
+Future<UserModel> fetchUser(memberID) async {
   final response =
       await http.get(Uri.parse("http://13.51.143.99:8080/members/$memberID"));
 
   if (response.statusCode == 200) {
     return UserModel.fromJson(
-        jsonDecode(response.body) as Map<String, dynamic>);
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
   } else {
-    throw Exception('Failed to load User');
+    throw Exception('Failed to load User data');
   }
 }
 
-Future<List<StampModel>> fetchStamp() async {
+Future<List<StampModel>> fetchStamp(memberID) async {
   final response =
       await http.get(Uri.parse("http://13.51.143.99:8080/$memberID/stamps"));
 
-  // print('Status code: ${response.statusCode}');
-  // print('Response body: ${response.body}');
+  if (response.statusCode == 200) {
+    final List body = json.decode(response.body);
+    return body.map((e) => StampModel.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load Stamp data');
+  }
+}
+
+Future<List<UserModel>> fetchMembers() async {
+  // var dio = Dio();
+  // dio.interceptors.add(CookieManager(MyCookieManager.instance.cookieJar));
+
+  // try {
+  //   final response = await dio.get("http://13.51.143.99:8080/members");
+
+  //   print("fetchmembers : ${response.statusCode}");
+  //   print("fetchmembers : ${response.data}");
+
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> body = response.data;
+  //     return body.map((e) => UserModel.fromJson(e)).toList();
+  //   } else {
+  //     throw Exception('Failed to load members data');
+  //   }
+  // } catch (e) {
+  //   print("Error during communication: $e");
+  //   throw Exception('Failed to load members data');
+  // }
+  final response =
+      await http.get(Uri.parse("http://13.51.143.99:8080/members"));
 
   if (response.statusCode == 200) {
     final List body = json.decode(response.body);
-
-    print(body);
-
-    return body.map((e) => StampModel.fromJson(e)).toList();
+    return body.map((e) => UserModel.fromJson(e)).toList();
   } else {
-    throw Exception('Failed to load Stamp');
+    throw Exception('Failed to load Stamp data');
   }
 }
 
 class _StampScreenState extends State<StampScreen> {
-  late Future<List<StampModel>> futureStamp;
-  late Future<UserModel> futureUser;
+  late Future<List<StampModel>> futureStamp = Future.value([]);
+  late Future<List<UserModel>> futureMembers = Future.value([]);
+  late Future<UserModel> futureUser = Future.value(UserModel(
+    id: 0,
+    loginId: '',
+    loginPassword: '',
+    name: '',
+    stamp_cnt: 0,
+  ));
+  late Future<MissionModel> futureMission = Future.value(MissionModel(
+    id: 0,
+    missionTitle: "",
+    missionContent: "",
+  ));
   late final userName;
 
   Future<void> _showMission() async {
-    return showDialog<void>(
+    Dialogs.materialDialog(
+      color: Colors.white,
+      msg: '분단의 한 명씩 빗자루로 바닥을 쓸고 검사를 받으세요',
+      msgStyle: const TextStyle(
+        fontSize: 25.0,
+      ),
+      title: '오늘의 미션은 바닥 쓸기!',
+      titleStyle: const TextStyle(
+        fontSize: 40.0,
+      ),
+      lottieBuilder: Lottie.asset(
+        'assets/lottie/flag.json',
+        fit: BoxFit.contain,
+      ),
+      dialogWidth: kIsWeb ? 0.3 : null,
       context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          titleTextStyle: kMediumText.copyWith(
-            color: Colors.black,
-            fontWeight: FontWeight.w300,
-          ),
-          title: const Text('오늘의 미션'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                Text(
-                  'This is a demo alert dialog',
-                  style: kSmallText.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.w300),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'close',
-                style: kSmallText.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.w300),
-              ),
-            )
-          ],
-        );
-      },
     );
+    // return showDialog<void>(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       backgroundColor: Colors.white,
+    //       titleTextStyle: kMediumText.copyWith(
+    //         color: Colors.black,
+    //         fontWeight: FontWeight.w300,
+    //       ),
+    //       title: const Center(child: Text('오늘의 미션')),
+    //       content: SingleChildScrollView(
+    //         child: ListBody(
+    //           children: [
+    //             Center(
+    //               child: Text(
+    //                 '주어진 미션을 모두 해냈어요!',
+    //                 style: kSmallText.copyWith(
+    //                     color: Colors.black, fontWeight: FontWeight.w300),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text(
+    //             'close',
+    //             style: kSmallText.copyWith(
+    //                 color: Colors.black, fontWeight: FontWeight.w300),
+    //           ),
+    //         )
+    //       ],
+    //     );
+    //   },
+    // );
   }
 
   @override
   void initState() {
-    futureStamp = fetchStamp();
-    futureUser = fetchUser();
     super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await currentUser();
+    setState(() {
+      futureStamp = fetchStamp(currentmemberID);
+      futureUser = fetchUser(currentmemberID);
+      futureMembers = fetchMembers();
+      showSpinner = false;
+    });
   }
 
   @override
@@ -209,20 +279,25 @@ class _StampScreenState extends State<StampScreen> {
                   ),
                 ),
               ),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
-              const NameCard(),
               Container(
                 width: 30,
-              )
+              ),
+              FutureBuilder<List<UserModel>>(
+                future: futureMembers,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    //Connecting...
+                  } else if (snapshot.hasData) {
+                    final users = snapshot.data!;
+                    users.sort((a, b) => a.stampCnt.compareTo(b.stampCnt));
+                    print(users);
+                    return buildRanking(users);
+                  } else if (snapshot.hasError) {
+                    print(snapshot.error);
+                  }
+                  return const Text("No Data Available...");
+                },
+              ),
             ],
           ),
         ),
@@ -239,6 +314,19 @@ Widget buildStamp(List<StampModel> stamps) {
       return Stamp(
         successMissionId: stamp.successMissionId.toString(),
       );
+    },
+  );
+}
+
+Widget buildRanking(List<UserModel> users) {
+  print("users.length :${users.length}");
+
+  return ListView.builder(
+    shrinkWrap: true,
+    itemCount: users.length,
+    itemBuilder: (context, index) {
+      final user = users[index];
+      return NameCard(ranking: index, name: user.name, stamps: user.stamp_cnt);
     },
   );
 }
@@ -301,9 +389,16 @@ class TitleCard extends StatelessWidget {
 }
 
 class NameCard extends StatelessWidget {
-  const NameCard({
+  NameCard({
     super.key,
+    required this.ranking,
+    required this.name,
+    required this.stamps,
   });
+
+  int ranking;
+  String name;
+  int stamps;
 
   @override
   Widget build(BuildContext context) {
@@ -315,13 +410,13 @@ class NameCard extends StatelessWidget {
           color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('(ranking) (name) (number of stamp)'),
+              padding: const EdgeInsets.all(8.0),
+              child: Text('$ranking $name $stamps'),
             ),
           ],
         ),

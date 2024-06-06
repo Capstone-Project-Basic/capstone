@@ -11,6 +11,7 @@ import 'package:pocekt_teacher/model/user.dart';
 import 'package:pocekt_teacher/resources/AnimatedVisibility.dart';
 import 'package:pocekt_teacher/resources/TransitionData.dart';
 import 'package:pocekt_teacher/screens/main_screen.dart';
+import 'package:pocekt_teacher/screens/welcome/login_screen.dart';
 
 enum Role {
   child,
@@ -60,9 +61,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return UserModel(
         id: 9999,
-        loginID: 'error email',
+        loginId: 'error email',
         loginPassword: 'error password',
-        name: 'error name');
+        name: 'error name',
+        stamp_cnt: 0);
   }
 
   bool _idIsVisible = true;
@@ -267,7 +269,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const MainScreen()));
+                                              const LoginScreen()));
                                 },
                               ),
                             ],
