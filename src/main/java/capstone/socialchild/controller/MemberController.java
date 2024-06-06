@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/members")
@@ -65,30 +66,31 @@ public class MemberController {
     /**
      * 회원 수정
      */
-    @Transactional
-    public void updateMember(Long memberId, UpdateMember request) {
+    @PatchMapping("/{memberId}/image")
+    public ResponseEntity<Member> updateMember(@PathVariable Long memberId, @RequestBody UpdateMember request) {
 
-        Member findMember = memberRepository.findOne(memberId);
-        if (findMember == null) {
-            throw new EntityNotFoundException("존재하지 않는 회원입니다!");
-        }
+        Optional<Member> findMember = memberRepository.findById(memberId);
+        findMember.orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회원입니다!"));
+
 
         // loginId, Role은 변경 불가로 설정
-        findMember.setLoginPassword(request.getLoginPassword());
-        findMember.setName(request.getName());
-        findMember.setBirth(request.getBirth());
-        findMember.setPhone_no(request.getPhone_no());
+        memberService.updateMember(memberId, request);
+
+        return ResponseEntity.ok(findMember.get());
     }
 
     /**
      * 회원 삭제
      */
-    public void deleteMember(Long id) {
-        Member member = memberRepository.findOne(id);
-        if (member != null) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable Long id) {
+        Optional<Member> member = memberRepository.findById(id);
+        if (member.isPresent()) {
             memberRepository.delete(id);
+            return ResponseEntity.ok("회원 삭제가 완료되었습니다.");
         } else {
             throw new EntityNotFoundException("존재하지 않는 회원입니다!");
         }
     }
+
 }

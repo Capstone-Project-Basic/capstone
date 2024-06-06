@@ -35,13 +35,16 @@ public class SignUp {
     @NotEmpty(message = "신분을 선택해주세요!")
     private Role role;              // 역할[CHILD, TEACHER]
 
-    private String token; //회원가입 시 기기 고유 토큰
+    private String imagePath;       // 회원 이미지
+
+    private String token;           //회원가입 시 기기 고유 토큰
     private Long stampCnt;
 
     private Double latitude;
     private Double longitude;
 
     public Member toMember() {
-        return Member.createMember(loginId, loginPassword, name, birth, gender, phone_no, role, stampCnt, latitude, longitude);
+        return Member.createMember(loginId, loginPassword,
+                name, birth, gender, phone_no, role, imagePath, stampCnt, latitude, longitude);
     }
 }

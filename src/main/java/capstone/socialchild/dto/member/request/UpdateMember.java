@@ -15,4 +15,5 @@ public class UpdateMember {
     private String name;            // 이름
     private LocalDate birth;        // 생년월일
     private String phone_no;        // 전화번호
+    private String imagePath;       // 이미지 경로
 }
