@@ -75,4 +75,18 @@ public class StampService {
         memberService.addStampCnt(member);
         return new StampResponseDto(stamp);
     }
+
+    public StampResponseDto createShake(Long memberId, StampRequestDto requestDto) {
+        if (memberId == null)
+            throw new IllegalArgumentException("현재 유저가 없습니다.");
+        Member member = memberRepository.findOne(requestDto.getMemberId());
+
+        Stamp stamp = Stamp.builder()
+                .member(member)
+                .successMission(null)
+                .build();
+        stampRepository.save(stamp);
+        memberService.addStampCnt(member);
+        return new StampResponseDto(stamp);
+    }
 }
