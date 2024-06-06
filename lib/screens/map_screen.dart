@@ -46,23 +46,28 @@ class MapWithMyLocationState extends State<MapWithMyLocation> {
     Friend(name: '정동글', id: '4', profileImage: 'assets/images/profile.png'),
   ];
 
-  final Map<String, LatLng> _friendLocations = {
-    '1': const LatLng(37.5665, 126.9780),
-    '2': const LatLng(37.5765, 126.9880),
-    '3': const LatLng(37.5865, 126.9980),
-    '4': const LatLng(37.5965, 127.0080),
+   final Map<String, LatLng> _friendLocations = {
+    '1': const LatLng(37.295978675656244, 127.04752743130493),
+    '2': const LatLng(37.29229148220293, 127.01645672207641),
+    '3': const LatLng(37.30608339051031, 127.01508343106079),
+    '4': const LatLng(37.304581424208585, 127.03302204495239),
   };
+
 
   final Map<String, Marker> _markers = {};
 
-  @override
-  void initState() {
-    super.initState();
-    _checkLocationService();
-    _loadMapStyle().then((String style) {
-      _mapStyle = style;
-    });
-  }
+@override
+void initState() {
+  super.initState();
+  _checkLocationService();
+  _loadMapStyle().then((String style) {
+    _mapStyle = style;
+  });
+  // 현재 위치를 가져와서 맵을 해당 위치로 이동
+  _getCurrentLocation();
+}
+
+
 
   @override
   void dispose() {
@@ -94,6 +99,22 @@ class MapWithMyLocationState extends State<MapWithMyLocation> {
       return;
     }
   }
+void _addFriendMarker(Friend friend, LatLng friendLocation) async {
+  Uint8List imageData = await _getResizedImageWithBorder(friend.profileImage, 120, 120);
+  BitmapDescriptor markerIcon = BitmapDescriptor.fromBytes(imageData);
+
+  Marker marker = Marker(
+    markerId: MarkerId(friend.id),
+    position: friendLocation,
+    icon: markerIcon,
+    infoWindow: InfoWindow(title: friend.name),
+  );
+
+  setState(() {
+    _markers[friend.id] = marker;
+  });
+}
+
 
   Future<void> _getCurrentLocation() async {
     try {
@@ -125,18 +146,22 @@ class MapWithMyLocationState extends State<MapWithMyLocation> {
     }
   }
 
-  void _addCurrentLocationMarker() {
-    if (_currentLocation != null) {
-      _currentLocationMarker = Marker(
-        markerId: const MarkerId('currentLocation'),
-        position: _currentLocation!,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-      );
-      setState(() {
-        _markers['currentLocation'] = _currentLocationMarker!;
-      });
-    }
+ Future<void> _addCurrentLocationMarker() async {
+  if (_currentLocation != null) {
+    Uint8List imageData = await _getResizedImageWithBorder('assets/images/hiyoko.png', 120, 120);
+    BitmapDescriptor markerIcon = BitmapDescriptor.fromBytes(imageData);
+
+    _currentLocationMarker = Marker(
+      markerId: const MarkerId('currentLocation'),
+      position: _currentLocation!,
+      icon: markerIcon,
+    );
+
+    setState(() {
+      _markers['currentLocation'] = _currentLocationMarker!;
+    });
   }
+}
 
   void _moveToCurrentLocation() {
     _controller.future.then((controller) {
@@ -151,27 +176,33 @@ class MapWithMyLocationState extends State<MapWithMyLocation> {
     });
   }
 
-  Future<Uint8List> _getResizedImage(String imagePath, int width, int height) async {
-    ByteData data = await rootBundle.load(imagePath);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width, targetHeight: height);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
-  }
+  Future<Uint8List> _getResizedImageWithBorder(String imagePath, int width, int height) async {
+  // Load profile image
+  ByteData imageData = await rootBundle.load(imagePath);
+  ui.Codec codec = await ui.instantiateImageCodec(imageData.buffer.asUint8List(), targetWidth: width, targetHeight: height);
+  ui.FrameInfo frameInfo = await codec.getNextFrame();
 
-  Future<void> _addFriendMarker(Friend friend, LatLng position) async {
-    Uint8List imageData = await _getResizedImage(friend.profileImage, 120, 120);
-    BitmapDescriptor markerIcon = BitmapDescriptor.fromBytes(imageData);
+  // Create a PictureRecorder to draw the image and border
+  ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+  Canvas canvas = Canvas(pictureRecorder);
 
-    Marker marker = Marker(
-      markerId: MarkerId(friend.id),
-      position: position,
-      icon: markerIcon,
-    );
+  // Draw white circle border
+  Paint borderPaint = Paint()..color = Colors.white..style = PaintingStyle.stroke..strokeWidth = 10;
+  canvas.drawCircle(Offset(width / 2, height / 2), width / 2, borderPaint);
 
-    setState(() {
-      _markers[friend.id] = marker;
-    });
-  }
+  // Draw the profile image inside the border
+  Paint imagePaint = Paint()..isAntiAlias = true..filterQuality = FilterQuality.high;
+  Rect imageRect = Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble());
+  canvas.drawImageRect(frameInfo.image, imageRect, imageRect, imagePaint);
+
+  // Convert the drawn picture to an Image
+  ui.Image image = await pictureRecorder.endRecording().toImage(width, height);
+
+  // Convert the Image to bytes
+  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  return byteData!.buffer.asUint8List();
+}
+
 
   void _onMapLongPress(LatLng location) {
     print('Map long pressed at: $location');
