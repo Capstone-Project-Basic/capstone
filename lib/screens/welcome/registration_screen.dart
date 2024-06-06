@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:pocekt_teacher/api/firebase_api.dart';
 import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/components/rounded_button.dart';
 import 'package:pocekt_teacher/constants.dart';
@@ -36,7 +37,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   late String role;
 
   Future<UserModel> registerUser(String loginID, String loginPassword,
-      String name, String role, BuildContext context) async {
+      String name, String role, String token, BuildContext context) async {
+    print('deviceToken : $token');
+
     var response =
         await http.post(Uri.parse("http://13.51.143.99:8080/login/new"),
             headers: <String, String>{"Content-Type": "application/json"},
@@ -45,9 +48,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               "loginPassword": loginPassword,
               "name": name,
               'role': role,
+              'token': token,
             }));
 
     String responseString = response.body;
+
+    print(response.body);
     if (response.statusCode == 200) {
       showDialog(
         context: context,
@@ -64,7 +70,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         loginId: 'error email',
         loginPassword: 'error password',
         name: 'error name',
-        stamp_cnt: 0);
+        stamp_cnt: 0,
+        token: '');
   }
 
   bool _idIsVisible = true;
@@ -72,11 +79,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _nameIsVisible = false;
   bool _roleIsVisible = false;
   Role selectedRole = Role.none;
+  String devToken = '';
 
   void selectGender(Role role) {
     role == Role.child
         ? selectedRole = Role.child
         : selectedRole = Role.teacher;
+  }
+
+  @override
+  void initState() {
+    initToken();
+    super.initState();
+  }
+
+  void initToken() async {
+    FirebaseApi firebaseApi = FirebaseApi();
+    await firebaseApi.initNotifications(); // 토큰을 초기화하고 기다립니다.
+    devToken = firebaseApi.fCMToken; // 초기화된 토큰을 가져옵니다.
   }
 
   @override
@@ -264,6 +284,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       loginPassword,
                                       name,
                                       role,
+                                      devToken,
                                       context);
                                   Navigator.pushReplacement(
                                       context,

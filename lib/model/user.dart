@@ -11,6 +11,7 @@ class UserModel {
     required this.loginPassword,
     required this.name,
     required this.stamp_cnt,
+    required this.token,
   });
 
   int? id;
@@ -18,6 +19,7 @@ class UserModel {
   String loginId;
   String loginPassword;
   String name;
+  String token;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"] ?? 0, // null일 경우 기본값 0 설정
@@ -25,6 +27,7 @@ class UserModel {
         loginPassword: json["loginPassword"] ?? "",
         name: json["name"] ?? "",
         stamp_cnt: json["stampCnt"] ?? 0, // null일 경우 기본값 0 설정
+        token: json["token"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +36,7 @@ class UserModel {
         "loginPassword": loginPassword,
         "name": name,
         "stampCnt": stampCnt,
+        "token": token,
       };
 
   int? get userID => id;
@@ -44,4 +48,6 @@ class UserModel {
   String get loginpassword => loginPassword;
 
   String get username => name;
+
+  String get Token => token;
 }

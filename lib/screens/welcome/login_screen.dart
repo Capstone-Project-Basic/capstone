@@ -94,7 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
         loginId: 'error email',
         loginPassword: 'error password',
         name: 'error name',
-        stamp_cnt: 0);
+        stamp_cnt: 0,
+        token: '');
   }
 
   @override

@@ -103,6 +103,7 @@ class _StampScreenState extends State<StampScreen> {
     loginPassword: '',
     name: '',
     stamp_cnt: 0,
+    token: '',
   ));
   late Future<MissionModel> futureMission = Future.value(MissionModel(
     id: 0,

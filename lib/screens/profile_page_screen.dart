@@ -71,6 +71,7 @@ class ProfilePageState extends State<ProfilePage> {
     loginPassword: '',
     name: '',
     stamp_cnt: 0,
+    token: '',
   ));
 
   @override
