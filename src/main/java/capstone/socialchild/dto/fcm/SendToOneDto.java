@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class SendToOneDto {
-    private Long memberId;
+    private Long senderId;
+    private Long targetId;
     private String location;
 }
