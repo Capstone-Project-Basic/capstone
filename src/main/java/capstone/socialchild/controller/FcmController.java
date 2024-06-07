@@ -43,10 +43,10 @@ public class FcmController {
     //한명(토큰)에게 default 메세지 보내기
     @PostMapping("/sendToOne")
     public ResponseEntity<String> sendToTone(@RequestBody SendToOneDto sendToOneDto) {
-        String targetToken= fcmTokenRepository.findTokenByMemberId(sendToOneDto.getMemberId());
+        String targetToken= fcmTokenRepository.findTokenByMemberId(sendToOneDto.getTargetId());
         firebaseCloudMessageService.sendMessageTo(targetToken,
                 "친구가 나를 불러요 !",
-                memberRepository.findNameById(sendToOneDto.getMemberId()) +
+                memberRepository.findNameById(sendToOneDto.getSenderId()) +
                         " 친구가 " + sendToOneDto.getLocation()+ "에서 나를 불러요 !");
         return ResponseEntity.ok().build();
     }
