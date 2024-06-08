@@ -20,7 +20,7 @@ _Kyonggi University Pre Capstone Design._
 
 ---
 ### 🧠 개발 인원
-- **팀장 박성민 boroboro01** (Frontend, UI)
+- **팀장 박성민 boroboro01** (Frontend, UI)
 - 김서영 Tteoyom (Frontend)
 - 추유진 chuuuuujin (Frontend)
 - 심규선 gyuseon25 (Backend)
@@ -28,8 +28,9 @@ _Kyonggi University Pre Capstone Design._
 - 김민상 MinSang22Kim (Backend)
 - 홍성조 HongSeongJo (Backend)
 - 정의민 (Backend, 논문 작성)
-
+  
 모두들 수고하셨습니다 👍🏻
+
 ---
 ### ⚙️ 개발 환경
 - Flutter
@@ -38,19 +39,19 @@ _Kyonggi University Pre Capstone Design._
 ---
 # DEMO
 
-하이파이브 기능
+### 하이파이브 기능
 
 ![mission-1](https://github.com/Capstone-Project-Basic/capstone/assets/98679575/2600c026-e171-4c4f-b724-d09dbc0142a7)
 
-회원가입 및 로그인
+### 회원가입 및 로그인
 
 ![login](https://github.com/Capstone-Project-Basic/capstone/assets/98679575/4eb6f49b-1dbe-41d1-87f0-efd4e5e7657a)
 
-미션 만들기
+### 미션 만들기
 
 ![mission](https://github.com/Capstone-Project-Basic/capstone/assets/98679575/8bccb28e-065b-42c9-be99-3c183df37c9c)
 
-여러가지 기능들
+### 여러가지 기능들
 
 ![some](https://github.com/Capstone-Project-Basic/capstone/assets/98679575/c3eed3b4-3a51-48ca-a145-de8989997880)
 
