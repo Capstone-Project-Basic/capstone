@@ -46,15 +46,16 @@ Future<UserModel> currentUser() async {
   }
 }
 
-Future<MissionModel> fetchMission() async {
+Future<List<MissionModel>> fetchMissions() async {
   final response =
       await http.get(Uri.parse("http://13.51.143.99:8080/missions/active"));
-
   if (response.statusCode == 200) {
-    return MissionModel.fromJson(
-        jsonDecode(response.body) as Map<String, dynamic>);
+    List jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+    return jsonResponse
+        .map((mission) => MissionModel.fromJson(mission))
+        .toList();
   } else {
-    throw Exception('Failed to load mission data');
+    throw Exception('미션 로드 실패');
   }
 }
 
@@ -104,21 +105,49 @@ class _StampScreenState extends State<StampScreen> {
     name: '',
     stamp_cnt: 0,
     token: '',
+    image_path: '',
+    role: '',
   ));
-  late Future<MissionModel> futureMission = Future.value(MissionModel(
-    id: 0,
-    missionTitle: "",
-    missionContent: "",
-  ));
+  late Future<List<MissionModel>> futureMission = Future.value([]);
+  String missionContent = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await currentUser();
+    try {
+      final missions = await fetchMissions();
+      if (missions.isNotEmpty) {
+        setState(() {
+          missionContent = missions.first.missioncontent;
+        });
+      } else {
+        print('No missions found');
+      }
+    } catch (e) {
+      print('Failed to fetch missions: $e');
+    }
+    setState(() {
+      futureStamp = fetchStamp(currentmemberID);
+      futureUser = fetchUser(currentmemberID);
+      futureMembers = fetchMembers();
+      showSpinner = false;
+    });
+  }
 
   Future<void> _showMission() async {
     Dialogs.materialDialog(
       color: Colors.white,
-      msg: '분단의 한 명씩 빗자루로 바닥을 쓸고 검사를 받으세요',
+      msg: missionContent,
       msgStyle: const TextStyle(
         fontSize: 25.0,
       ),
-      title: '오늘의 미션은 바닥 쓸기!',
+      msgAlign: TextAlign.center,
+      title: '오늘의 미션!',
       titleStyle: const TextStyle(
         fontSize: 40.0,
       ),
@@ -129,219 +158,164 @@ class _StampScreenState extends State<StampScreen> {
       dialogWidth: kIsWeb ? 0.3 : null,
       context: context,
     );
-    // return showDialog<void>(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       backgroundColor: Colors.white,
-    //       titleTextStyle: kMediumText.copyWith(
-    //         color: Colors.black,
-    //         fontWeight: FontWeight.w300,
-    //       ),
-    //       title: const Center(child: Text('오늘의 미션')),
-    //       content: SingleChildScrollView(
-    //         child: ListBody(
-    //           children: [
-    //             Center(
-    //               child: Text(
-    //                 '주어진 미션을 모두 해냈어요!',
-    //                 style: kSmallText.copyWith(
-    //                     color: Colors.black, fontWeight: FontWeight.w300),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text(
-    //             'close',
-    //             style: kSmallText.copyWith(
-    //                 color: Colors.black, fontWeight: FontWeight.w300),
-    //           ),
-    //         )
-    //       ],
-    //     );
-    //   },
-    // );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeData();
-  }
-
-  Future<void> _initializeData() async {
-    await currentUser();
-    setState(() {
-      futureStamp = fetchStamp(currentmemberID);
-      futureUser = fetchUser(currentmemberID);
-      futureMembers = fetchMembers();
-      showSpinner = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     String userName = loginUser.name;
-    return Scaffold(
-      floatingActionButton: FloatingActionButton.large(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        focusElevation: 0,
-        hoverElevation: 0,
-        highlightElevation: 0,
-        disabledElevation: 0,
-        elevation: 0,
-        onPressed: () => _showMission(),
-        child: const Image(
-          image: AssetImage('assets/images/teacher.png'),
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton.large(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          focusElevation: 0,
+          hoverElevation: 0,
+          highlightElevation: 0,
+          disabledElevation: 0,
+          elevation: 0,
+          onPressed: () => _showMission(),
+          child: const Image(
+            image: AssetImage('assets/images/teacher.png'),
+          ),
         ),
-      ),
-      backgroundColor: Colors.white,
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: ListView(
-          children: [
-            FutureBuilder(
-                future: futureUser,
+        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
+        body: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Column(
+            children: [
+              FutureBuilder(
+                  future: futureUser,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      showSpinner = true;
+                    } else if (snapshot.hasData) {
+                      userName = snapshot.data!.name;
+                      print("$userName의 멤버 아이디 : ${snapshot.data!.id}");
+                      return TitleCard(
+                        title: '$userName의 도장 보관함',
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                    }
+                    return const TitleCard(
+                      title: "There is no data",
+                    );
+                  }),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(238, 238, 238, 1),
+                ),
+                // child: FutureBuilder<List<StampModel>>(
+                //     future: futureStamp,
+                //     builder: (context, snapshot) {
+                //       if (snapshot.connectionState ==
+                //           ConnectionState.waiting) {
+                //         //Connecting...
+                //       } else if (snapshot.hasData) {
+                //         final stamps = snapshot.data!;
+                //         final stampLength = loginUser.stamp_cnt;
+                //         return buildStamp(stamps, stampLength);
+                //       } else if (snapshot.hasError) {
+                //         print(snapshot.error);
+                //       }
+                //       return const Text("No Data Available...");
+                //     }),
+              ),
+              buildStampsRow(loginUser.stamp_cnt),
+              const TitleCard(title: '도장 순위'),
+              FutureBuilder<List<UserModel>>(
+                future: futureMembers,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    showSpinner = true;
+                    //Connecting...
                   } else if (snapshot.hasData) {
-                    userName = snapshot.data!.name;
-                    return TitleCard(
-                      title: '$userName의 도장 보관함',
-                    );
+                    final users = snapshot.data!;
+                    users.sort((a, b) => a.stampCnt.compareTo(b.stampCnt));
+                    final usersReverse = users.reversed.toList();
+                    return buildRanking(usersReverse, userName);
                   } else if (snapshot.hasError) {
                     print(snapshot.error);
                   }
-                  return const TitleCard(
-                    title: "There is no data",
-                  );
-                }),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(238, 238, 238, 1),
+                  return const Text("No Data Available...");
+                },
               ),
-              child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 5,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: [
-                  FutureBuilder<List<StampModel>>(
-                      future: futureStamp,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          //Connecting...
-                        } else if (snapshot.hasData) {
-                          final stamps = snapshot.data!;
-                          return buildStamp(stamps);
-                        } else if (snapshot.hasError) {
-                          print(snapshot.error);
-                        }
-                        return const Text("No Data Available...");
-                      }),
-                ],
-              ),
-            ),
-            const TitleCard(title: '도장 순위'),
-            FutureBuilder<List<UserModel>>(
-              future: futureMembers,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  //Connecting...
-                } else if (snapshot.hasData) {
-                  final users = snapshot.data!;
-                  users.sort((a, b) => a.stampCnt.compareTo(b.stampCnt));
-                  print(users);
-                  return buildRanking(users, userName);
-                } else if (snapshot.hasError) {
-                  print(snapshot.error);
-                }
-                return const Text("No Data Available...");
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget buildStamp(List<StampModel> stamps) {
+Widget buildStampsRow(int count) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20.0),
+    child: Row(
+      children: List.generate(count, (index) => const Stamp()),
+    ),
+  );
+}
+
+Widget buildStamp(List<StampModel> stamps, int length) {
+  print("length $length");
   return ListView.builder(
-    itemCount: stamps.length,
+    scrollDirection: Axis.horizontal,
+    itemCount: length,
     itemBuilder: (context, index) {
-      final stamp = stamps[index];
-      return Stamp(
-        successMissionId: stamp.successMissionId.toString(),
-      );
+      print("created!");
+      return const Stamp();
     },
   );
 }
 
 Widget buildRanking(List<UserModel> users, String userName) {
-  print("users.length :${users.length}");
+  return Expanded(
+    child: ListView.builder(
+      shrinkWrap: true,
+      itemCount: users.length,
+      itemBuilder: (context, index) {
+        final user = users[index];
+        final rank = (index + 1).toString();
+        Color color = Colors.grey;
+        Color bgColor = Colors.grey.shade200;
+        IconData icon = FontAwesomeIcons.medal;
 
-  return ListView.builder(
-    shrinkWrap: true,
-    itemCount: users.length,
-    itemBuilder: (context, index) {
-      final user = users[index];
-      final rank = (index + 1).toString();
-      Color color = Colors.grey;
-      Color bgColor = Colors.grey.shade200;
-      IconData icon = FontAwesomeIcons.medal;
+        switch (rank) {
+          case '1':
+            color = const Color.fromRGBO(255, 213, 79, 1);
+            icon = FontAwesomeIcons.crown;
+            break;
+          case '2':
+            color = const Color.fromRGBO(255, 213, 79, 1);
+            break;
+          case '3':
+            color = const Color.fromRGBO(255, 213, 79, 1);
+            break;
+        }
+        if (user.name == userName) {
+          bgColor = children_light;
+        }
 
-      switch (rank) {
-        case '1':
-          color = const Color.fromRGBO(255, 213, 79, 1);
-          icon = FontAwesomeIcons.crown;
-          break;
-        case '2':
-          color = const Color.fromRGBO(255, 213, 79, 1);
-          break;
-        case '3':
-          color = const Color.fromRGBO(255, 213, 79, 1);
-          break;
-      }
-      if (user.name == userName) {
-        bgColor = children_light;
-      }
-
-      return NameCard(
-        ranking: rank,
-        name: user.name,
-        stamps: user.stamp_cnt,
-        color: color,
-        icon: icon,
-        backgroundColor: bgColor,
-      );
-    },
+        return NameCard(
+          ranking: rank,
+          name: user.name,
+          stamps: user.stamp_cnt,
+          color: color,
+          icon: icon,
+          backgroundColor: bgColor,
+        );
+      },
+    ),
   );
 }
 
 class Stamp extends StatelessWidget {
   const Stamp({
     super.key,
-    required this.successMissionId,
   });
-
-  final String successMissionId;
 
   @override
   Widget build(BuildContext context) {
@@ -350,8 +324,10 @@ class Stamp extends StatelessWidget {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child:
-          const Image(image: AssetImage("assets/images/eto_mark10_tori.png")),
+      child: const Image(
+        image: AssetImage("assets/images/eto_mark10_tori.png"),
+        width: 50.0,
+      ),
     );
   }
 }

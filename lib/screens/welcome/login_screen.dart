@@ -90,12 +90,15 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return UserModel(
-        id: 9999,
-        loginId: 'error email',
-        loginPassword: 'error password',
-        name: 'error name',
-        stamp_cnt: 0,
-        token: '');
+      id: 9999,
+      loginId: 'error email',
+      loginPassword: 'error password',
+      name: 'error name',
+      stamp_cnt: 0,
+      token: '',
+      image_path: '',
+      role: '',
+    );
   }
 
   @override

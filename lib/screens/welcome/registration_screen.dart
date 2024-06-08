@@ -51,8 +51,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               'token': token,
             }));
 
-    String responseString = response.body;
-
     print(response.body);
     if (response.statusCode == 200) {
       showDialog(
@@ -66,12 +64,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
 
     return UserModel(
-        id: 9999,
-        loginId: 'error email',
-        loginPassword: 'error password',
-        name: 'error name',
-        stamp_cnt: 0,
-        token: '');
+      id: 9999,
+      loginId: 'error email',
+      loginPassword: 'error password',
+      name: 'error name',
+      stamp_cnt: 0,
+      token: '',
+      image_path: "",
+      role: '',
+    );
   }
 
   bool _idIsVisible = true;

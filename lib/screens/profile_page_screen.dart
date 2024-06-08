@@ -72,6 +72,8 @@ class ProfilePageState extends State<ProfilePage> {
     name: '',
     stamp_cnt: 0,
     token: '',
+    image_path: '',
+    role: '',
   ));
 
   @override

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/model/token.dart';
+import 'package:pocekt_teacher/screens/map_screen.dart';
 import 'package:vibration/vibration.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -23,12 +24,14 @@ Future<Token> sendAlert(String token, BuildContext context) async {
       body: jsonEncode(<String, String>{
         "token": token,
       }));
+  print("responseStatusCode : ${response.statusCode}");
+  print("response.body : ${response.body}");
 
-  String responseString = response.body;
   if (response.statusCode == 200) {
-    print(response.body);
+    print("Success to send alert");
+  } else {
+    print("Failed to send alert");
   }
-
   return Token(
     id: 9999,
     token: 'error email',
@@ -162,97 +165,99 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
     // }
     bool isInviteShowing = false;
     return Scaffold(
-        appBar: AppBar(
-          title: ShakeDetectWrap(
-              onShake: () {
-                if (devices.isEmpty) {
-                  Navigator.pushNamed(context, 'advertiser');
-                  if (isInviteShowing) {
-                    isInviteShowing = true;
-                    Dialogs.materialDialog(
-                        color: Colors.white,
-                        msg: '주변 친구에게 하이파이브를 시도하고 있어요!',
-                        title: '하이파이브 요청 중!',
-                        lottieBuilder: Lottie.asset(
-                          'assets/lottie/hand.json',
-                          fit: BoxFit.contain,
-                        ),
-                        dialogWidth: kIsWeb ? 0.3 : null,
-                        context: context,
-                        onClose: (_) {
-                          isInviteShowing = false;
-                        });
-                  }
-                } else {
-                  log('there is device');
+      appBar: AppBar(
+        title: ShakeDetectWrap(
+            onShake: () {
+              if (devices.isEmpty) {
+                Navigator.pushNamed(context, 'advertiser');
+                if (!isInviteShowing) {
+                  isInviteShowing = true;
+                  Dialogs.materialDialog(
+                    color: Colors.white,
+                    msg: '주변 친구에게 하이파이브를 시도하고 있어요!',
+                    title: '하이파이브 요청 중!',
+                    lottieBuilder: Lottie.asset(
+                      'assets/lottie/hand.json',
+                      fit: BoxFit.contain,
+                    ),
+                    dialogWidth: kIsWeb ? 0.3 : null,
+                    context: context,
+                    onClose: (_) {
+                      isInviteShowing = false;
+                    },
+                  );
                 }
-              },
-              // child: Text(_title)), //"${getItemCount()}"
-              child: const Text('title')),
-        ),
-        backgroundColor: Colors.white,
-        body: Container(
-          color: children_light,
-          child: Center(
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: getItemCount(),
-                itemBuilder: (context, index) {
-                  final device = widget.deviceType == DeviceType.advertiser
-                      ? connectedDevices[index]
-                      : devices[index];
-                  return Container(
-                    color: children_light,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "하이파이브 요청!",
-                          style: kMediumText,
-                        ),
-                        Text(
-                          "내 친구 ${device.deviceName}로 부터", //
-                          style: kSmallText,
-                        ),
-                        const Image(
-                          image: AssetImage('assets/images/high_touch.png'),
-                          height: 350,
-                        ),
-                        const Text(
-                          "흔들어서 하이파이브!",
-                          style: kSmallText,
-                        ),
-                        // Text(
-                        //   getStateName(device.state),
-                        //   style: TextStyle(
-                        //     color: getStateColor(device.state),
-                        //   ),
-                        // ),
-                        ShakeDetectWrap(
-                          // Request connect
-                          onShake: () => _onButtonClicked(device),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                            padding: const EdgeInsets.all(8.0),
-                            height: 35,
-                            width: 100,
-                            color: getButtonColor(device.state),
-                            child: Center(
-                              child: Text(
-                                getButtonStateName(device.state),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+              } else {
+                log('there is device');
+              }
+            },
+            // child: Text(_title)), //"${getItemCount()}"
+            child: const Text('핸드폰을 흔들어보아요!')),
+      ),
+      backgroundColor: Colors.white,
+      body: Container(
+        color: children_light,
+        child: Center(
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: getItemCount(),
+              itemBuilder: (context, index) {
+                final device = widget.deviceType == DeviceType.advertiser
+                    ? connectedDevices[index]
+                    : devices[index];
+                return Container(
+                  color: children_light,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "하이파이브 요청!",
+                        style: kMediumText,
+                      ),
+                      Text(
+                        "내 친구 ${device.deviceName}로 부터", //
+                        style: kSmallText,
+                      ),
+                      const Image(
+                        image: AssetImage('assets/images/high_touch.png'),
+                        height: 350,
+                      ),
+                      const Text(
+                        "흔들어서 하이파이브!",
+                        style: kSmallText,
+                      ),
+                      // Text(
+                      //   getStateName(device.state),
+                      //   style: TextStyle(
+                      //     color: getStateColor(device.state),
+                      //   ),
+                      // ),
+                      ShakeDetectWrap(
+                        // Request connect
+                        onShake: () => _onButtonClicked(device),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.all(8.0),
+                          height: 35,
+                          width: 100,
+                          color: getButtonColor(device.state),
+                          child: Center(
+                            child: Text(
+                              getButtonStateName(device.state),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  );
-                }),
-          ),
-        ));
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
+        ),
+      ),
+    );
   }
 
   String getStateName(SessionState state) {
@@ -399,8 +404,6 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
             Vibration.vibrate(duration: 1000);
             if (!isDialogShowing) {
               isDialogShowing = true;
-              String token = devToken;
-              Token userToken = await sendAlert(token, context);
               Dialogs.materialDialog(
                   color: Colors.white,
                   msg: '하이파이브 성공!',
@@ -414,6 +417,8 @@ class _DevicesListScreenState extends State<DevicesListScreen> {
                   onClose: (_) {
                     isDialogShowing = false;
                   });
+              String token = devToken;
+              Token userToken = await sendAlert(token, context);
             }
 
             Navigator.of(context).popUntil((route) => route.isFirst);

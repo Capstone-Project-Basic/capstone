@@ -51,6 +51,7 @@ class _PocketTeacherState extends State<PocketTeacher> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pocket Teacher',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         navigationBarTheme: const NavigationBarThemeData(
           backgroundColor: children_dark,
@@ -60,7 +61,7 @@ class _PocketTeacherState extends State<PocketTeacher> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: MainScreen.id,
+      initialRoute: WelcomeScreen.id,
       navigatorKey: navigatorKey,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
