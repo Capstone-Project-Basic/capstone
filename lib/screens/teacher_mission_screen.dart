@@ -14,6 +14,8 @@ import '../components/my_alert_dialog.dart';
 import '../model/mission.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/material_dialogs.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 
 final ButtonStyle commonButtonStyle = ElevatedButton.styleFrom(
   foregroundColor: Colors.purple,
@@ -382,6 +384,7 @@ class _MissionRegistrationPageState extends State<MissionRegistrationPage> {
         },
       );
       return null;
+      return null;
     }
   }
 
@@ -464,6 +467,7 @@ class MissionEditingPage extends StatefulWidget {
 
   const MissionEditingPage({
     Key? key,
+    required this.missionId,
     required this.missionId,
     required this.missionTitle,
     required this.missionContent,

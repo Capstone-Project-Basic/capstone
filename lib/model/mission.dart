@@ -4,6 +4,7 @@ MissionModel missionModelFromJson(String str) =>
     MissionModel.fromJson(json.decode(str));
 
 String missionModelToJson(MissionModel data) => json.encode(data.toJson());
+String missionModelToJson(MissionModel data) => json.encode(data.toJson());
 
 class MissionModel {
   MissionModel({
@@ -12,8 +13,18 @@ class MissionModel {
     required this.content,
     required this.grade,
     required this.title,
+    required this.missionId,
+    required this.activeStatus,
+    required this.content,
+    required this.grade,
+    required this.title,
   });
 
+  int missionId;
+  bool activeStatus;
+  String content;
+  String grade;
+  String title;
   int missionId;
   bool activeStatus;
   String content;
