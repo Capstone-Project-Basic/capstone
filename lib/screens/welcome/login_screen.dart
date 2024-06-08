@@ -1,13 +1,15 @@
 import 'dart:convert';
-
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pocekt_teacher/components/my_alert_dialog.dart';
 import 'package:pocekt_teacher/components/rounded_button.dart';
 import 'package:pocekt_teacher/constants.dart';
 import 'package:pocekt_teacher/model/user.dart';
-import 'package:http/http.dart' as http;
 import 'package:pocekt_teacher/screens/main_screen.dart';
+import 'package:pocekt_teacher/utils/cookie_manager.dart'; // MyCookieManager import
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -22,33 +24,81 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
   late String loginID;
   late String loginPassword;
+  late Dio dio;
+
+  @override
+  void initState() {
+    dio = Dio();
+    dio.interceptors.add(CookieManager(MyCookieManager.instance.cookieJar));
+    super.initState();
+  }
 
   Future<UserModel> loginUser(
       String loginID, String loginPassword, BuildContext context) async {
-    var response = await http.post(Uri.parse("http://13.51.143.99:8080/login"),
-        headers: <String, String>{"Content-Type": "application/json"},
-        body: jsonEncode(<String, String>{
+    print("Attempting login with ID: $loginID and Password: $loginPassword");
+
+    try {
+      var response = await dio.post(
+        "http://13.51.143.99:8080/login",
+        data: {
           "loginId": loginID,
           "loginPassword": loginPassword,
-        }));
+        },
+        options: Options(
+          headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        ),
+      );
 
-    String responseString = response.body;
-    if (response.statusCode == 200) {
+      // Cookies after login
+      List<Cookie> cookies = await MyCookieManager.instance.cookieJar
+          .loadForRequest(Uri.parse("http://13.51.143.99:8080/"));
+      print(
+          "Received Cookies: ${cookies.map((cookie) => '${cookie.name}: ${cookie.value}').join(', ')}");
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => const MainScreen()));
+      } else {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext dialogContext) {
+            return MyAlertDialog(
+                title: "Failed login", content: response.toString());
+          },
+        );
+        setState(() {
+          showSpinner = false;
+        });
+      }
+    } catch (e) {
+      print("Error during communication: $e");
       showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext dialogContext) {
           return MyAlertDialog(
-              title: "Backend Response", content: response.body);
+              title: "Network Error",
+              content: "Error during communication: $e");
         },
       );
+      setState(() {
+        showSpinner = false;
+      });
     }
 
     return UserModel(
-        id: 9999,
-        loginID: 'error email',
-        loginPassword: 'error password',
-        name: 'error name');
+      id: 9999,
+      loginId: 'error email',
+      loginPassword: 'error password',
+      name: 'error name',
+      stamp_cnt: 0,
+      token: '',
+      image_path: '',
+      role: '',
+    );
   }
 
   @override
@@ -132,11 +182,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           //Add some function to login user
                           UserModel userModel =
                               await loginUser(loginID, loginPassword, context);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const MainScreen()));
                         }),
                     const SizedBox(
                       height: 50.0,

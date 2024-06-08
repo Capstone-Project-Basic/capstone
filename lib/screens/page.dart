@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pocekt_teacher/constants.dart';
+import 'package:pocekt_teacher/highfive.dart';
 import 'package:pocekt_teacher/screens/school_screen.dart';
 import 'package:pocekt_teacher/screens/map_screen.dart';
-
-
 
 class SchoolPage extends StatelessWidget {
   const SchoolPage({
@@ -16,91 +15,100 @@ class SchoolPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-         // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(Icons.accessibility_rounded),
-      // ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(
-            child: Stack(
-              fit: StackFit.loose,
-              clipBehavior: Clip.none,
+    return SafeArea(
+      child: Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {},
+        //   child: const Icon(Icons.accessibility_rounded),
+        // ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Stack(
+                fit: StackFit.loose,
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    color: sky_deep,
+                  ),
+                  Positioned(
+                    width: screenSize.width - 300,
+                    height: screenSize.height - 700,
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 24.0, top: 8.0),
+                      child: Image(
+                        image: AssetImage('assets/images/sun.png'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Row(
               children: [
-                Container(
-                  color: sky_deep,
-                ),
-                Positioned(
-                  width: screenSize.width - 300,
-                  height: screenSize.height - 700,
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 24.0, top: 8.0),
+                Expanded(
                     child: Image(
-                      image: AssetImage('assets/images/sun.png'),
-                    ),
-                  ),
-                ),
+                  image: AssetImage('assets/images/sky.jpeg'),
+                )),
               ],
             ),
-          ),
-          const Row(
-            children: [
-              Expanded(
-                  child: Image(
-                image: AssetImage('assets/images/sky.jpeg'),
-              )),
-            ],
-          ),
-          Expanded(
-            child: Container(
-              color: sky_light,
+            Expanded(
+              child: Container(
+                color: sky_light,
+              ),
             ),
-          ),
-          Expanded(
-            child: Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              fit: StackFit.expand,
-              children: [
-                const Image(
-                  image: AssetImage('assets/images/green_bg.png'),
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  width: screenSize.width - 100,
-                  bottom: screenSize.width - 350,
-                  child: ElevatedButton(
-                    style: const ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.transparent),
-                      foregroundColor:
-                          MaterialStatePropertyAll(Colors.transparent),
-                      overlayColor:
-                          MaterialStatePropertyAll(Colors.transparent),
-                      elevation: MaterialStatePropertyAll(0.0),
-                    ),
-                    child: buttonImage,
-                    onPressed: () {
-                      if (buttonImage.image == const AssetImage('assets/images/school.png')) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>  NoticeListScreen()),
-                        );
-                      }  if (buttonImage.image == const AssetImage('assets/images/library.png')) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>  MapWithMyLocation()),
-                        );
-                      }
-                    },
+            Expanded(
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                fit: StackFit.expand,
+                children: [
+                  const Image(
+                    image: AssetImage('assets/images/green_bg.png'),
+                    fit: BoxFit.cover,
                   ),
-                ),
-              ],
+                  Positioned(
+                    width: screenSize.width - 100,
+                    bottom: screenSize.width - 350,
+                    child: ElevatedButton(
+                      style: const ButtonStyle(
+                        backgroundColor:
+                            WidgetStatePropertyAll(Colors.transparent),
+                        foregroundColor:
+                            WidgetStatePropertyAll(Colors.transparent),
+                        overlayColor:
+                            WidgetStatePropertyAll(Colors.transparent),
+                        elevation: WidgetStatePropertyAll(0.0),
+                      ),
+                      child: buttonImage,
+                      onPressed: () {
+                        if (buttonImage.image ==
+                            const AssetImage('assets/images/school.png')) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NoticeListScreen()),
+                          );
+                        }
+                        if (buttonImage.image ==
+                            const AssetImage(
+                                'assets/images/athletic_kids.png')) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const MapWithMyLocation()),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
