@@ -20,8 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
     NoticeListScreen(),
   ];
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
             buttonImage: Image(image: AssetImage('assets/images/school.png')),
           ),
           SchoolPage(
-            buttonImage: Image(image: AssetImage('assets/images/library.png')),
+            buttonImage:
+                Image(image: AssetImage('assets/images/athletic_kids.png')),
           ),
         ],
       ),
