@@ -3,8 +3,6 @@ package capstone.socialchild.controller;
 import capstone.socialchild.dto.mission.MissionResponseDto;
 import capstone.socialchild.dto.stamp.StampRequestDto;
 import capstone.socialchild.dto.stamp.StampResponseDto;
-import capstone.socialchild.repository.MissionRepository;
-import capstone.socialchild.service.MissionService;
 import capstone.socialchild.service.StampService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +35,11 @@ public class StampController {
     public StampResponseDto newStamp(@PathVariable("memberId") Long memberId,
                                      @RequestBody StampRequestDto requestDto) {
         return stampService.create(memberId, requestDto);
+    }
+
+    @PostMapping("/{memberId}/stamps/Shake")
+    public StampResponseDto newStampShake(@PathVariable("memberId") Long memberId,
+                                     @RequestBody StampRequestDto requestDto) {
+        return stampService.createShake(memberId, requestDto);
     }
 }

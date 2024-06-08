@@ -1,5 +1,4 @@
 package capstone.socialchild.repository;
-
 import capstone.socialchild.domain.member.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -21,13 +20,8 @@ public class MemberRepository {
 
     @Transactional
     public Long save(Member member) {
-        if (member.getId() == null) {
-            em.persist(member);
-            return member.getId();
-        } else {
-            Member mergedMember = em.merge(member);
-            return mergedMember.getId();
-        }
+        em.persist(member);
+        return member.getId();
     }
 
     @Transactional
@@ -39,7 +33,7 @@ public class MemberRepository {
             throw new IllegalArgumentException("Member ID must not be null for update.");
         }
 
-        Query query = em.createQuery("UPDATE Member m SET m.StampCnt = :stampCnt WHERE m.id = :id");
+        Query query = em.createQuery("UPDATE Member m SET m.stampCnt = :stampCnt WHERE m.id = :id");
         query.setParameter("stampCnt", stampCnt);
         query.setParameter("id", id);
 
@@ -64,23 +58,16 @@ public class MemberRepository {
                 .getSingleResult();
     }
 
-
-    public List<Member> findById(Long id) {
-        return em.createQuery("select m from Member m where m.id = :id", Member.class)
-                .setParameter("id", id)
-                .getResultList();
+    public Optional<Member> findById(Long id) {
+        try {
+            Member member = em.createQuery("select m from Member m where m.id = :id", Member.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            return Optional.ofNullable(member);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
-//    public Optional<Member> findById(Long id) {
-//        try {
-//            Member member = em.createQuery("select m from Member m where m.id = :id", Member.class)
-//                    .setParameter("id", id)
-//                    .getSingleResult();
-//            return Optional.ofNullable(member);
-//        } catch (NoResultException e) {
-//            return Optional.empty();
-//        }
-//    }
-
 
     public List<Member> findByLoginId(String loginId) {
         return em.createQuery("select m from Member m where m.loginId = :loginId", Member.class)
